@@ -12,7 +12,11 @@ import { MediaReveal } from "@/components/site/media-reveal";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/projects";
 import { siteConfig } from "@/site.config";
 
-export const dynamic = "force-dynamic";
+export const revalidate = false;
+export async function generateStaticParams() {
+  const projects = await getPublishedProjects();
+  return projects.map((p) => ({ slug: p.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

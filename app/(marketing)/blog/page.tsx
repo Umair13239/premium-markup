@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Journal — web design & marketing for UK small businesses",

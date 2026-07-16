@@ -12,7 +12,10 @@ import { services, getService, relatedServices } from "@/lib/services";
 import { getProjectsForService } from "@/lib/projects";
 import { siteConfig } from "@/site.config";
 
-export const dynamic = "force-dynamic";
+export const revalidate = false;
+export function generateStaticParams() {
+  return services.map((s) => ({ slug: s.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

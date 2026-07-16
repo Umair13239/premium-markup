@@ -6,7 +6,11 @@ import { prisma } from "@/lib/prisma";
 import { PostCTA } from "@/components/site/post-cta";
 import { siteConfig } from "@/site.config";
 
-export const dynamic = "force-dynamic";
+export const revalidate = false;
+export async function generateStaticParams() {
+  const posts = await prisma.post.findMany({ where: { status: "published" }, select: { slug: true } });
+  return posts.map((p) => ({ slug: p.slug }));
+}
 
 async function getPost(slug: string) {
   return prisma.post.findFirst({ where: { slug, status: "published" } });

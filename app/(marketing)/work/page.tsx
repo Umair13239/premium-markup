@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/site/page-header";
 import { PortfolioExplorer } from "@/components/site/portfolio-explorer";
 import { getPortfolio } from "@/lib/portfolio";
 
-export const dynamic = "force-dynamic";
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Work — websites, branding & design by Premium Markup",

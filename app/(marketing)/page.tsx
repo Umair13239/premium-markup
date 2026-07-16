@@ -16,7 +16,9 @@ import { WorkTeaser } from "@/components/site/work-teaser";
 import { getPortfolio } from "@/lib/portfolio";
 import { services } from "@/lib/services";
 
-export const dynamic = "force-dynamic";
+// Static: content changes only on redeploy (edit-locally workflow), so this is
+// baked at build time and served from the CDN — no per-request serverless call.
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Premium Markup | Web Design & Development Agency",
