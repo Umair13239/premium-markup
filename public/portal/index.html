@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PremiumMarkup — Leads Portal</title>
+  <meta name="description" content="Leads management dashboard for security & investigation businesses.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <style>
+    /* ===== Collect view (embedded) — uses the dashboard's own tokens ===== */
+    #view-collect .cx-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    #view-collect .cx-title{margin:0;font-size:22px;font-weight:700}
+    #view-collect .cx-sub{margin:4px 0 0;color:var(--fg-2);font-size:13.5px}
+    #view-collect .cx-aistat{font-family:var(--mono);font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface-2);color:var(--fg-3)}
+    #view-collect .cx-aistat.on{color:var(--accent);background:var(--accent-soft);border-color:transparent}
+    #view-collect .cx-tabs{display:inline-flex;gap:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:4px;margin-bottom:16px}
+    #view-collect .cx-tabs button{padding:8px 16px;border:0;background:none;color:var(--fg-2);font-size:13.5px;font-weight:600;border-radius:8px;transition:all .16s var(--ease)}
+    #view-collect .cx-tabs button.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff}
+    #view-collect .cx-panel{margin-bottom:16px}
+    #view-collect .cx-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+    #view-collect .cx-field{position:relative}
+    #view-collect .cx-field.grow{flex:1 1 320px}
+    #view-collect .cx-field.sm{flex:0 0 120px}
+    #view-collect .cx-field{margin-bottom:0}
+    #view-collect .cx-field label{display:block;font-size:12px;color:var(--fg-2);margin-bottom:6px;font-weight:500}
+    #view-collect .cx-field input,#view-collect .cx-field textarea{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--fg);border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit;outline:none;transition:border-color .16s,box-shadow .16s}
+    #view-collect .cx-field input:focus,#view-collect .cx-field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+    #view-collect .cx-field textarea{min-height:110px;resize:vertical;font-family:var(--mono);font-size:13px;line-height:1.6;margin-top:14px}
+    #view-collect .cx-run{white-space:nowrap}
+    #view-collect .cx-opts{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+    #view-collect .cx-sw{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:var(--fg-2);user-select:none}
+    #view-collect .cx-sw input{display:none}
+    #view-collect .cx-track{width:40px;height:22px;border-radius:20px;background:var(--surface-3);position:relative;transition:background .16s;flex:none}
+    #view-collect .cx-track::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .16s}
+    #view-collect .cx-sw input:checked+.cx-track{background:var(--primary)}
+    #view-collect .cx-sw input:checked+.cx-track::after{transform:translateX(18px)}
+    #view-collect .cx-note{font-size:12.5px;color:var(--fg-3);margin:14px 0 0}
+    #view-collect .cx-note code{font-family:var(--mono);font-size:11.5px;background:var(--surface-3);padding:1px 6px;border-radius:5px}
+    #view-collect .cx-wa-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    #view-collect .cx-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
+    #view-collect .cx-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px}
+    #view-collect .cx-stat .k{font-size:11.5px;color:var(--fg-3)}
+    #view-collect .cx-stat .v{font-family:var(--mono);font-size:24px;font-weight:700;margin-top:6px;color:var(--primary-2);font-variant-numeric:tabular-nums}
+    #view-collect .cx-prog-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+    #view-collect .cx-phase{display:flex;align-items:center;gap:10px;font-weight:600}
+    #view-collect .cx-spin{width:16px;height:16px;border:2px solid var(--surface-3);border-top-color:var(--primary);border-radius:50%;animation:cxspin .8s linear infinite}
+    @keyframes cxspin{to{transform:rotate(360deg)}}
+    #view-collect .cx-badge{font-family:var(--mono);font-size:12px;padding:4px 10px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);color:var(--fg-2)}
+    #view-collect .cx-bar{height:7px;border-radius:20px;background:var(--surface-3);overflow:hidden;position:relative}
+    #view-collect .cx-bar>i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--primary-2));width:0;transition:width .4s ease}
+    #view-collect .cx-bar.indet>i{width:35%!important;animation:cxindet 1.3s ease-in-out infinite}
+    @keyframes cxindet{0%{margin-left:-35%}100%{margin-left:100%}}
+    #view-collect .cx-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+    #view-collect .cx-chip{font-family:var(--mono);font-size:11.5px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface-2);color:var(--fg-2)}
+    #view-collect .cx-chip b{color:var(--primary-2)}
+    #view-collect .cx-chip.active{border-color:var(--primary);color:var(--fg)}
+    #view-collect .cx-toolbar{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    #view-collect .cx-stop{color:var(--danger);border-color:rgba(239,68,68,.4)}
+    #view-collect .cx-logbox{margin-top:14px}
+    #view-collect .cx-logbox summary{cursor:pointer;color:var(--fg-3);font-size:13px;font-family:var(--mono)}
+    #view-collect .cx-log{margin-top:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:12px;height:150px;overflow-y:auto;font-family:var(--mono);font-size:12px;color:var(--fg-2);white-space:pre-wrap;line-height:1.6}
+    #view-collect .cx-rc-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);font-size:14px}
+    #view-collect .cx-rc-head span{color:var(--fg-3);font-family:var(--mono);font-size:12px}
+    #view-collect .cx-tablewrap{overflow:auto;max-height:560px}
+    #view-collect .cx-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px}
+    #view-collect .cx-table th{position:sticky;top:0;background:var(--surface);text-align:left;padding:11px 14px;color:var(--fg-3);font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border)}
+    #view-collect .cx-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+    #view-collect .cx-biz{display:flex;align-items:center;gap:11px}
+    #view-collect .cx-av{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;font-weight:700;font-family:var(--mono);font-size:13px;color:#fff;background:linear-gradient(135deg,var(--primary),var(--c-investigation))}
+    #view-collect .cx-nm{font-weight:600}#view-collect .cx-cat{font-size:12px;color:var(--fg-3);margin-top:2px}
+    #view-collect .cx-muted{color:var(--fg-3)}
+    #view-collect .cx-ilink{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);color:var(--fg-2);margin-right:6px}
+    #view-collect .cx-ilink:hover{color:#fff;border-color:var(--primary)}
+    #view-collect .cx-ilink svg{width:13px;height:13px}
+    @media (max-width:1000px){#view-collect .cx-stats{grid-template-columns:repeat(3,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="load-screen" id="loadScreen"><div class="spinner"></div></div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">PremiumMarkup</div>
+          <div class="brand-sub">leads portal</div>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <div class="nav-label">Collect</div>
+        <button class="nav-item" data-view="collect">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Collect Leads
+        </button>
+
+        <div class="nav-label">Overview</div>
+        <button class="nav-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-item" data-view="leads">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          All Leads <span class="count" id="navCountAll">0</span>
+        </button>
+        <button class="nav-item" data-view="saved">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+          Marked / Saved <span class="count" id="navCountSaved">0</span>
+        </button>
+
+        <div class="nav-label">Categories</div>
+        <div id="catNav"></div>
+
+        <div class="nav-label">Pipeline</div>
+        <button class="nav-item" data-view="pipeline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          Status Board <span class="count" id="navCountTracked">0</span>
+        </button>
+
+        <button class="nav-item" data-view="whatsapp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.44.79 3.07 1.2 4.74 1.2 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.01c-.24.68-1.42 1.31-1.95 1.36-.5.05-1.13.07-1.83-.11-.42-.13-.96-.31-1.66-.61-2.92-1.26-4.83-4.2-4.97-4.4-.15-.2-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.82 2.04.89 2.19.07.15.12.32.02.52-.09.2-.14.32-.28.49l-.42.51c-.14.14-.28.29-.12.57.16.28.72 1.18 1.55 1.91 1.06.95 1.96 1.25 2.24 1.39.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.18-.28.37-.23.62-.14.25.09 1.61.76 1.89.9.28.14.46.21.53.32.07.12.07.66-.17 1.34z"/></svg>
+          WhatsApp Check <span class="count" id="navCountWa">0</span>
+        </button>
+        <button class="nav-item" data-view="pitch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+          Pitch on WhatsApp <span class="count" id="navCountPitch">0</span>
+        </button>
+
+        <div class="nav-label">Data</div>
+        <button class="nav-item" data-view="import">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          Import Data <span class="count" id="navCountImported">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <a href="/admin" style="display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-weight:600;margin-bottom:8px">&larr; Back to admin</a>
+        <div id="footStats">—</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+        <div>
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div class="page-sub" id="pageSub">Overview of all leads</div>
+        </div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input class="search-input" id="globalSearch" placeholder="Search by name, city, category, phone…" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" id="importBtn" title="Upload Excel / CSV files">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          <span class="hide-sm">Import</span>
+        </button>
+        <button class="icon-btn" id="exportBtn" title="Export current view to CSV">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        </button>
+      </header>
+
+      <div class="mode-banner" id="modeBanner" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <div class="mode-banner-text">
+          <b>Local mode — your saved database leads are NOT shown here (nothing was deleted).</b>
+          Your marks, notes, tags and statuses live safely in <code>leads.db</code>. To see them, start the server
+          (double-click <b>Start Leads Manager.bat</b>) and open <a href="http://localhost:3000">http://localhost:3000</a>.
+        </div>
+        <button class="mode-banner-x" id="modeBannerClose" title="Dismiss">✕</button>
+      </div>
+
+      <main class="content">
+        <!-- DASHBOARD VIEW -->
+        <section class="view active" id="view-dashboard">
+          <div class="kpi-grid" id="kpiGrid"></div>
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 3 5-7"/></svg>Leads by State</div>
+                <div class="panel-note">click to filter</div>
+              </div>
+              <div class="bars" id="stateBars"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9h-9z"/></svg>Category Mix</div></div>
+              <div class="donut-wrap"><div class="donut" id="catDonut"></div><div class="legend" id="catLegend"></div></div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 11-8 11s-8-5-8-11a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Top Cities</div></div>
+              <div class="bars" id="cityBars"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Rating Distribution</div></div>
+              <div class="bars" id="ratingBars"></div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/></svg>Top Lead Sources (search queries)</div></div>
+              <div class="bars" id="serviceBars"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Highest Rated (50+ reviews)</div><div class="panel-note">top picks</div></div>
+              <div id="topRated"></div>
+            </div>
+          </div>
+          <div class="panel" id="activityPanel" style="display:none;margin-top:16px">
+            <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>Recent Activity</div><div class="panel-note">from the database</div></div>
+            <div id="activityFeed"></div>
+          </div>
+        </section>
+
+        <!-- LEADS VIEW -->
+        <section class="view" id="view-leads">
+          <div class="toolbar" id="toolbar">
+            <select class="select" id="fState"><option value="">All States</option></select>
+            <select class="select" id="fGroup"><option value="">All Categories</option></select>
+            <select class="select" id="fCity"><option value="">All Cities</option></select>
+            <select class="select" id="fService"><option value="">All Sources</option></select>
+            <select class="select" id="fStatus">
+              <option value="">Any Status</option>
+              <option value="none">Untouched</option>
+              <option value="new">New</option>
+              <option value="contacted">Contacted</option>
+              <option value="interested">Interested</option>
+              <option value="negotiating">Negotiating</option>
+              <option value="closed">Closed / Won</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <select class="select" id="fRating">
+              <option value="">Any Rating</option>
+              <option value="4.5">4.5★ &amp; up</option>
+              <option value="4">4.0★ &amp; up</option>
+              <option value="3">3.0★ &amp; up</option>
+            </select>
+            <select class="select" id="fWa">
+              <option value="">Any WhatsApp</option>
+              <option value="yes">Has WhatsApp</option>
+              <option value="no">No WhatsApp</option>
+              <option value="unchecked">Not checked</option>
+            </select>
+            <select class="select" id="fTag"><option value="">All Tags</option></select>
+            <button class="toggle-pill" data-flag="website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Has Website</button>
+            <button class="toggle-pill" data-flag="phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Has Phone</button>
+            <button class="toggle-pill" data-flag="marked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Marked</button>
+            <div class="spacer"></div>
+            <select class="select" id="sortSel">
+              <option value="name">Sort: Name (A→Z)</option>
+              <option value="rating">Sort: Rating (high→low)</option>
+              <option value="reviews">Sort: Reviews (high→low)</option>
+              <option value="state">Sort: State</option>
+              <option value="city">Sort: City</option>
+            </select>
+            <div class="seg" id="viewSeg">
+              <button data-mode="grid" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>Cards</button>
+              <button data-mode="table"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Table</button>
+            </div>
+            <button class="btn btn-ghost" id="clearFilters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Reset</button>
+          </div>
+          <div class="result-bar" id="resultBar"></div>
+          <div id="leadsContainer"></div>
+        </section>
+
+        <!-- SAVED VIEW -->
+        <section class="view" id="view-saved">
+          <div class="result-bar" id="savedBar"></div>
+          <div id="savedContainer"></div>
+        </section>
+
+        <!-- PIPELINE / STATUS VIEW -->
+        <section class="view" id="view-pipeline">
+          <div class="result-bar" id="pipeBar"></div>
+          <div id="pipeContainer"></div>
+        </section>
+
+        <!-- WHATSAPP VIEW -->
+        <section class="view" id="view-whatsapp">
+          <div class="wa-hero">
+            <div class="wa-hero-left">
+              <div class="wa-progress-ring" id="waRing"></div>
+              <div>
+                <div class="wa-hero-title" id="waHeroTitle">WhatsApp Check</div>
+                <div class="wa-hero-sub" id="waHeroSub">Check which of your leads are on WhatsApp</div>
+              </div>
+            </div>
+            <div class="wa-hero-actions">
+              <input type="file" id="waFileInput" accept=".json,.csv" hidden>
+              <button class="btn btn-primary" id="waSyncBtn" title="Load results the wa-checker tool saved (wa-checker/wa-results.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>Sync from wa-checker</button>
+              <button class="btn" id="waLoadBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Load results file</button>
+              <button class="btn btn-primary" id="waExportBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>Export numbers to check</button>
+            </div>
+          </div>
+
+          <div class="import-stats" id="waStats"></div>
+
+          <div class="wa-progress-bar"><div class="wa-progress-fill" id="waBarFill"></div></div>
+
+          <div class="toolbar" style="margin-top:18px">
+            <div class="seg" id="waSeg">
+              <button data-waview="all" class="active">All</button>
+              <button data-waview="yes">✅ Available</button>
+              <button data-waview="no">❌ Not available</button>
+              <button data-waview="unchecked">Unchecked</button>
+            </div>
+            <div class="search-wrap" style="max-width:280px;margin-left:0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="search-input" id="waSearch" placeholder="Search these leads…" autocomplete="off">
+            </div>
+            <div class="spacer"></div>
+            <div class="result-bar" id="waResultBar" style="margin:0"></div>
+          </div>
+
+          <div id="waListContainer"></div>
+
+          <div class="panel wa-panel" style="margin-top:18px">
+            <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 2"/></svg>How automatic checking works</div></div>
+            <ol class="help-list">
+              <li>Click <b>Export numbers to check</b> → save <code>wa-numbers.json</code> and move it into the <code>wa-checker</code> folder.</li>
+              <li>In that folder run <code>npm install</code> once, then <code>npm start</code>. Scan the QR with WhatsApp (Settings → Linked devices) — one time.</li>
+              <li>It goes through <b>each number one by one</b>, waiting a few seconds between each (editable), and writes <b>WhatsApp Available / Not Available</b> for every one.</li>
+              <li>Click <b>Load results file</b> here and pick <code>wa-results.json</code> (or <code>wa-results.csv</code>) — statuses fill in across the dashboard.</li>
+            </ol>
+            <div class="wa-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span>The checker uses your own WhatsApp account. Checking hundreds of numbers can get it temporarily limited — it runs slowly and in batches on purpose. Use at your own risk.</span></div>
+          </div>
+        </section>
+
+        <!-- PITCH VIEW -->
+        <section class="view" id="view-pitch">
+          <details class="pitch-settings" id="pitchSettings">
+            <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Your pitch settings <span class="pitch-setup-hint" id="pitchSetupHint">← set this up first</span></summary>
+            <div class="pitch-cfg-grid">
+              <label class="edit-field"><span>Your name</span><input id="pitchCfgName" placeholder="e.g. Umair"></label>
+              <label class="edit-field"><span>Your company</span><input id="pitchCfgCompany" placeholder="e.g. Bright Digital"></label>
+            </div>
+            <label class="edit-field"><span>What you offer (one or two lines)</span><textarea id="pitchCfgOffer" rows="2"></textarea></label>
+            <label class="edit-field"><span>Call to action</span><input id="pitchCfgCta"></label>
+            <div class="pitch-vars">The message auto-adapts per lead: no-website / few-reviews / low-rating get a different opening line. Save to apply.</div>
+            <button class="btn btn-primary" id="pitchCfgSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Save settings</button>
+          </details>
+
+          <div class="import-stats" id="pitchStats"></div>
+
+          <div class="toolbar" style="margin-top:16px">
+            <div class="seg" id="pitchSeg">
+              <button data-pv="todo" class="active">To pitch</button>
+              <button data-pv="pitched">Pitched</button>
+              <button data-pv="all">All</button>
+            </div>
+            <button class="toggle-pill on" id="pitchWaOnly"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.44.79 3.07 1.2 4.74 1.2 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2z"/></svg>WhatsApp only</button>
+            <div class="search-wrap" style="max-width:260px;margin-left:0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="search-input" id="pitchSearch" placeholder="Search these leads…" autocomplete="off">
+            </div>
+            <div class="spacer"></div>
+            <div class="result-bar" id="pitchResultBar" style="margin:0"></div>
+          </div>
+          <div id="pitchList"></div>
+        </section>
+
+        <!-- IMPORT / DATA VIEW -->
+        <section class="view" id="view-import">
+          <div class="import-stats" id="importStats"></div>
+
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload lead files">
+            <input type="file" id="fileInput" multiple accept=".xlsx,.xls,.csv,.tsv,.html,.htm,.json" hidden>
+            <div class="dz-inner">
+              <div class="dz-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+              </div>
+              <div class="dz-title">Drop your lead files here</div>
+              <div class="dz-sub">or <span class="dz-link">click to browse</span> — upload as many as you like at once</div>
+              <div class="dz-formats">.xlsx · .xls · .csv · .tsv · .html · .json</div>
+            </div>
+          </div>
+
+          <div class="import-log" id="importLog" style="display:none"></div>
+
+          <div class="grid-2" style="margin-top:18px">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 2"/></svg>How it works</div></div>
+              <ol class="help-list">
+                <li>Drop or pick one or more files. Excel, CSV, the Google&nbsp;Sheets HTML export, or JSON all work.</li>
+                <li>Columns are matched automatically (name, phone, website, address, rating, category, etc.) — order doesn't matter.</li>
+                <li><b>State, city, category &amp; lead source</b> are derived for every new row instantly.</li>
+                <li><b>Duplicates are removed automatically</b> — matched by Google place ID, or by name + phone / address.</li>
+                <li>Imported leads are saved in this browser and merged into every view.</li>
+              </ol>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg>Manage data</div></div>
+              <p style="font-size:13px;color:var(--fg-2);margin:0 0 14px">Your dashboard currently combines the built-in leads with everything you've imported.</p>
+              <div class="drawer-actions">
+                <button class="btn" id="dedupeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>Re-run dedupe</button>
+                <button class="btn" id="exportAllBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Export everything</button>
+                <button class="btn" id="migrateBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/><path d="M3 12h4l2 3 3-6 2 3h4" /></svg>Import browser data → database</button>
+                <button class="btn" id="clearImportBtn" style="color:var(--danger);border-color:rgba(239,68,68,.4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Remove imported</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel wa-panel" style="margin-top:16px">
+            <div class="panel-head">
+              <div class="panel-title"><svg class="wa-title-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.44.79 3.07 1.2 4.74 1.2 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.01c-.24.68-1.42 1.31-1.95 1.36-.5.05-1.13.07-1.83-.11-.42-.13-.96-.31-1.66-.61-2.92-1.26-4.83-4.2-4.97-4.4-.15-.2-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.82 2.04.89 2.19.07.15.12.32.02.52-.09.2-.14.32-.28.49l-.42.51c-.14.14-.28.29-.12.57.16.28.72 1.18 1.55 1.91 1.06.95 1.96 1.25 2.24 1.39.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.18-.28.37-.23.62-.14.25.09 1.61.76 1.89.9.28.14.46.21.53.32.07.12.07.66-.17 1.34z"/></svg>WhatsApp Checker <span class="wa-auto-tag">automated</span></div>
+            </div>
+            <p style="font-size:13px;color:var(--fg-2);margin:0 0 14px">Auto-detect which numbers are on WhatsApp — no checking one by one. Runs locally using your own WhatsApp via the included <b>wa-checker</b> tool.</p>
+            <ol class="help-list">
+              <li>Click <b>Export numbers</b> below → save <code>wa-numbers.json</code>.</li>
+              <li>Move that file into the <code>wa-checker</code> folder, then run <code>npm install</code> once, and <code>npm start</code>.</li>
+              <li>Scan the QR code with WhatsApp (Settings → Linked devices) — one time only.</li>
+              <li>It checks every number and writes <code>wa-results.json</code>.</li>
+              <li><b>Drag <code>wa-results.json</code> onto the drop zone above</b> — statuses appear across the dashboard instantly.</li>
+            </ol>
+            <div class="wa-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span>Checking hundreds of numbers from a personal WhatsApp can get it temporarily limited. The tool goes slow by default and lets you check in batches — see its README.</span></div>
+            <div class="drawer-actions" style="margin-top:14px">
+              <button class="btn btn-primary" id="exportNumbersBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Export numbers (wa-numbers.json)</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- COLLECT VIEW (embedded) -->
+        <section class="view" id="view-collect">
+          <div class="cx-head">
+            <div>
+              <h2 class="cx-title">Collect Leads</h2>
+              <p class="cx-sub">Collect local businesses into your database, then check WhatsApp — automatically.</p>
+            </div>
+            <span class="cx-aistat" id="cx-ai">AI…</span>
+          </div>
+
+          <div class="seg cx-tabs" id="cx-tabs">
+            <button class="active" data-ctab="pipeline">Auto Pipeline</button>
+            <button data-ctab="single">Single Search</button>
+          </div>
+
+          <!-- Auto Pipeline -->
+          <div class="panel cx-panel" id="cx-pipeline">
+            <div class="cx-row">
+              <div class="cx-field grow"><label>Category / query</label><input id="cx-p-query" type="text" placeholder="e.g. security companies" autocomplete="off"></div>
+              <div class="cx-field sm"><label>Max / city</label><input id="cx-p-max" type="number" value="60" min="1" max="500"></div>
+              <button class="btn btn-primary cx-run" id="cx-p-run">Run Pipeline</button>
+            </div>
+            <div class="cx-field"><label>Cities — one per line (or comma-separated)</label><textarea id="cx-p-cities" placeholder="London&#10;Manchester&#10;Birmingham&#10;Leeds"></textarea></div>
+            <div class="cx-opts">
+              <label class="cx-sw"><input type="checkbox" id="cx-p-crawl" checked><span class="cx-track"></span><span>Crawl websites · emails + socials</span></label>
+              <label class="cx-sw"><input type="checkbox" id="cx-p-push" checked><span class="cx-track"></span><span>Save to database</span></label>
+              <label class="cx-sw"><input type="checkbox" id="cx-p-wa"><span class="cx-track"></span><span>Auto WhatsApp check</span></label>
+            </div>
+          </div>
+
+          <!-- Single Search -->
+          <div class="panel cx-panel" id="cx-single" style="display:none">
+            <div class="cx-row">
+              <div class="cx-field grow"><label>Keyword &amp; area</label><input id="cx-s-query" type="text" placeholder="e.g. dentists in Chicago" autocomplete="off"></div>
+              <div class="cx-field sm"><label>Max results</label><input id="cx-s-max" type="number" value="40" min="1" max="500"></div>
+              <button class="btn btn-primary cx-run" id="cx-s-run">Extract</button>
+            </div>
+            <div class="cx-opts">
+              <label class="cx-sw"><input type="checkbox" id="cx-s-crawl" checked><span class="cx-track"></span><span>Crawl websites</span></label>
+              <label class="cx-sw"><input type="checkbox" id="cx-s-enrich"><span class="cx-track"></span><span>AI enrichment</span></label>
+              <label class="cx-sw"><input type="checkbox" id="cx-s-headless" checked><span class="cx-track"></span><span>Run hidden</span></label>
+            </div>
+            <p class="cx-note">Single search shows a quick table and saves CSV/JSON to <code>exports/</code>; it does not write to the database. Use Auto Pipeline to build your database.</p>
+          </div>
+
+          <!-- WhatsApp one-click (works for all data in the database) -->
+          <div class="panel cx-panel" id="cx-wa">
+            <div class="cx-wa-top">
+              <div>
+                <b>WhatsApp check</b>
+                <div class="cx-note" id="cx-wa-sub" style="margin-top:4px">See which numbers are on WhatsApp. Runs in the background — no window. Checks every not-yet-checked number in your database.</div>
+              </div>
+              <button class="btn btn-primary" id="cx-wa-btn">Check WhatsApp numbers</button>
+            </div>
+            <div class="cx-bar" id="cx-wa-bar" style="margin-top:14px"><i></i></div>
+            <div class="cx-note" id="cx-wa-stat" style="margin-top:8px">—</div>
+          </div>
+
+          <!-- Stats -->
+          <div class="cx-stats" id="cx-stats" style="display:none">
+            <div class="cx-stat"><div class="k">Leads</div><div class="v" id="cx-v-total" data-v="0">0</div></div>
+            <div class="cx-stat"><div class="k">In database</div><div class="v" id="cx-v-pushed" data-v="0" style="color:var(--fg)">0</div></div>
+            <div class="cx-stat"><div class="k">Emails</div><div class="v" id="cx-v-email" data-v="0" style="color:var(--accent)">0</div></div>
+            <div class="cx-stat"><div class="k">Phones</div><div class="v" id="cx-v-phone" data-v="0" style="color:var(--c-legal)">0</div></div>
+            <div class="cx-stat"><div class="k">Websites</div><div class="v" id="cx-v-site" data-v="0" style="color:var(--c-investigation)">0</div></div>
+            <div class="cx-stat"><div class="k">Avg rating</div><div class="v" id="cx-v-rating" data-v="0" style="color:var(--star)">0</div></div>
+          </div>
+
+          <!-- Progress -->
+          <div class="panel cx-panel" id="cx-progress" style="display:none">
+            <div class="cx-prog-top">
+              <div class="cx-phase"><span class="cx-spin" id="cx-spin"></span><span id="cx-phase">Starting…</span></div>
+              <span class="cx-badge" id="cx-badge">running</span>
+            </div>
+            <div class="cx-bar indet" id="cx-bar"><i></i></div>
+            <div class="cx-chips" id="cx-chips"></div>
+            <div class="cx-toolbar">
+              <button class="btn cx-stop" id="cx-stop">Stop</button>
+              <a class="btn" id="cx-dlcsv" style="display:none" href="#">Download CSV</a>
+              <a class="btn" id="cx-dljson" style="display:none" href="#">Download JSON</a>
+            </div>
+            <details class="cx-logbox"><summary>activity log</summary><div class="cx-log" id="cx-log"></div></details>
+          </div>
+
+          <!-- Results -->
+          <div class="panel cx-panel" id="cx-results" style="display:none;padding:0;overflow:hidden">
+            <div class="cx-rc-head"><b>Extracted businesses</b><span id="cx-rc-count"></span></div>
+            <div class="cx-tablewrap"><table class="cx-table"><thead><tr><th>Business</th><th>Rating</th><th>Phone</th><th>Email</th><th>Links</th></tr></thead><tbody id="cx-rows"></tbody></table></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Detail drawer -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+  /* ===== Collect view — embedded scraper + pipeline control ===== */
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    var job = null, poll = null, current = [];
+    var ICON = {
+      globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg>',
+      mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+      linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg>',
+      facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>',
+      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>'
+    };
+    var esc = function (s) { return (s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var initials = function (n) { return (n || '?').split(/\s+/).slice(0, 2).map(function (w) { return w[0] || ''; }).join('').toUpperCase(); };
+    function animateNum(el, to) {
+      var from = +el.dataset.v || 0; if (from === to) { el.textContent = Number.isInteger(to) ? to : to.toFixed(1); return; }
+      el.dataset.v = to; var st = performance.now(), dur = 450;
+      function step(t) { var k = Math.min(1, (t - st) / dur), v = from + (to - from) * (1 - Math.pow(1 - k, 3)); el.textContent = Number.isInteger(to) ? Math.round(v) : v.toFixed(1); if (k < 1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    }
+    function api(path, opts) { return fetch(path, opts).then(function (r) { return r.json(); }); }
+
+    api('/api/collect/config').then(function (c) {
+      var el = $('cx-ai'); if (!el) return;
+      el.textContent = c.ai_ready ? ('AI ready · ' + (c.model || '')) : 'AI: off';
+      el.className = 'cx-aistat' + (c.ai_ready ? ' on' : '');
+    }).catch(function () {});
+
+    // tabs
+    document.querySelectorAll('#cx-tabs button').forEach(function (b) {
+      b.onclick = function () {
+        document.querySelectorAll('#cx-tabs button').forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        var t = b.getAttribute('data-ctab');
+        $('cx-pipeline').style.display = t === 'pipeline' ? '' : 'none';
+        $('cx-single').style.display = t === 'single' ? '' : 'none';
+      };
+    });
+
+    function showRun() {
+      $('cx-stats').style.display = 'grid'; $('cx-progress').style.display = ''; $('cx-results').style.display = '';
+      $('cx-dlcsv').style.display = 'none'; $('cx-dljson').style.display = 'none'; $('cx-stop').style.display = '';
+      $('cx-spin').style.display = ''; $('cx-bar').classList.add('indet'); $('cx-bar').querySelector('i').style.width = '';
+      $('cx-rows').innerHTML = '<tr><td colspan="5" class="cx-muted" style="padding:20px">Starting…</td></tr>';
+      $('cx-chips').innerHTML = '';
+    }
+    function rowHTML(r, i) {
+      var socials = ['linkedin', 'facebook', 'instagram'].filter(function (s) { return r[s]; });
+      var links = [];
+      if (r.website) links.push('<a class="cx-ilink" href="' + esc(r.website) + '" target="_blank" title="Website">' + ICON.globe + '</a>');
+      socials.forEach(function (s) { links.push('<a class="cx-ilink" href="' + esc(r[s]) + '" target="_blank" title="' + s + '">' + ICON[s] + '</a>'); });
+      return '<tr><td><div class="cx-biz"><div class="cx-av">' + esc(initials(r.name)) + '</div><div><div class="cx-nm">' + esc(r.name || '—') + '</div><div class="cx-cat">' + esc(r.main_category || '') + '</div></div></div></td>' +
+        '<td>' + (r.rating ? esc(r.rating) + ' <span class="cx-muted">(' + esc(r.reviews || '0') + ')</span>' : '<span class="cx-muted">—</span>') + '</td>' +
+        '<td>' + (r.phone ? esc(r.phone) : '<span class="cx-muted">—</span>') + '</td>' +
+        '<td>' + (r.email ? esc(r.email) : '<span class="cx-muted">—</span>') + '</td>' +
+        '<td>' + (links.join('') || '<span class="cx-muted">—</span>') + '</td></tr>';
+    }
+    function tick() {
+      if (!job) return;
+      api('/api/collect/status/' + job).then(function (d) {
+        if (d.error) return;
+        $('cx-phase').textContent = d.phase || '…'; $('cx-badge').textContent = d.state;
+        animateNum($('cx-v-total'), d.count); animateNum($('cx-v-pushed'), d.pushed || 0);
+        animateNum($('cx-v-email'), d.with_email); animateNum($('cx-v-phone'), d.with_phone);
+        animateNum($('cx-v-site'), d.with_site); animateNum($('cx-v-rating'), d.avg_rating);
+        $('cx-log').textContent = (d.log || []).join('\n'); $('cx-log').scrollTop = $('cx-log').scrollHeight;
+        if (d.kind === 'pipeline' && d.cities_total) {
+          var html = (d.per_city || []).map(function (c) { return '<span class="cx-chip">' + esc(c.city) + ' <b>' + c.count + '</b></span>'; }).join('');
+          if (d.current_city && d.state !== 'done' && d.state !== 'stopped') html += '<span class="cx-chip active">' + esc(d.current_city) + ' …</span>';
+          $('cx-chips').innerHTML = html;
+        }
+        current = d.results || [];
+        $('cx-rc-count').textContent = current.length ? (current.length + ' shown') : '';
+        if (current.length) $('cx-rows').innerHTML = current.map(rowHTML).join('');
+        if (d.state !== 'running' && d.state !== 'enriching' && d.state !== 'whatsapp') {
+          clearInterval(poll);
+          $('cx-p-run').disabled = false; $('cx-s-run').disabled = false;
+          $('cx-stop').style.display = 'none'; $('cx-spin').style.display = 'none';
+          $('cx-bar').classList.remove('indet'); $('cx-bar').querySelector('i').style.width = '100%';
+          if (d.has_csv) { $('cx-dlcsv').style.display = ''; $('cx-dlcsv').href = '/api/collect/download/' + job + '/csv'; }
+          if (d.has_json) { $('cx-dljson').style.display = ''; $('cx-dljson').href = '/api/collect/download/' + job + '/json'; }
+          if (d.state === 'done' && d.pushed) $('cx-phase').textContent = 'Completed — ' + d.pushed + ' saved to database (reload to see them in All Leads)';
+        }
+      }).catch(function () {});
+    }
+    function begin(id) { job = id; showRun(); poll = setInterval(tick, 1500); tick(); }
+
+    $('cx-p-run').onclick = function () {
+      var query = $('cx-p-query').value.trim(), cities = $('cx-p-cities').value.trim();
+      if (!query) { $('cx-p-query').focus(); return; }
+      if (!cities) { $('cx-p-cities').focus(); return; }
+      $('cx-p-run').disabled = true;
+      api('/api/collect/pipeline', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: query, cities: cities, max_results: parseInt($('cx-p-max').value || '60', 10), crawl_contacts: $('cx-p-crawl').checked, push_db: $('cx-p-push').checked, run_wa: $('cx-p-wa').checked }) })
+        .then(function (d) { if (d.error) { $('cx-p-run').disabled = false; alert(d.error); return; } begin(d.job_id); });
+    };
+    $('cx-s-run').onclick = function () {
+      var query = $('cx-s-query').value.trim(); if (!query) { $('cx-s-query').focus(); return; }
+      $('cx-s-run').disabled = true;
+      api('/api/collect/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: query, max_results: parseInt($('cx-s-max').value || '40', 10), crawl_contacts: $('cx-s-crawl').checked, enrich: $('cx-s-enrich').checked, headless: $('cx-s-headless').checked }) })
+        .then(function (d) { if (d.error) { $('cx-s-run').disabled = false; alert(d.error); return; } begin(d.job_id); });
+    };
+    $('cx-stop').onclick = function () { if (job) api('/api/collect/stop/' + job, { method: 'POST' }); };
+
+    /* ---- one-click WhatsApp check (background, live progress) ---- */
+    var waPoll = null;
+    function renderWa(p) {
+      if (!p) return;
+      var bar = $('cx-wa-bar').querySelector('i');
+      var pct = p.total ? Math.round(p.checked / p.total * 100) : 0;
+      bar.style.width = pct + '%';
+      $('cx-wa-bar').classList.toggle('indet', p.running && p.checked === 0);
+      var txt = p.total
+        ? (p.checked + ' of ' + p.total + ' checked · ' + p.yes + ' on WhatsApp · ' + p.unchecked + ' left')
+        : 'No phone numbers in the database yet.';
+      if (p.running) txt = 'Checking… ' + txt;
+      else if (p.error) txt = 'Last error: ' + p.error + ' — ' + txt;
+      $('cx-wa-stat').textContent = txt;
+      var btn = $('cx-wa-btn');
+      btn.disabled = p.running || p.unchecked === 0;
+      btn.textContent = p.running ? 'Checking…' : (p.unchecked === 0 && p.total ? 'All numbers checked' : 'Check WhatsApp numbers');
+    }
+    function pollWa() { api('/api/wa/progress').then(function (p) { renderWa(p); if (!p.running) { clearInterval(waPoll); waPoll = null; } }).catch(function () {}); }
+    $('cx-wa-btn').onclick = function () {
+      $('cx-wa-btn').disabled = true; $('cx-wa-stat').textContent = 'Starting WhatsApp checker…';
+      api('/api/wa/start', { method: 'POST' }).then(function (p) {
+        renderWa(p);
+        if (!waPoll) waPoll = setInterval(pollWa, 3000);
+        setTimeout(pollWa, 1500);
+      }).catch(function () { $('cx-wa-stat').textContent = 'Could not start the checker.'; });
+    };
+    // show current progress whenever the Collect tab is opened
+    var collectNav = document.querySelector('.nav-item[data-view="collect"]');
+    if (collectNav) collectNav.addEventListener('click', function () { setTimeout(function () { api('/api/wa/progress').then(renderWa).catch(function () {}); if (!waPoll) { /* start polling if a run is active */ api('/api/wa/progress').then(function (p) { if (p.running && !waPoll) waPoll = setInterval(pollWa, 3000); }); } }, 100); });
+    api('/api/wa/progress').then(renderWa).catch(function () {});
+  })();
+  </script>
+  <script>
+    // Open a specific view from the URL hash, e.g. /#collect opens the leads finder.
+    window.addEventListener('load', function () {
+      var v = (location.hash || '').replace('#', '').trim();
+      if (!v) return;
+      var el = document.querySelector('.nav-item[data-view="' + v + '"]');
+      if (el) setTimeout(function () { el.click(); }, 60);
+    });
+  </script>
+</body>
+</html>

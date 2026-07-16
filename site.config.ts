@@ -1,0 +1,60 @@
+// Central site configuration — brand, contact, socials, feature flags.
+// Toggle a social `enabled: false` to hide it everywhere without touching components.
+
+export const siteConfig = {
+  name: "PremiumMarkup",
+  legalName: "PremiumMarkup Ltd",
+  domain: "premiummarkup.com",
+  url: "https://premiummarkup.com",
+  locale: "en_GB",
+  tagline: "Hand-built websites that win customers.",
+  description:
+    "PremiumMarkup is a UK web development and social media agency. We hand-code fast, search-friendly websites for small businesses — no page builders, no bloat.",
+
+  phone: {
+    display: "+44 7451 296502",
+    tel: "+447451296502",
+    whatsapp: "https://wa.me/447451296502",
+  },
+
+  email: {
+    // Primary public address.
+    primary: "hello@premiummarkup.com",
+    // Where contact-form notifications are sent (swappable via env at deploy).
+    projects: "projects@premiummarkup.com",
+    // Founder address, used on the About signature.
+    founder: "umair@premiummarkup.com",
+  },
+
+  founder: {
+    // TODO: replace with the founder's real name before launch.
+    name: "Umair",
+    role: "Founder & Lead Developer",
+  },
+
+  address: {
+    // TODO: replace with registered business details.
+    region: "United Kingdom",
+    companiesHouse: "Company no. TODO",
+  },
+
+  nav: [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: "Work", href: "/work" },
+    { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
+  ],
+
+  socials: [
+    { name: "Instagram", href: "https://instagram.com/premiummarkup", handle: "@premiummarkup", enabled: true },
+    { name: "TikTok", href: "https://tiktok.com/@premiummarkup", handle: "@premiummarkup", enabled: true },
+    { name: "LinkedIn", href: "https://linkedin.com/company/premiummarkup", handle: "premiummarkup", enabled: true },
+    { name: "Facebook", href: "https://facebook.com/premiummarkup", handle: "premiummarkup", enabled: true },
+    { name: "X", href: "https://x.com/premiummarkup", handle: "@premiummarkup", enabled: true },
+  ],
+} as const;
+
+export type SocialLink = (typeof siteConfig.socials)[number];
+export const activeSocials = siteConfig.socials.filter((s) => s.enabled);

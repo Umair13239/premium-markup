@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* ============================================================
+   PremiumMarkup — cinematic brand design system
+   Dark-first, editorial code-craft. Violet-ink ground, warm-ivory
+   type, a single luminous IRIS accent (the interactive colour), and
+   editor-maroon reserved for the <!-- markup --> code-comment eyebrows.
+   Every value is a token — swap the whole palette from this block.
+   (--color-cobalt is the historical name for the accent; now iris.)
+   ============================================================ */
+
+@theme {
+  /* Brand palette (light defaults) — warm ivory editorial */
+  --color-paper: #f4f2ec;
+  --color-ink: #17151c;
+  --color-surface: #ffffff;
+  --color-surface-2: #f6f4ee;
+  --color-cobalt: #5b57e6;      /* accent — iris (light) */
+  --color-cobalt-ink: #4a46cc;
+  --color-tag: #b0413e;         /* code-comment eyebrow — maroon */
+  --color-muted: #5c5866;
+  --color-line: #e2ded4;
+
+  --color-ink-2: #1d2029;
+  --color-paper-dim: #cdd0d8;
+
+  /* Fonts (wired by next/font in layout.tsx) */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Modular type scale (~1.25) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5625rem;
+  --text-2xl: 1.9531rem;
+  --text-3xl: 2.4414rem;
+  --text-4xl: 3.0518rem;
+  --text-5xl: 3.8147rem;
+  --text-6xl: 4.7684rem;
+
+  --radius: 6px;
+}
+
+/* Dark theme (the primary, cinematic world) — set data-theme="dark" */
+:root[data-theme="dark"] {
+  --color-paper: #0d0c11;       /* violet-biased near-black ground */
+  --color-ink: #ece8e1;         /* warm ivory, never pure white */
+  --color-surface: #1a1822;
+  --color-surface-2: #221f2b;
+  --color-cobalt: #7c7bff;      /* accent — luminous iris */
+  --color-cobalt-ink: #9a99ff;
+  --color-tag: #e79490;
+  --color-muted: #9e99a8;       /* chosen mauve-grey */
+  --color-line: #2a2733;
+  --color-paper-dim: #c6cad3;
+}
+
+@layer base {
+  * { border-color: var(--color-line); }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+  html[data-theme="dark"] { color-scheme: dark; }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  ::selection { background: var(--color-cobalt); color: #fff; }
+
+  /* Custom cursor (mounted only on fine pointers with motion allowed) */
+  .pm-cursor-dot, .pm-cursor-ring {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+    border-radius: 9999px; will-change: transform;
+  }
+  .pm-cursor-dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: var(--color-cobalt); }
+  .pm-cursor-ring {
+    width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1.5px solid color-mix(in oklab, var(--color-cobalt) 65%, transparent);
+    background: color-mix(in oklab, var(--color-cobalt) 8%, transparent);
+  }
+  .pm-cursor-label {
+    position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+    display: grid; place-items: center; width: 92px; height: 92px; margin: -46px 0 0 -46px;
+    border-radius: 9999px; background: var(--color-cobalt); color: #fff;
+    font-family: var(--font-mono); font-size: 0.72rem; text-align: center; line-height: 1.25;
+    will-change: transform;
+  }
+  @media (pointer: fine) {
+    .has-custom-cursor, .has-custom-cursor a, .has-custom-cursor button,
+    .has-custom-cursor label, .has-custom-cursor [data-cursor] { cursor: none; }
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  h1 { letter-spacing: -0.035em; }
+  a { color: inherit; }
+  :focus-visible {
+    outline: 2px solid var(--color-cobalt);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .container-editorial {
+    width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) { .container-editorial { padding-inline: 2.5rem; } }
+
+  .mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
+
+  /* HTML-comment section labels — <!-- services --> */
+  .tag-label {
+    font-family: var(--font-mono); font-size: 0.8125rem;
+    letter-spacing: 0.02em; color: var(--color-tag);
+  }
+
+  /* Fixed dark "band" — cinematic dark sections in BOTH themes */
+  .band {
+    --color-ink: #ece8e1;        /* re-scope so nested text-ink / text-paper read light */
+    --color-paper: #ece8e1;
+    --color-paper-dim: #b4afbd;
+    --color-muted: #9e99a8;
+    --color-line: #2a2733;
+    --color-surface: #1a1822;
+    background: #0a090e;
+    color: #ece8e1;
+    position: relative;
+    overflow: hidden;
+  }
+  .band-text-dim { color: var(--color-paper-dim); }
+
+  .cursor {
+    display: inline-block; width: 0.55ch; height: 1em;
+    transform: translateY(0.12em); margin-left: 0.15ch;
+    background: var(--color-cobalt); animation: blink 1.05s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px; background-position: 0 100%;
+    background-repeat: no-repeat; transition: background-size 0.25s ease; padding-bottom: 1px;
+  }
+  .link-underline:hover { background-size: 100% 1px; }
+
+  /* Gradient headline sweep */
+  .grad-text {
+    background: linear-gradient(100deg, var(--color-cobalt), #7c5cff 55%, var(--color-tag));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* Cinematic hero background: spotlight + dev grid */
+  .hero-grid {
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000 0%, transparent 75%);
+    opacity: 0.5;
+  }
+  .spotlight {
+    background:
+      radial-gradient(600px 380px at 72% 32%, color-mix(in oklab, var(--color-cobalt) 22%, transparent), transparent 70%),
+      radial-gradient(520px 340px at 20% 78%, color-mix(in oklab, #7c5cff 16%, transparent), transparent 70%);
+  }
+
+  /* 3D code editor card */
+  .code-window {
+    background: #131019; color: #d7d2df; border: 1px solid #2a2733;
+    border-radius: 10px; box-shadow: 0 40px 80px -30px rgba(6, 10, 30, 0.55), 0 0 0 1px rgba(255,255,255,0.02) inset;
+  }
+  .code-dot { width: 11px; height: 11px; border-radius: 50%; }
+
+  /* floating idle motion */
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .floaty { animation: floaty 6s ease-in-out infinite; }
+
+  /* marquee for the logo/skill strip */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee { animation: marquee 26s linear infinite; }
+  .marquee-mask { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+
+  /* Generative project media zoom (on card hover) */
+  .pm-shot { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+
+  /* Frosted glass surface */
+  .glass {
+    background: color-mix(in oklab, var(--color-surface) 55%, transparent);
+    backdrop-filter: blur(14px) saturate(1.25);
+    -webkit-backdrop-filter: blur(14px) saturate(1.25);
+    border: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+  }
+
+  /* Drag slider */
+  .drag-track { scrollbar-width: none; -ms-overflow-style: none; scroll-snap-type: x mandatory; }
+  .drag-track::-webkit-scrollbar { display: none; }
+  .drag-track > * { scroll-snap-align: start; }
+  .grabbing { cursor: grabbing; user-select: none; }
+
+  /* Route transition panel (see app/(marketing)/template.tsx) */
+  .route-panel {
+    position: fixed; inset: 0; z-index: 60; pointer-events: none;
+    background: var(--color-surface);
+    will-change: transform;
+  }
+}
+
+/* ============ Preloader ============ */
+.pm-pre {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--color-paper);
+  display: grid; place-items: center;
+  animation: pm-pre-out 0.75s cubic-bezier(0.76, 0, 0.24, 1) 1.9s forwards;
+}
+html[data-preloaded] .pm-pre { display: none !important; }
+.pm-pre-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.pm-pre-mark { width: 92px; height: 92px; }
+.pm-pre-p {
+  stroke-dasharray: 320; stroke-dashoffset: 320;
+  animation: pm-draw 0.85s ease 0.15s forwards;
+}
+.pm-pre-m {
+  clip-path: inset(0 100% 0 0);
+  animation: pm-wipe 0.55s cubic-bezier(0.76, 0, 0.24, 1) 0.85s forwards;
+}
+.pm-pre-word {
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+  font-size: 1.35rem; opacity: 0; transform: translateY(8px);
+  animation: pm-fade 0.5s ease 1.25s forwards;
+}
+.pm-pre-word span { color: var(--color-cobalt); }
+.pm-pre-line { width: 120px; height: 2px; background: var(--color-line); overflow: hidden; border-radius: 2px; }
+.pm-pre-line i { display: block; height: 100%; width: 100%; background: var(--color-cobalt);
+  transform: scaleX(0); transform-origin: left; animation: pm-load 1.6s ease forwards; }
+
+@keyframes pm-draw { to { stroke-dashoffset: 0; } }
+@keyframes pm-wipe { to { clip-path: inset(0 0 0 0); } }
+@keyframes pm-fade { to { opacity: 1; transform: none; } }
+@keyframes pm-load { to { transform: scaleX(1); } }
+@keyframes pm-pre-out { to { transform: translateY(-100%); visibility: hidden; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-pre { animation: pm-pre-fade 0.4s ease 0.5s forwards; }
+  .pm-pre-p { stroke-dashoffset: 0; animation: none; }
+  .pm-pre-m { clip-path: none; animation: none; }
+  .pm-pre-word { opacity: 1; transform: none; animation: none; }
+  .pm-pre-line i { transform: scaleX(1); animation: none; }
+  @keyframes pm-pre-fade { to { opacity: 0; visibility: hidden; } }
+}
+
+/* ---- Rich text (blog editor + rendered posts) ---- */
+.rich { font-size: 1.075rem; line-height: 1.75; color: var(--color-ink); }
+.rich > * + * { margin-top: 1.1rem; }
+.rich h2 { font-family: var(--font-display); font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 2.4rem; }
+.rich h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-top: 1.8rem; }
+.rich p { color: color-mix(in oklab, var(--color-ink) 92%, transparent); }
+.rich a { color: var(--color-cobalt); text-decoration: underline; text-underline-offset: 2px; }
+.rich ul { list-style: disc; padding-left: 1.4rem; }
+.rich ol { list-style: decimal; padding-left: 1.4rem; }
+.rich li { margin-top: 0.4rem; }
+.rich li::marker { color: var(--color-cobalt); }
+.rich blockquote { border-left: 3px solid var(--color-cobalt); padding-left: 1.1rem; color: var(--color-muted); font-style: italic; }
+.rich img { border-radius: 8px; border: 1px solid var(--color-line); max-width: 100%; height: auto; margin-block: 1.5rem; }
+.rich pre { background: #131019; color: #d7d2df; border-radius: 8px; padding: 1rem 1.1rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; }
+.rich code { font-family: var(--font-mono); font-size: 0.9em; }
+.rich :not(pre) > code { background: color-mix(in oklab, var(--color-line) 60%, transparent); padding: 0.1em 0.4em; border-radius: 4px; }
+.rich hr { border: none; border-top: 1px solid var(--color-line); margin-block: 2rem; }
+.ProseMirror { outline: none; min-height: 340px; }
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder); color: var(--color-muted); float: left; height: 0; pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body { transition: none; }
+  .cursor, .floaty, .marquee { animation: none !important; }
+  .cursor { opacity: 1; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

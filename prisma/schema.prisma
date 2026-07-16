@@ -1,0 +1,147 @@
+// PremiumMarkup — data model.
+// Dev uses SQLite. To deploy on Postgres (Supabase/Neon): change provider to
+// "postgresql" and point DATABASE_URL at the connection string (see README).
+
+generator client {
+  provider = "prisma-client-js"
+  // Building on Windows but running on Linux (Namecheap/CloudLinux is RHEL-based).
+  // Bundle the Linux query engines so Prisma runs on the server.
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+}
+
+model Lead {
+  id          String  @id @default(cuid())
+  name        String
+  company     String?
+  email       String?
+  phone       String?
+  website     String?
+  source      String  @default("manual") // website | manual | imported
+  status      String  @default("New")    // New | Contacted | In Conversation | Proposal Sent | Won | Lost
+  budget      String?
+  projectType String?
+  message     String?
+  niche       String?
+  tags        String  @default("")       // comma-separated
+
+  // Optional project brief / reference file uploaded with a website enquiry
+  attachmentUrl  String?
+  attachmentName String?
+
+  // Prospecting research checklist
+  hasSsl         Boolean?
+  mobileFriendly Boolean?
+  pageSpeedNote  String?
+  socialsFound   String?
+
+  // Website audit notes (feed the outreach message)
+  auditSlow      Boolean @default(false)
+  auditDated     Boolean @default(false)
+  auditNotMobile Boolean @default(false)
+  auditNoSeo     Boolean @default(false)
+  auditNotes     String?
+
+  unread           Boolean   @default(false) // website submissions arrive unread
+  nextFollowUpDate DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes Note[]
+
+  @@index([status])
+  @@index([source])
+  @@index([nextFollowUpDate])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  name      String
+  kind      String   @default("cold-email") // cold-email | follow-up-1 | follow-up-2 | linkedin-dm
+  subject   String?
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  title          String
+  excerpt        String?
+  content        String    @default("") // rich HTML from the editor
+  coverImage     String?
+  status         String    @default("draft") // draft | published
+  tags           String    @default("")
+  readingTime    String?
+  seoTitle       String?
+  seoDescription String?
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status])
+  @@index([publishedAt])
+}
+
+// Portfolio case studies, managed from the admin (Work).
+model Project {
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  name           String
+  sector         String    @default("")
+  location       String?
+  url            String?
+  year           String    @default("")
+  services       String    @default("") // comma-separated
+  summary        String    @default("")
+  challenge      String    @default("")
+  solution       String    @default("") // one bullet per line
+  results        String    @default("[]") // JSON: [{ "stat": "3×", "label": "…" }]
+  image          String?   // /uploads/… or /generated/…
+  status         String    @default("published") // draft | published (→ shows on /work)
+  featured       Boolean   @default(false)        // → shows in the homepage showcase
+  relatedService String?   // service slug → shows on that service page's "related work"
+  order          Int       @default(0)
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status])
+  @@index([order])
+}
+
+// The standalone portfolio at /cv ("Design in Motion"). A single row whose
+// `data` field is the whole PORTFOLIO_DATA object (categories + projects) as
+// JSON — this is what the static portfolio page loads as window.PORTFOLIO_DATA,
+// served dynamically from /cv/projects-data.js. Managed from /admin/portfolio.
+model Portfolio {
+  id        String   @id @default("portfolio")
+  data      String   @default("{}")
+  visible   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
