@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { Loader2, Lock, LayoutDashboard, Radar } from "lucide-react";
 import { login } from "./actions";
+import { siteConfig } from "@/site.config";
 
 export default function LoginPage() {
   const [error, formAction, pending] = useActionState(login, undefined);
@@ -61,16 +62,15 @@ export default function LoginPage() {
                 {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <LayoutDashboard className="h-4 w-4" aria-hidden="true" />}
                 Website admin panel
               </button>
-              <button
-                type="submit"
-                name="destination"
-                value="/portal/index.html"
-                disabled={pending}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] border border-line px-5 font-medium transition-colors hover:border-cobalt hover:text-cobalt disabled:opacity-60"
+              <a
+                href={siteConfig.leadsPortalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] border border-line px-5 font-medium transition-colors hover:border-cobalt hover:text-cobalt"
               >
-                {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Radar className="h-4 w-4" aria-hidden="true" />}
-                Leads Portal
-              </button>
+                <Radar className="h-4 w-4" aria-hidden="true" />
+                Leads Portal ↗
+              </a>
             </div>
           </form>
         </div>

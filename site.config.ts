@@ -7,6 +7,9 @@ export const siteConfig = {
   domain: "premiummarkup.com",
   url: "https://premiummarkup.com",
   locale: "en_GB",
+  // Private Leads Portal (runs on the office PC, exposed over Tailscale — only
+  // your signed-in devices can reach it). Update here if the tailnet URL changes.
+  leadsPortalUrl: "https://umair.tail191f85.ts.net",
   tagline: "Hand-built websites that win customers.",
   description:
     "PremiumMarkup is a UK web development and social media agency. We hand-code fast, search-friendly websites for small businesses — no page builders, no bloat.",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Users, Search, Send, FileText, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText } from "lucide-react";
+import { siteConfig } from "@/site.config";
 
 function ThemeRow() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -76,11 +77,13 @@ export function AdminSidebar({
           );
         })}
         <a
-          href="/portal/index.html"
+          href={siteConfig.leadsPortalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-2 flex items-center gap-3 rounded-[6px] border border-line bg-cobalt/5 px-3 py-2.5 text-sm font-medium text-cobalt transition-colors hover:bg-cobalt/10"
         >
           <Radar className="h-4.5 w-4.5" aria-hidden="true" />
-          Leads Portal (scan / WhatsApp)
+          Leads Portal ↗
         </a>
         <a
           href="/"

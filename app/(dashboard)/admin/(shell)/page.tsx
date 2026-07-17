@@ -3,6 +3,7 @@ import { Inbox, Radar, ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { STATUSES, SOURCES, statusTone, weeklyBuckets } from "@/lib/leads-data";
 import { LeadsChart } from "@/components/admin/leads-chart";
+import { siteConfig } from "@/site.config";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +70,7 @@ export default async function AdminHome() {
           </p>
         </Link>
 
-        <a href="/portal/index.html" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
+        <a href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener noreferrer" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-cobalt/10 text-cobalt">
             <Radar className="h-6 w-6" aria-hidden="true" />
           </div>
