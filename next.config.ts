@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
   // /cv is the standalone portfolio — a complete static document with its own
   // Lenis/GSAP stack, so it is served straight from public/ rather than mounted
   // in the root layout (which runs its own Lenis + cursor and would fight it).
+  // The /cv page inlines its CSS in the HTML, so a cached HTML file shows stale
+  // styling after an update. Make the document + its scripts always revalidate
+  // (304 when unchanged — still fast); the heavy image assets stay cacheable.
+  async headers() {
+    return [
+      { source: "/cv", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+      { source: "/cv/index.html", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+      { source: "/cv/:file(homepage.js|work-explorer.js)", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+    ];
+  },
   async rewrites() {
     return [
       { source: "/cv", destination: "/cv/index.html" },
