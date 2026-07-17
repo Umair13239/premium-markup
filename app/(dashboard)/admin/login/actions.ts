@@ -8,13 +8,12 @@ export async function login(
   formData: FormData
 ): Promise<string | undefined> {
   try {
-    // Which area to open after sign-in — whitelisted.
-    const dest = String(formData.get("destination") || "/admin");
-    const redirectTo = dest === "/portal/index.html" ? "/portal/index.html" : "/admin";
+    // Sign-in always lands on the admin dashboard. (The Leads Portal is a
+    // separate always-on app reached via its own external link.)
     await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirectTo,
+      redirectTo: "/admin",
     });
   } catch (error) {
     if (error instanceof AuthError) {

@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/portal", "/api/"],
+        disallow: ["/admin", "/api/"],
       },
     ],
     sitemap: `${base}/sitemap.xml`,
