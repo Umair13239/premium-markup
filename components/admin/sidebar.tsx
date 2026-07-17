@@ -32,6 +32,7 @@ function ThemeRow() {
 const nav = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
   { label: "Leads", href: "/admin/leads", icon: Users, exact: false },
+  { label: "Prospects", href: "/admin/prospects", icon: Radar, exact: false },
   { label: "Find leads", href: "/admin/find", icon: Search, exact: false },
   { label: "Compose", href: "/admin/outreach", icon: Send, exact: false },
   { label: "Templates", href: "/admin/templates", icon: FileText, exact: false },
