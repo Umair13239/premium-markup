@@ -6,13 +6,20 @@ const prisma = new PrismaClient();
 async function main() {
   // --- Admin account ---
   const email = process.env.ADMIN_EMAIL || "umair@premiummarkup.com";
-  const password = process.env.ADMIN_PASSWORD || "premiummarkup-dev";
-  const passwordHash = await bcrypt.hash(password, 10);
+  // Only sets a password when CREATING the admin. Re-running the seed no longer
+  // resets an existing admin's password back to a default (that was a footgun).
+  // To force a reset, set ADMIN_PASSWORD; otherwise a strong password stands.
+  const password = process.env.ADMIN_PASSWORD || "change-me-" + Math.random().toString(36).slice(2, 10);
+  const passwordHash = await bcrypt.hash(password, 12);
+  const existing = await prisma.user.findUnique({ where: { email } });
   await prisma.user.upsert({
     where: { email },
-    update: { passwordHash },
-    create: { email, passwordHash, name: "Umair" },
+    update: process.env.ADMIN_PASSWORD ? { passwordHash } : {},
+    create: { email, passwordHash, name: "Umair Abbas" },
   });
+  if (!existing && !process.env.ADMIN_PASSWORD) {
+    console.log(`Admin created with a random password: ${password}  (save it, or set ADMIN_PASSWORD)`);
+  }
   console.log(`Admin user ready: ${email}`);
 
   // --- Outreach templates ---

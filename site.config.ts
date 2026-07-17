@@ -30,8 +30,7 @@ export const siteConfig = {
   },
 
   founder: {
-    // TODO: replace with the founder's real name before launch.
-    name: "Umair",
+    name: "Umair Abbas",
     role: "Founder & Lead Developer",
   },
 

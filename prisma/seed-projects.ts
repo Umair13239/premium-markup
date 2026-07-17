@@ -21,7 +21,9 @@ async function main() {
         solution: c.solution.join("\n"),
         results: JSON.stringify(c.results),
         image: `/generated/work-${c.slug}.png`,
-        status: "published",
+        // Draft, not published: these are sample/template case studies. Publish
+        // only after replacing them with real client work (never fabricate results).
+        status: "draft",
         featured: i === 0,
         order: i,
         seoTitle: `${c.name} — ${c.sector} case study`,
