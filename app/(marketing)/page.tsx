@@ -48,9 +48,9 @@ export default async function HomePage() {
       {/* count-up stats */}
       <section className="border-b border-line bg-surface">
         <div className="container-editorial grid grid-cols-1 gap-10 py-14 sm:grid-cols-3 md:py-16">
-          <Stat value="116+" label="sites shipped" />
+          <Stat value="99%" label="client satisfaction" />
           <Stat value="0.8s" label="average load time" />
-          <Stat value="93%" label="client retention" />
+          <Stat value="7 yrs" label="design & development" />
         </div>
       </section>
 

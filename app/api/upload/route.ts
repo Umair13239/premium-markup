@@ -5,7 +5,9 @@ import path from "node:path";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const ALLOWED = ["image/png", "image/jpeg", "image/webp", "image/gif", "image/svg+xml"];
+// No SVG: an uploaded SVG can carry <script> and, served same-origin from
+// /uploads, would execute in the site's origin (stored XSS).
+const ALLOWED = ["image/png", "image/jpeg", "image/webp", "image/gif"];
 const MAX = 8 * 1024 * 1024; // 8MB
 
 // Saves an uploaded image to public/uploads and returns its URL.
