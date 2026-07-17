@@ -273,14 +273,58 @@
     });
   }
 
-  /* ---------- Contact form (mock) ---------- */
+  /* ---------- Contact form -> /api/contact (real) ---------- */
+  // This used to fake "Message sent ✓" and throw the enquiry away. It now posts
+  // to the same endpoint as the main site, so it lands in /admin/leads.
   function contact() {
     const f = $('#contact-form'); if (!f) return;
-    f.addEventListener('submit', (e) => {
+    const status = $('#cf-status');
+    const setStatus = (msg, cls) => {
+      if (!status) return;
+      status.textContent = msg || '';
+      status.className = 'cf-status' + (cls ? ' ' + cls : '');
+    };
+    const val = (sel) => { const el = f.querySelector(sel); return (el && el.value || '').trim(); };
+
+    f.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = $('#send-btn');
-      btn.textContent = 'Message sent ✓'; btn.classList.add('is-sent');
-      setTimeout(() => { btn.textContent = 'Send message'; btn.classList.remove('is-sent'); f.reset(); }, 2600);
+      const consentEl = f.querySelector('[name="consent"]');
+      const payload = {
+        name: val('[name="name"]'),
+        email: val('[name="email"]'),
+        message: val('[name="message"]'),
+        consent: !!(consentEl && consentEl.checked),
+        website: val('[name="website"]'), // honeypot
+        // Sensible defaults — this short CV form doesn't ask for these.
+        budget: 'Not sure yet',
+        projectType: 'Other',
+        referral: 'Portfolio / CV page',
+      };
+
+      if (!payload.name || payload.name.length < 2) return setStatus('Please add your name.', 'err');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return setStatus('Please enter a valid email address.', 'err');
+      if (payload.message.length < 10) return setStatus('A sentence or two about the project helps.', 'err');
+      if (!payload.consent) return setStatus('Please tick the box so I can reply to you.', 'err');
+
+      const orig = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending…'; setStatus('');
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Something went wrong — please try again.');
+        btn.textContent = 'Message sent ✓'; btn.classList.add('is-sent');
+        setStatus("Thanks — I'll get back to you shortly.", 'ok');
+        f.reset();
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('is-sent'); btn.disabled = false; }, 2600);
+      } catch (err) {
+        btn.disabled = false; btn.textContent = orig;
+        setStatus((err && err.message) || 'Could not send — please email me directly.', 'err');
+      }
     });
   }
 

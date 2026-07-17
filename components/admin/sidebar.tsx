@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Users, Search, Send, FileText, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText } from "lucide-react";
+import { LayoutDashboard, Users, Search, Send, FileText, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText, Settings } from "lucide-react";
 import { siteConfig } from "@/site.config";
 
 function ThemeRow() {
@@ -39,6 +39,7 @@ const nav = [
   { label: "Blog", href: "/admin/blog", icon: PenSquare, exact: false },
   { label: "Site Images", href: "/admin/images", icon: ImageIcon, exact: false },
   { label: "Portfolio", href: "/admin/portfolio", icon: ScrollText, exact: false },
+  { label: "Settings", href: "/admin/settings", icon: Settings, exact: false },
 ];
 
 export function AdminSidebar({

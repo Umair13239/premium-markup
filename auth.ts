@@ -19,7 +19,9 @@ function assertAuthSecret() {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  session: { strategy: "jwt" },
+  // 7-day sessions refreshed daily (was NextAuth's 30-day default with no idle
+  // timeout) — a stolen/left-open session shouldn't stay valid for a month.
+  session: { strategy: "jwt", maxAge: 7 * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
   providers: [
     Credentials({
       credentials: {

@@ -359,6 +359,12 @@ h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:.94;letter-spacing:
 .fld input,.fld textarea{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--ink);font-family:var(--sans);font-size:15px;transition:border-color .3s}
 .fld input:focus,.fld textarea:focus{outline:none;border-color:var(--acc)}
 .fld textarea{resize:vertical;min-height:110px}
+.fld-consent{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);line-height:1.5;cursor:pointer}
+.fld-consent input{width:16px;height:16px;margin-top:2px;accent-color:var(--acc);flex-shrink:0}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0;pointer-events:none}
+.cf-status{font-size:13.5px;min-height:18px;margin:0}
+.cf-status.ok{color:var(--acc)}
+.cf-status.err{color:#ff7a7a}
 #send-btn{justify-self:start;margin-top:6px;background:var(--acc);color:#0b0b0f;border:0;border-radius:44px;padding:16px 34px;font-family:var(--sans);font-weight:600;font-size:15px;cursor:none;transition:transform .3s}
 #send-btn.is-sent{background:#2fbf71;color:#fff}
 footer{margin-top:14vh;border-top:1px solid var(--line);padding:36px var(--pad);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted)}
@@ -410,6 +416,7 @@ footer .brand{font-size:15px}
     <a class="link" href="#work" data-goto="#work">Work</a>
     <a class="link" href="#about" data-goto="#about">About</a>
     <a class="link" href="#contact" data-goto="#contact">Contact</a>
+    <a class="nav-cta nav-cv magnetic" href="/cv/Umair-Abbas-CV.pdf" download>Download CV ↓</a>
     <a class="nav-cta magnetic" href="#contact" data-goto="#contact">Start a Project</a>
   </div>
   <button id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -534,11 +541,15 @@ footer .brand{font-size:15px}
         <a href="https://www.tiktok.com/@premium_markup" target="_blank" rel="noopener"><span>TikTok</span><span class="arw">↗</span></a>
         <a href="https://wa.me/447451296502" target="_blank" rel="noopener"><span>WhatsApp</span><span class="arw">↗</span></a>
       </div>
-      <form id="contact-form" data-reveal>
-        <div class="fld"><label>Name</label><input type="text" required placeholder="Your name"></div>
-        <div class="fld"><label>Email</label><input type="email" required placeholder="you@company.com"></div>
-        <div class="fld"><label>What are you building?</label><textarea required placeholder="A few lines about the project…"></textarea></div>
+      <form id="contact-form" data-reveal novalidate>
+        <div class="fld"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Your name"></div>
+        <div class="fld"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com"></div>
+        <div class="fld"><label for="cf-message">What are you building?</label><textarea id="cf-message" name="message" required minlength="10" placeholder="A few lines about the project…"></textarea></div>
+        <label class="fld-consent"><input id="cf-consent" name="consent" type="checkbox" required> I agree to be contacted about this enquiry.</label>
+        <!-- Honeypot: real people leave this empty; bots tend to fill it. -->
+        <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button id="send-btn" type="submit" class="magnetic">Send message</button>
+        <p id="cf-status" class="cf-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </div>
