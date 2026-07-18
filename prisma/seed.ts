@@ -25,21 +25,21 @@ async function main() {
   // --- Outreach templates ---
   const templates = [
     {
-      name: "Cold email — website audit",
+      name: "Cold email: website idea",
       kind: "cold-email",
-      subject: "A quick note about {company}'s website",
+      subject: "Quick idea for {company}",
       body:
-        "Hi {firstName},\n\nI came across {company} and had a look at your website. {auditFinding}\n\nI hand-build fast, search-friendly sites for businesses like yours, and I think a few small changes could bring you more enquiries.\n\nWould you be open to a quick, no-pressure chat this week?\n\nBest,\nUmair — PremiumMarkup",
+        "Hi {firstName},\n\nI came across {company} online and had a look at your website. {auditFinding}\n\nWe build fast, professional websites by hand for businesses like yours, the kind that turn Google searches into real enquiries. A few examples of our recent work:\nhttps://www.premiummarkup.com/work\n\nIf it's useful, I'd happily put together a couple of specific, free ideas for {company}, no obligation.\n\nWorth a quick call this week?\n\nBest,\nUmair, Premium Markup\nhttps://www.premiummarkup.com",
     },
     {
-      name: "Follow-up 1 — gentle nudge",
+      name: "Follow-up 1: gentle nudge",
       kind: "follow-up-1",
       subject: "Re: {company}'s website",
       body:
-        "Hi {firstName},\n\nJust floating this back to the top of your inbox. No worries at all if the timing's not right — happy to share one specific idea for {company} either way.\n\nBest,\nUmair",
+        "Hi {firstName},\n\nJust floating this back to the top of your inbox. No worries at all if the timing isn't right, I'm happy to share one specific idea for {company} either way.\n\nBest,\nUmair",
     },
     {
-      name: "Follow-up 2 — final",
+      name: "Follow-up 2: final",
       kind: "follow-up-2",
       subject: "Last one from me",
       body:
@@ -50,7 +50,7 @@ async function main() {
       kind: "linkedin-dm",
       subject: null,
       body:
-        "Hi {firstName} — I build hand-coded websites for local businesses and noticed {company}'s could load a lot faster. Mind if I send a couple of specifics?",
+        "Hi {firstName}, I build hand coded websites for local businesses and noticed {company}'s could load a lot faster. Mind if I send a couple of specifics?",
     },
   ];
   for (const t of templates) {

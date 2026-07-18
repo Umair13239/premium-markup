@@ -395,10 +395,12 @@ footer .brand{font-size:15px}
      it never collides with the copy or the CTA buttons. */
   /* Portrait is a faint atmospheric backdrop only — kept low-opacity and behind
      a strong scrim so it never competes with or obscures the copy. */
-  .pl-portrait{width:80vw;height:58vh;right:-18%;bottom:0;opacity:.4;transform:none;z-index:1;filter:grayscale(.2)}
+  /* Portrait becomes a prominent, animated top-centre avatar on mobile. */
+  .pl-portrait{width:min(56vw,290px);height:min(56vw,290px);left:50%;right:auto;top:clamp(100px,15vh,170px);bottom:auto;opacity:1;z-index:66;filter:none;transform:translateX(-50%);animation:pmPortraitIn 1s cubic-bezier(.2,.85,.25,1) both}
+  .pl-portrait img{object-fit:cover;object-position:center 18%;border-radius:50%;border:3px solid rgba(232,163,61,.6);box-shadow:0 22px 55px rgba(0,0,0,.55),0 0 0 10px rgba(232,163,61,.08);-webkit-mask-image:none;mask-image:none;filter:none;animation:pmPortraitFloat 6s ease-in-out 1s infinite}
   .portrait-glow{display:none}
-  /* Dark enough over the whole hero that text is unmistakably primary */
-  .hero-scrim{background:linear-gradient(180deg,rgba(11,11,15,.55) 0%,rgba(11,11,15,.82) 34%,rgba(11,11,15,.95) 64%)}
+  /* Lighter at the very top (behind the avatar), dark toward the copy below */
+  .hero-scrim{background:linear-gradient(180deg,rgba(11,11,15,.25) 0%,rgba(11,11,15,.5) 30%,rgba(11,11,15,.9) 62%,rgba(11,11,15,.96) 100%)}
   /* The scroll cue overlapped the CTA buttons on small screens */
   .hero-scroll{display:none}
   /* No custom cursor dot/ring on touch or narrow screens */
@@ -408,6 +410,9 @@ footer .brand{font-size:15px}
   .csi-phone{justify-self:start}
   .xp-visual{max-width:420px}
 }
+/* Mobile hero portrait entrance + gentle float */
+@keyframes pmPortraitIn{from{opacity:0;transform:translateX(-50%) translateY(-18px) scale(.85)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+@keyframes pmPortraitFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
