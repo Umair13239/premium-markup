@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Users, Search, Send, FileText, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText, Settings } from "lucide-react";
+import { LayoutDashboard, Users, Search, Send, FileText, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText, Settings, Wand2 } from "lucide-react";
 import { siteConfig } from "@/site.config";
 
 function ThemeRow() {
@@ -34,6 +34,7 @@ const nav = [
   { label: "Leads", href: "/admin/leads", icon: Users, exact: false },
   { label: "Prospects", href: "/admin/prospects", icon: Radar, exact: false },
   { label: "Find leads", href: "/admin/find", icon: Search, exact: false },
+  { label: "AI Email", href: "/admin/email-writer", icon: Wand2, exact: false },
   { label: "Compose", href: "/admin/outreach", icon: Send, exact: false },
   { label: "Templates", href: "/admin/templates", icon: FileText, exact: false },
   { label: "Work / Projects", href: "/admin/work", icon: Briefcase, exact: false },
