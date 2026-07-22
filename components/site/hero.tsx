@@ -119,7 +119,7 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
           disablePictureInPicture
           aria-hidden="true"
           tabIndex={-1}
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.22] [mask-image:radial-gradient(ellipse_85%_75%_at_60%_40%,#000,transparent_85%)]"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
         />
       ) : (
         <Image
