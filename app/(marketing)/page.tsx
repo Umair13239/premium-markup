@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import fs from "node:fs";
+import path from "node:path";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
 import { Hero } from "@/components/site/hero";
+import { ShowcaseReel } from "@/components/site/showcase-reel";
 import { TechMarquee } from "@/components/site/tech-marquee";
 import { Reveal } from "@/components/site/reveal";
 import { KineticHeading } from "@/components/site/kinetic-heading";
@@ -37,12 +40,19 @@ const compare = [
   { point: "Design", built: "Custom to your brand", builder: "One of a thousand templates" },
 ];
 
+// Videos are optional: sections appear automatically once the files exist in
+// public/generated/ (checked at build time — the page is fully static).
+const genDir = path.join(process.cwd(), "public", "generated");
+const heroVideo = fs.existsSync(path.join(genDir, "hero-office.mp4")) ? "/generated/hero-office.mp4" : undefined;
+const projectsReel = fs.existsSync(path.join(genDir, "projects-reel.mp4")) ? "/generated/projects-reel.mp4" : undefined;
+
 export default async function HomePage() {
   const { data: portfolio } = await getPortfolio();
   const featured = portfolio.projects.slice(0, 6);
   return (
     <>
-      <Hero />
+      <Hero videoSrc={heroVideo} />
+      {projectsReel && <ShowcaseReel src={projectsReel} poster="/generated/work-meridian-lettings.png" />}
       <TechMarquee />
 
       {/* count-up stats */}

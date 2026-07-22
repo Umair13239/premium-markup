@@ -85,11 +85,14 @@ function CodeWindow() {
 }
 
 /* ---------------------------- hero ---------------------------- */
-export function Hero() {
+export function Hero({ videoSrc }: { videoSrc?: string }) {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const codeY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 90]);
+  // Agency-at-work video behind the hero. Only when the file exists (page passes
+  // the src) and motion is allowed — otherwise the ambient still does the job.
+  const showVideo = !!videoSrc && !reduce;
 
   const [count, setCount] = useState(reduce ? OPEN.length + CLOSE.length : 0);
   const total = OPEN.length + CLOSE.length;
@@ -104,15 +107,31 @@ export function Hero() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      <Image
-        src="/generated/hero-ambient.png"
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.20] [mask-image:radial-gradient(ellipse_75%_65%_at_72%_35%,#000,transparent_78%)]"
-      />
+      {showVideo ? (
+        <video
+          src={videoSrc}
+          poster="/generated/hero-ambient.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          aria-hidden="true"
+          tabIndex={-1}
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.22] [mask-image:radial-gradient(ellipse_85%_75%_at_60%_40%,#000,transparent_85%)]"
+        />
+      ) : (
+        <Image
+          src="/generated/hero-ambient.png"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.20] [mask-image:radial-gradient(ellipse_75%_65%_at_72%_35%,#000,transparent_78%)]"
+        />
+      )}
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 hero-grid" aria-hidden="true" />
 
