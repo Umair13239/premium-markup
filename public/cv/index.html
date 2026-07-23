@@ -376,7 +376,12 @@ footer .brand{font-size:15px}
 @media(max-width:900px){
   #menu .link,#menu .nav-cta{display:none}
   #burger{display:flex}
-  #menu.is-open{position:fixed;inset:0;background:#0b0b0f;flex-direction:column;justify-content:center;gap:26px;mix-blend-mode:normal}
+  /* #nav uses mix-blend-mode:difference, which creates a blending context for
+     its children — so the open menu's solid background was being blended with
+     the hero behind it and the links appeared to overlap the page. Turning the
+     blend off on the nav itself while the menu is open makes it a real panel. */
+  #nav:has(#menu.is-open),#nav.menu-open{mix-blend-mode:normal}
+  #menu.is-open{position:fixed;inset:0;z-index:210;background:#0b0b0f;flex-direction:column;justify-content:center;gap:26px;mix-blend-mode:normal}
   #menu.is-open .link,#menu.is-open .nav-cta{display:block;font-size:26px;font-family:var(--disp)}
   #hero{min-height:100svh}
   /* The decorative website planes sat directly behind the hero copy on narrow
@@ -384,7 +389,11 @@ footer .brand{font-size:15px}
      the portrait + gradient carry the hero instead. */
   .wc-1,.wc-2{display:none}
   .hero-ghost{display:none}
-  .hero-copy{max-width:100%;padding-bottom:clamp(44px,9vh,96px)}
+  /* Copy must start BELOW the avatar, never behind it. The hero flows from the
+     top on mobile and the copy is padded clear of the portrait's full height
+     (same clamps as .pl-portrait below, plus breathing room). */
+  #hero{align-items:flex-start;height:auto;min-height:100svh}
+  .hero-copy{max-width:100%;padding-top:calc(clamp(100px,15vh,170px) + min(56vw,290px) + 30px);padding-bottom:clamp(44px,9vh,96px)}
   .hero-name{font-size:clamp(38px,12vw,68px);white-space:normal}
   /* 1.03 line-height overlapped once the heading wrapped onto 3-4 mobile lines */
   .hero-h1{font-size:clamp(21px,5.6vw,32px);line-height:1.18;max-width:100%;margin-top:10px}

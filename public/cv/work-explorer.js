@@ -68,7 +68,23 @@
   const modal = $('#wx-modal');
   let openP = null, activeTab = null;
 
+  /* Back-button + scroll handling.
+     Opening a project (and the lightbox) pushes a history entry, so the phone's
+     Back gesture peels off one layer at a time — lightbox, then project, then
+     the page — instead of leaving the site outright. We also remember the page
+     scroll position, because locking body overflow otherwise drops you back at
+     the top of the page when the project closes. */
+  let scrollBeforeModal = 0, pushedModal = false, pushedLb = false;
+
+  function restoreScroll() {
+    const y = scrollBeforeModal;
+    window.scrollTo(0, y);
+    requestAnimationFrame(function () { window.scrollTo(0, y); });
+  }
+
   function openModal(p) {
+    scrollBeforeModal = window.scrollY || window.pageYOffset || 0;
+    if (!pushedModal) { try { history.pushState({ wxModal: true }, ''); pushedModal = true; } catch (e) {} }
     openP = p;
     modal.style.setProperty('--acc', p.accent || '#e8a33d'); // brand-tint the tabs
     $('#wx-mcat').textContent = catLabel(p.category);
@@ -84,13 +100,24 @@
     if (window.__lenis) window.__lenis.stop();
     const panel = $('.wx-panel'); if (panel) panel.scrollTop = 0;
   }
-  function closeModal() {
+  function closeModal(fromPop) {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     if (window.__lenis) window.__lenis.start();
     openP = null;
+    restoreScroll();
+    // Closing by button/Escape consumes the history entry we pushed, so the
+    // Back gesture never has a stale state to walk through afterwards.
+    if (!fromPop && pushedModal) { pushedModal = false; try { history.back(); } catch (e) {} }
+    else pushedModal = false;
   }
+
+  // Back peels one layer: lightbox -> project -> leave the page.
+  window.addEventListener('popstate', function () {
+    if (lbOpen && lbOpen()) { pushedLb = false; closeLightbox(true); return; }
+    if (modal.classList.contains('is-open')) { pushedModal = false; closeModal(true); }
+  });
 
   function renderTabs(bs) {
     const wrap = $('#wx-tabs'); wrap.innerHTML = '';
@@ -167,10 +194,16 @@
   function openLightbox(list, idx) {
     lbList = list; showLb(idx);
     lb.classList.add('is-open'); document.body.style.overflow = 'hidden';
+    if (!pushedLb) { try { history.pushState({ wxLb: true }, ''); pushedLb = true; } catch (e) {} }
   }
-  function closeLightbox() { lb.classList.remove('is-open'); lbImg.src = ''; lbList = []; resetZoom(); if (!modal.classList.contains('is-open')) document.body.style.overflow = ''; }
+  function closeLightbox(fromPop) {
+    lb.classList.remove('is-open'); lbImg.src = ''; lbList = []; resetZoom();
+    if (!modal.classList.contains('is-open')) document.body.style.overflow = '';
+    if (!fromPop && pushedLb) { pushedLb = false; try { history.back(); } catch (e) {} }
+    else pushedLb = false;
+  }
   const lbOpen = () => lb.classList.contains('is-open');
-  lb.querySelector('.lb-close').addEventListener('click', closeLightbox);
+  lb.querySelector('.lb-close').addEventListener('click', function () { closeLightbox(); });
   lbPrev.addEventListener('click', (e) => { e.stopPropagation(); showLb(lbIdx - 1); });
   lbNext.addEventListener('click', (e) => { e.stopPropagation(); showLb(lbIdx + 1); });
   lbIn.addEventListener('click', (e) => { e.stopPropagation(); setZoom(scale + 0.5); });
@@ -253,7 +286,7 @@
       : '<div class="wx-drop"><b>No ' + esc(activeTab) + ' yet</b>Add them in <code>projects-data.js</code>.</div>';
   }
 
-  $('#wx-close').addEventListener('click', closeModal);
+  $('#wx-close').addEventListener('click', function () { closeModal(); });
   $('#wx-body').addEventListener('click', (e) => {
     const v = e.target.closest('[data-preview]');
     if (!v) return;
@@ -261,7 +294,7 @@
     const list = all.map((n) => ({ src: n.getAttribute('data-preview'), cap: n.getAttribute('data-cap') }));
     openLightbox(list, all.indexOf(v));
   });
-  modal.querySelectorAll('[data-wx-close]').forEach((n) => n.addEventListener('click', closeModal));
+  modal.querySelectorAll('[data-wx-close]').forEach((n) => n.addEventListener('click', function () { closeModal(); }));
   // Escape closes the lightbox first (if open); only then the project modal.
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lbOpen() && modal.classList.contains('is-open')) closeModal(); });
 

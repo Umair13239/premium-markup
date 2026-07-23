@@ -16,6 +16,7 @@ import { Magnetic } from "@/components/site/magnetic";
 import { Button } from "@/components/site/button";
 import { PMMark } from "@/components/site/pm-mark";
 import { WorkTeaser } from "@/components/site/work-teaser";
+import { Testimonial } from "@/components/site/testimonial";
 import { getPortfolio } from "@/lib/portfolio";
 import { services } from "@/lib/services";
 
@@ -157,6 +158,9 @@ export default async function HomePage() {
           <WorkTeaser projects={featured} categories={portfolio.categories} />
         </div>
       </section>
+
+      {/* real client testimonial (LinkedIn embed) */}
+      <Testimonial />
 
       {/* process — dark band */}
       <section className="band">

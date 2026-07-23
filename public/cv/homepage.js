@@ -90,9 +90,18 @@
       const y = t.getBoundingClientRect().top + (lenis ? lenis.scroll : scrollY);
       if (lenis) lenis.scrollTo(y, { duration: 1.2 }); else scrollTo({ top: y, behavior: 'smooth' });
       $('#menu').classList.remove('is-open'); $('#burger').classList.remove('is-open');
+      $('#nav').classList.remove('menu-open'); document.body.style.overflow = '';
     }));
-    const burger = $('#burger'), menu = $('#menu');
-    burger.addEventListener('click', () => { const o = menu.classList.toggle('is-open'); burger.classList.toggle('is-open', o); });
+    const burger = $('#burger'), menu = $('#menu'), navEl = $('#nav');
+    burger.addEventListener('click', () => {
+      const o = menu.classList.toggle('is-open');
+      burger.classList.toggle('is-open', o);
+      // #nav is mix-blend-mode:difference; that blends the open menu's solid
+      // background into the page. Drop the blend while the panel is up.
+      // (CSS :has() covers modern browsers — this is the fallback.)
+      if (navEl) navEl.classList.toggle('menu-open', o);
+      document.body.style.overflow = o ? 'hidden' : '';
+    });
   }
 
   /* ---------- Per-scene atmosphere (bg + ink) ---------- */

@@ -13,11 +13,16 @@ export function Stat({ value, label }: { value: string; label: string }) {
   // Stable across renders — recomputes only when `value` changes, so it can't
   // retrigger the animation effect on every frame.
   const m = useMemo(() => value.match(/^(\D*)(\d[\d.,]*)(.*)$/), [value]);
-  const [disp, setDisp] = useState(m && !reduce ? m[1] + "0" + m[3] : value);
+  // Start on the REAL value so the server-rendered HTML shows "99%", not "0%".
+  // Crawlers, social previews and no-JS visitors were seeing zeros, which read
+  // as a broken/empty site. The count-up is re-armed client-side below.
+  const [disp, setDisp] = useState(value);
 
   useEffect(() => {
     if (!m || reduce) { setDisp(value); return; }
-    if (!inView) return;
+    // Not scrolled to yet — park it at zero so the count-up still has somewhere
+    // to travel from (client-side only, after hydration).
+    if (!inView) { setDisp(m[1] + "0" + m[3]); return; }
     const target = parseFloat(m[2].replace(/,/g, ""));
     const decimals = (m[2].split(".")[1] || "").length;
     const dur = 1100;
