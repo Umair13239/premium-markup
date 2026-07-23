@@ -61,7 +61,7 @@ export function ShowcaseReel({ src, poster }: { src: string; poster?: string }) 
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 disablePictureInPicture
                 className="block w-full"
               />

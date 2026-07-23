@@ -110,7 +110,7 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
       {showVideo ? (
         <video
           src={videoSrc}
-          poster="/generated/hero-ambient.png"
+          poster="/generated/hero-poster.webp"
           autoPlay
           muted
           loop
