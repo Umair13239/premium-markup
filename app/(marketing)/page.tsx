@@ -106,14 +106,18 @@ export default async function HomePage() {
               <Reveal key={s.slug} delay={(i % 3) * 0.05}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group block transition-transform duration-300 ease-out hover:-translate-y-1.5"
+                  className="group block transition-transform duration-300 ease-out hover:-translate-y-2"
                   data-cursor="Explore ↗"
                 >
-                  <div className="relative overflow-hidden rounded-[10px] border border-line transition-colors duration-300 group-hover:border-cobalt/50">
+                  <div className="relative overflow-hidden rounded-xl border border-line transition-all duration-300 group-hover:border-cobalt/60 group-hover:shadow-[0_28px_60px_-32px_color-mix(in_oklab,var(--color-cobalt)_55%,transparent)]">
                     <div className="relative" style={{ aspectRatio: "16 / 11" }}>
-                      <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 33vw" className="pm-shot object-cover group-hover:scale-[1.06]" />
+                      <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 33vw" className="pm-shot object-cover group-hover:scale-[1.07]" />
+                      <span className="card-shine" aria-hidden="true" />
                     </div>
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: "linear-gradient(180deg, transparent 55%, color-mix(in oklab, var(--color-cobalt) 26%, transparent))" }} />
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: "linear-gradient(180deg, transparent 45%, color-mix(in oklab, var(--color-cobalt) 32%, transparent))" }} />
+                    <span className="pointer-events-none absolute right-3 top-3 z-[3] inline-flex translate-y-1 items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      View <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                    </span>
                   </div>
                   <h3 className="mt-5 flex items-center gap-2 text-xl group-hover:text-cobalt">
                     {s.title}

@@ -244,6 +244,15 @@
   /* Generative project media zoom (on card hover) */
   .pm-shot { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
 
+  /* Diagonal light sweep that crosses a card's media on hover */
+  .card-shine {
+    position: absolute; inset: 0; pointer-events: none; z-index: 2;
+    background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.22) 46%, transparent 60%);
+    transform: translateX(-130%);
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .card-shine { transform: translateX(130%); }
+
   /* Frosted glass surface */
   .glass {
     background: color-mix(in oklab, var(--color-surface) 55%, transparent);
