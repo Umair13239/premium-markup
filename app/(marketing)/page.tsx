@@ -43,11 +43,8 @@ const compare = [
 // Videos are optional: sections appear automatically once the files exist in
 // public/generated/ (checked at build time — the page is fully static).
 const genDir = path.join(process.cwd(), "public", "generated");
-// TEMP DIAGNOSTIC: videos disabled to isolate the blank-page issue.
-// To re-enable, restore the two fs.existsSync lines below.
-const VIDEOS_DISABLED = true;
-const heroVideo = !VIDEOS_DISABLED && fs.existsSync(path.join(genDir, "hero-office.mp4")) ? "/generated/hero-office.mp4" : undefined;
-const projectsReel = !VIDEOS_DISABLED && fs.existsSync(path.join(genDir, "projects-reel.mp4")) ? "/generated/projects-reel.mp4" : undefined;
+const heroVideo = fs.existsSync(path.join(genDir, "hero-office.mp4")) ? "/generated/hero-office.mp4" : undefined;
+const projectsReel = fs.existsSync(path.join(genDir, "projects-reel.mp4")) ? "/generated/projects-reel.mp4" : undefined;
 
 export default async function HomePage() {
   const { data: portfolio } = await getPortfolio();
