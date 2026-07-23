@@ -27,6 +27,7 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const hovering = useRef(false);
   const drag = useRef<{ x: number; active: boolean }>({ x: 0, active: false });
+  const didDrag = useRef(false); // guards the card link from firing after a drag
 
   // Measure the stage so card offsets are precise and responsive.
   useLayoutEffect(() => {
@@ -55,11 +56,12 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
   };
 
   // Pointer drag.
-  const onDown = (e: React.PointerEvent) => { drag.current = { x: e.clientX, active: true }; };
+  const onDown = (e: React.PointerEvent) => { drag.current = { x: e.clientX, active: true }; didDrag.current = false; };
   const onUp = (e: React.PointerEvent) => {
     if (!drag.current.active) return;
     const dx = e.clientX - drag.current.x;
     drag.current.active = false;
+    didDrag.current = Math.abs(dx) > 8; // any real movement = a drag, not a click
     if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
   };
 
@@ -104,15 +106,19 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
           const abs = Math.abs(off);
           const visible = abs <= 2;
           const active = off === 0;
+          // Cards stay FULLY opaque so nothing behind them bleeds through the
+          // "transparent" side cards. Depth/recession is done with a dark
+          // scrim overlay (below), not element opacity.
           const target = reduce
             ? { x: 0, opacity: active ? 1 : 0, scale: 1, rotateY: 0, zIndex: active ? 10 : 0 }
             : {
                 x: off * step,
                 rotateY: off * -26,
                 scale: active ? 1 : Math.max(0.72, 0.86 - (abs - 1) * 0.08),
-                opacity: visible ? (active ? 1 : 0.5 - (abs - 1) * 0.18) : 0,
+                opacity: visible ? 1 : 0,
                 zIndex: 20 - abs,
               };
+          const dim = active ? 0 : Math.min(0.62, 0.36 + (abs - 1) * 0.22);
           return (
             <motion.div
               key={it.id}
@@ -130,8 +136,13 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
               transition={spring}
               aria-hidden={!active}
             >
-              <div
-                className="group relative h-full w-full overflow-hidden rounded-2xl border"
+              <Link
+                href={`/work?project=${it.id}`}
+                onClick={(e) => { if (didDrag.current) e.preventDefault(); }}
+                tabIndex={active ? 0 : -1}
+                aria-label={`Open project: ${it.name}`}
+                draggable={false}
+                className="group relative block h-full w-full overflow-hidden rounded-2xl border bg-surface"
                 style={{
                   borderColor: active ? `color-mix(in oklab, ${it.accent || "#7c7bff"} 55%, transparent)` : "var(--color-line)",
                   boxShadow: active
@@ -147,10 +158,17 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   loading={abs <= 1 ? "eager" : "lazy"}
                 />
+                {/* Dark scrim so further cards recede — cards stay fully opaque
+                    (no bleed-through of the card behind). */}
+                <div
+                  className="pointer-events-none absolute inset-0 z-[1] bg-[#080a14] transition-opacity duration-500"
+                  style={{ opacity: dim }}
+                  aria-hidden="true"
+                />
                 {/* caption — only meaningful on the active card */}
                 <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5"
-                  style={{ background: "linear-gradient(to top, rgba(6,8,20,0.85), transparent 70%)", opacity: active ? 1 : 0 }}
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-5"
+                  style={{ background: "linear-gradient(to top, rgba(6,8,20,0.88), transparent 70%)", opacity: active ? 1 : 0 }}
                 >
                   <div>
                     {it.categoryLabel && (
@@ -161,15 +179,11 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
                     )}
                     <h3 className="mt-1.5 text-lg font-semibold text-white md:text-xl">{it.name}</h3>
                   </div>
-                  <Link
-                    href="/work"
-                    className="pointer-events-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur transition-colors hover:bg-white/25"
-                    aria-label={`View ${it.name} and more work`}
-                  >
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur transition-colors group-hover:bg-white/25">
                     <ArrowUpRight className="h-5 w-5" />
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           );
         })}

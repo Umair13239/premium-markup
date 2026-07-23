@@ -256,6 +256,19 @@ export function PortfolioExplorer({ data }: { data: PortfolioData }) {
   const [activeCat, setActiveCat] = useState("all");
   const [openId, setOpenId] = useState<string | null>(null);
 
+  // Deep-link: /work?project=<id> opens that project's modal directly (used by
+  // the homepage showcase slider). Read once on mount, then tidy the URL.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("project");
+    if (id && data.projects.some((p) => p.id === id)) {
+      setOpenId(id);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("project");
+      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const filters = useMemo(() => {
     const withCounts = data.categories
       .map((c) => ({ ...c, n: data.projects.filter((p) => p.category === c.id).length }))
