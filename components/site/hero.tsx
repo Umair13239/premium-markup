@@ -181,7 +181,7 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
 
           <motion.div className="mt-9 flex flex-wrap items-center gap-4" initial={reduce ? false : { opacity: 0, y: 10 }} animate={typed ? { opacity: 1, y: 0 } : undefined} transition={{ duration: 0.5, delay: 0.2 }}>
             <Magnetic strength={0.4}>
-              <Button href="/contact">Start a project</Button>
+              <Button href="/contact" variant="gradient">Start a project</Button>
             </Magnetic>
             <Magnetic strength={0.3}>
               <Button href="/work" variant="secondary">See our work</Button>

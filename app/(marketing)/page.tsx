@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
 import { Hero } from "@/components/site/hero";
-import { ShowcaseReel } from "@/components/site/showcase-reel";
+import { WorkShowcase } from "@/components/site/work-showcase";
 import { TechMarquee } from "@/components/site/tech-marquee";
 import { Reveal } from "@/components/site/reveal";
 import { KineticHeading } from "@/components/site/kinetic-heading";
@@ -40,19 +40,41 @@ const compare = [
   { point: "Design", built: "Custom to your brand", builder: "One of a thousand templates" },
 ];
 
-// Videos are optional: sections appear automatically once the files exist in
-// public/generated/ (checked at build time — the page is fully static).
+// The hero's agency-at-work video is optional: it appears once the file exists
+// in public/generated/ (checked at build time — the page is fully static).
 const genDir = path.join(process.cwd(), "public", "generated");
 const heroVideo = fs.existsSync(path.join(genDir, "hero-office.mp4")) ? "/generated/hero-office.mp4" : undefined;
-const projectsReel = fs.existsSync(path.join(genDir, "projects-reel.mp4")) ? "/generated/projects-reel.mp4" : undefined;
 
 export default async function HomePage() {
   const { data: portfolio } = await getPortfolio();
   const featured = portfolio.projects.slice(0, 6);
+  const catLabel = new Map(portfolio.categories.map((c) => [c.id, c.label]));
+  const showcase = portfolio.projects.slice(0, 10).map((p) => ({
+    id: p.id,
+    name: p.name,
+    cover: p.cover,
+    accent: p.accent,
+    categoryLabel: catLabel.get(p.category) ?? p.category,
+  }));
   return (
     <>
       <Hero videoSrc={heroVideo} />
-      {projectsReel && <ShowcaseReel src={projectsReel} poster="/generated/reel-poster.webp" />}
+
+      {/* 3D project showcase slider — replaces the old video reel */}
+      <section className="band relative overflow-hidden py-16 md:py-24" aria-label="Project showcase">
+        <div className="container-editorial">
+          <Reveal>
+            <p className="mono text-xs uppercase tracking-[0.2em] text-muted">Showreel</p>
+            <h2 className="mt-3 max-w-2xl text-3xl md:text-5xl">
+              The work, <span className="grad-text">in motion</span>.
+            </h2>
+          </Reveal>
+          <div className="mt-10 md:mt-14">
+            <WorkShowcase items={showcase} />
+          </div>
+        </div>
+      </section>
+
       <TechMarquee />
 
       {/* count-up stats */}
