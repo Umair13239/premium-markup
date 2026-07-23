@@ -111,7 +111,7 @@ export default async function HomePage() {
                   data-cursor="Explore ↗"
                 >
                   <div className="relative overflow-hidden rounded-xl border border-line transition-all duration-300 group-hover:border-cobalt/60 group-hover:shadow-[0_28px_60px_-32px_color-mix(in_oklab,var(--color-cobalt)_55%,transparent)]">
-                    <div className="relative" style={{ aspectRatio: "16 / 11" }}>
+                    <div className="relative" style={{ aspectRatio: "16 / 9" }}>
                       <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 33vw" className="pm-shot object-cover group-hover:scale-[1.07]" />
                       <span className="card-shine" aria-hidden="true" />
                     </div>

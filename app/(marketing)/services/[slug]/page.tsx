@@ -73,7 +73,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </Reveal>
           </div>
           <Reveal delay={0.15}>
-            <div className="relative overflow-hidden rounded-[10px] border border-line" style={{ aspectRatio: "16 / 11" }}>
+            <div className="relative overflow-hidden rounded-[10px] border border-line" style={{ aspectRatio: "16 / 9" }}>
               <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill priority sizes="(max-width: 768px) 100vw, 45vw" className="object-cover" />
             </div>
           </Reveal>
