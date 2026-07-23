@@ -152,9 +152,28 @@ function SitePreview({ p }: { p: PortfolioProject }) {
       <div ref={frameRef} className="relative bg-[color:var(--color-surface-2)]" style={{ aspectRatio: "16 / 10", overflow: "hidden" }}>
         {w.url && !failed ? (
           <iframe ref={iframeRef} src={w.url} title={p.name} loading="lazy" onLoad={() => { loaded.current = true; }} style={{ width: 1440, height: 900, border: 0, transformOrigin: "top left" }} />
+        ) : w.shot ? (
+          // Site can't be embedded (blocked, or a bad/expired certificate) — so
+          // keep BOTH options: a real full-opacity preview of the site, and the
+          // live link. The screenshot is the in-site preview.
+          <div className="absolute inset-0">
+            <Image src={w.shot} alt={`${p.name} website preview`} fill className="object-cover object-top" />
+            <div
+              className="absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-3 p-4"
+              style={{ background: "linear-gradient(to top, rgba(6,8,20,0.92), transparent)" }}
+            >
+              <p className="mono text-[11px] text-white/70">
+                {w.url ? "Preview — this site can’t be embedded" : "Preview — live link coming soon"}
+              </p>
+              {w.url && (
+                <a href={w.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-cobalt px-4 py-2 text-xs font-medium text-white hover:brightness-110">
+                  Open live site <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
-            {w.shot && <Image src={w.shot} alt="" fill className="object-cover object-top opacity-30" />}
             <p className="relative text-sm text-muted">{w.url ? "This site blocks embedding." : "Live link coming soon."}</p>
             {w.url && <a href={w.url} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center gap-2 rounded-full bg-cobalt px-5 py-2.5 text-sm font-medium text-white">Open live site <ExternalLink className="h-4 w-4" /></a>}
           </div>
