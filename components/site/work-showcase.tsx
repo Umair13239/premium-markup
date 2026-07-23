@@ -145,7 +145,7 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
                 tabIndex={active ? 0 : -1}
                 aria-label={`Open project: ${it.name}`}
                 draggable={false}
-                className="group relative block h-full w-full overflow-hidden rounded-2xl border bg-surface"
+                className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border bg-[#0d1018]"
                 style={{
                   borderColor: active ? `color-mix(in oklab, ${it.accent || "#7c7bff"} 55%, transparent)` : "var(--color-line)",
                   boxShadow: active
@@ -153,42 +153,44 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
                     : "0 30px 70px -40px rgba(6,8,24,0.6)",
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={it.cover}
-                  alt={it.name}
-                  draggable={false}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  loading={abs <= 1 ? "eager" : "lazy"}
-                />
-                {/* Dark scrim so further cards recede — cards stay fully opaque
-                    (no bleed-through of the card behind). */}
+                {/* artwork — the caption never sits on top of it */}
+                <div className="relative min-h-0 flex-1 overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={it.cover}
+                    alt={it.name}
+                    draggable={false}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    loading={abs <= 1 ? "eager" : "lazy"}
+                  />
+                </div>
+
+                {/* solid caption bar — readable over ANY cover, light or dark */}
                 <div
-                  className="pointer-events-none absolute inset-0 z-[1] bg-[#080a14] transition-opacity duration-500"
-                  style={{ opacity: dim }}
-                  aria-hidden="true"
-                />
-                {/* caption — only meaningful on the active card */}
-                <div
-                  className={`pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between ${isNarrow ? "gap-2 p-3" : "gap-4 p-5"}`}
-                  style={{
-                    background: `linear-gradient(to top, rgba(6,8,20,0.92), transparent ${isNarrow ? "58%" : "70%"})`,
-                    opacity: active ? 1 : 0,
-                  }}
+                  className={`flex shrink-0 items-center justify-between gap-3 border-t border-white/10 bg-[#0d1018] ${
+                    isNarrow ? "px-3 py-2" : "px-4 py-3"
+                  }`}
                 >
                   <div className="min-w-0">
                     {it.categoryLabel && (
-                      <span className={`mono flex items-center gap-2 uppercase tracking-[0.18em] text-white/70 ${isNarrow ? "text-[9px]" : "text-[11px]"}`}>
+                      <span className={`mono flex items-center gap-1.5 uppercase tracking-[0.16em] text-white/55 ${isNarrow ? "text-[8px]" : "text-[10px]"}`}>
                         <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: it.accent || "#7c7bff" }} />
                         <span className="truncate">{it.categoryLabel}</span>
                       </span>
                     )}
-                    <h3 className={`mt-1 font-semibold text-white ${isNarrow ? "text-sm leading-snug" : "text-lg md:text-xl"}`}>{it.name}</h3>
+                    <h3 className={`truncate font-semibold text-white ${isNarrow ? "text-xs" : "text-base md:text-lg"}`}>{it.name}</h3>
                   </div>
-                  <span className={`inline-flex shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur transition-colors group-hover:bg-white/25 ${isNarrow ? "h-8 w-8" : "h-10 w-10"}`}>
-                    <ArrowUpRight className={isNarrow ? "h-4 w-4" : "h-5 w-5"} />
+                  <span className={`inline-flex shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-white/25 ${isNarrow ? "h-7 w-7" : "h-9 w-9"}`}>
+                    <ArrowUpRight className={isNarrow ? "h-3.5 w-3.5" : "h-4 w-4"} />
                   </span>
                 </div>
+
+                {/* recession scrim over the whole card (keeps side cards opaque) */}
+                <div
+                  className="pointer-events-none absolute inset-0 z-[3] bg-[#080a14] transition-opacity duration-500"
+                  style={{ opacity: dim }}
+                  aria-hidden="true"
+                />
               </Link>
             </motion.div>
           );
