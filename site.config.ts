@@ -21,8 +21,9 @@ export const siteConfig = {
   },
 
   email: {
-    // Primary public address.
-    primary: "hello@premiummarkup.com",
+    // Primary public address (shown in the footer, contact, privacy, terms and
+    // the structured-data schema).
+    primary: "umair@premiummarkup.com",
     // Where contact-form notifications are sent (swappable via env at deploy).
     projects: "projects@premiummarkup.com",
     // Founder address, used on the About signature.
