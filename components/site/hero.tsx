@@ -123,7 +123,7 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
         />
       ) : (
         <Image
-          src="/generated/hero-ambient.png"
+          src="/generated/hero-ambient.webp"
           alt=""
           aria-hidden="true"
           fill

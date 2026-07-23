@@ -52,7 +52,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero videoSrc={heroVideo} />
-      {projectsReel && <ShowcaseReel src={projectsReel} poster="/generated/work-meridian-lettings.png" />}
+      {projectsReel && <ShowcaseReel src={projectsReel} poster="/generated/reel-poster.webp" />}
       <TechMarquee />
 
       {/* count-up stats */}

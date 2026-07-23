@@ -41,7 +41,7 @@ export default function AboutPage() {
       <div className="container-editorial pt-10 md:pt-14">
         <MediaReveal className="overflow-hidden rounded-[10px] border border-line">
           <div className="relative" style={{ aspectRatio: "16 / 7" }}>
-            <Image src="/generated/about.png" alt="Craft and code — the Premium Markup approach" fill sizes="100vw" className="object-cover" />
+            <Image src="/generated/about.webp" alt="Craft and code — the Premium Markup approach" fill sizes="100vw" className="object-cover" />
           </div>
         </MediaReveal>
       </div>
