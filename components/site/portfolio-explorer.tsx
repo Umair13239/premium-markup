@@ -288,6 +288,25 @@ export function PortfolioExplorer({ data }: { data: PortfolioData }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Browser Back should close an open project, not navigate away from /work.
+  // Opening pushes a history entry; Back pops it and closes the modal. The
+  // Close button calls history.back() too, so both paths behave identically
+  // and no stray entries pile up.
+  const pushedRef = useRef(false);
+  useEffect(() => {
+    if (!openId) return;
+    window.history.pushState({ pmProject: openId }, "");
+    pushedRef.current = true;
+    const onPop = () => { pushedRef.current = false; setOpenId(null); };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [openId]);
+
+  const closeProject = useCallback(() => {
+    if (pushedRef.current) window.history.back(); // popstate handler clears openId
+    else setOpenId(null);
+  }, []);
+
   const filters = useMemo(() => {
     const withCounts = data.categories
       .map((c) => ({ ...c, n: data.projects.filter((p) => p.category === c.id).length }))
@@ -361,7 +380,7 @@ export function PortfolioExplorer({ data }: { data: PortfolioData }) {
       </motion.div>
 
       <AnimatePresence>
-        {openProject && <ProjectModal key={openProject.id} p={openProject} catLabel={catLabel(openProject.category)} onClose={() => setOpenId(null)} />}
+        {openProject && <ProjectModal key={openProject.id} p={openProject} catLabel={catLabel(openProject.category)} onClose={closeProject} />}
       </AnimatePresence>
     </div>
   );
