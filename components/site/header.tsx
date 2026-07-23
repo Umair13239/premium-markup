@@ -15,6 +15,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false); // mobile menu
   const [svcOpen, setSvcOpen] = useState(false); // desktop services dropdown
+  const [mSvcOpen, setMSvcOpen] = useState(false); // mobile services accordion (collapsed by default)
   const svcRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
@@ -27,7 +28,9 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); setSvcOpen(false); }, [pathname]);
+  useEffect(() => { setOpen(false); setSvcOpen(false); setMSvcOpen(false); }, [pathname]);
+  // Collapse the mobile services list whenever the menu is closed.
+  useEffect(() => { if (!open) setMSvcOpen(false); }, [open]);
 
   // Close the dropdown on Escape.
   useEffect(() => {
@@ -174,15 +177,28 @@ export function Header() {
             <nav className="flex flex-col" aria-label="Mobile">
               {siteConfig.nav.map((item) =>
                 item.href === "/services" ? (
-                  <div key={item.href} className="border-b border-line/60 px-2 py-3">
-                    <Link href="/services" className="text-lg font-medium">Services</Link>
-                    <div className="mt-2 flex flex-col gap-1 pl-2">
-                      {services.map((s) => (
-                        <Link key={s.slug} href={`/services/${s.slug}`} className="py-1.5 text-sm text-muted">
-                          {s.title}
-                        </Link>
-                      ))}
+                  <div key={item.href} className="border-b border-line/60 px-2">
+                    <div className="flex items-center justify-between">
+                      <Link href="/services" className="py-3 text-lg">Services</Link>
+                      <button
+                        type="button"
+                        onClick={() => setMSvcOpen((v) => !v)}
+                        aria-expanded={mSvcOpen}
+                        aria-label={mSvcOpen ? "Collapse services list" : "Expand services list"}
+                        className="-mr-1 flex h-11 w-11 items-center justify-center rounded-full text-muted"
+                      >
+                        <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${mSvcOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+                      </button>
                     </div>
+                    {mSvcOpen && (
+                      <div className="mb-3 flex flex-col gap-1 pl-2">
+                        {services.map((s) => (
+                          <Link key={s.slug} href={`/services/${s.slug}`} className="py-1.5 text-sm text-muted">
+                            {s.title}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <Link

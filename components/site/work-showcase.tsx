@@ -65,9 +65,12 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
     if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
   };
 
-  const cardW = Math.min(Math.max(w * 0.6, 240), 760);
-  const cardH = cardW * 0.6;
-  const step = cardW * 0.52; // horizontal spacing between neighbours
+  // On phones the card has to be bigger (and the caption smaller), otherwise
+  // the title wraps up over the artwork and hides it.
+  const isNarrow = w > 0 && w < 640;
+  const cardW = Math.min(Math.max(w * (isNarrow ? 0.86 : 0.6), 240), 760);
+  const cardH = cardW * (isNarrow ? 0.68 : 0.6);
+  const step = cardW * (isNarrow ? 0.68 : 0.52); // horizontal spacing between neighbours
 
   // Signed, wrapped offset so the carousel loops the short way round.
   const offsetOf = (i: number) => {
@@ -167,20 +170,23 @@ export function WorkShowcase({ items }: { items: ShowcaseItem[] }) {
                 />
                 {/* caption — only meaningful on the active card */}
                 <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between gap-4 p-5"
-                  style={{ background: "linear-gradient(to top, rgba(6,8,20,0.88), transparent 70%)", opacity: active ? 1 : 0 }}
+                  className={`pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex items-end justify-between ${isNarrow ? "gap-2 p-3" : "gap-4 p-5"}`}
+                  style={{
+                    background: `linear-gradient(to top, rgba(6,8,20,0.92), transparent ${isNarrow ? "58%" : "70%"})`,
+                    opacity: active ? 1 : 0,
+                  }}
                 >
-                  <div>
+                  <div className="min-w-0">
                     {it.categoryLabel && (
-                      <span className="mono flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-white/70">
-                        <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: it.accent || "#7c7bff" }} />
-                        {it.categoryLabel}
+                      <span className={`mono flex items-center gap-2 uppercase tracking-[0.18em] text-white/70 ${isNarrow ? "text-[9px]" : "text-[11px]"}`}>
+                        <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: it.accent || "#7c7bff" }} />
+                        <span className="truncate">{it.categoryLabel}</span>
                       </span>
                     )}
-                    <h3 className="mt-1.5 text-lg font-semibold text-white md:text-xl">{it.name}</h3>
+                    <h3 className={`mt-1 font-semibold text-white ${isNarrow ? "text-sm leading-snug" : "text-lg md:text-xl"}`}>{it.name}</h3>
                   </div>
-                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur transition-colors group-hover:bg-white/25">
-                    <ArrowUpRight className="h-5 w-5" />
+                  <span className={`inline-flex shrink-0 items-center justify-center rounded-full bg-white/12 text-white backdrop-blur transition-colors group-hover:bg-white/25 ${isNarrow ? "h-8 w-8" : "h-10 w-10"}`}>
+                    <ArrowUpRight className={isNarrow ? "h-4 w-4" : "h-5 w-5"} />
                   </span>
                 </div>
               </Link>
