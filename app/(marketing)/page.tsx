@@ -91,9 +91,6 @@ export default async function HomePage() {
           so social proof lands before the pitch. */}
       <Testimonial />
 
-      {/* brand statement */}
-      <BrandStatement />
-
       {/* services overview */}
       <section className="border-t border-line bg-surface">
         <div className="container-editorial py-20 md:py-28">
@@ -142,6 +139,9 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* brand statement — sits between services and the work it produced */}
+      <BrandStatement />
 
       {/* selected work */}
       <section className="container-editorial py-20 md:py-28">
