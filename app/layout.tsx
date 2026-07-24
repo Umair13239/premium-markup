@@ -44,6 +44,8 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
+  // Google Search Console (URL-prefix property) site verification.
+  verification: { google: "UA4BSmV1Rqpiwg-NarmgQcm0R_Sm4UsF6rSk6k8Y8vU" },
 };
 
 export default function RootLayout({
