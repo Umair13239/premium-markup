@@ -73,7 +73,7 @@ export function Header() {
           </Link>
 
           {/* Centered link group inside a glass sub-pill */}
-          <nav className="hidden md:flex" aria-label="Primary">
+          <nav className="hidden lg:flex" aria-label="Primary">
             <div className="nav-inner relative flex items-center gap-0.5 rounded-full p-1">
               {siteConfig.nav.map((item) => {
                 const active = isActive(item.href);
@@ -141,7 +141,7 @@ export function Header() {
           </nav>
 
           {/* Right cluster */}
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             <ThemeToggle />
             <Magnetic strength={0.35}>
               <Link
@@ -155,7 +155,7 @@ export function Header() {
           </div>
 
           {/* Mobile controls */}
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-1 lg:hidden">
             <ThemeToggle />
             <button
               type="button"
@@ -172,7 +172,7 @@ export function Header() {
 
       {/* Mobile dropdown menu — floating glass card under the capsule */}
       {open && (
-        <div className="container-editorial mt-2 md:hidden">
+        <div className="container-editorial mt-2 lg:hidden">
           <div className="glass max-h-[78vh] overflow-y-auto rounded-2xl p-2 shadow-[0_28px_70px_-30px_rgba(6,8,24,0.7)]">
             <nav className="flex flex-col" aria-label="Mobile">
               {siteConfig.nav.map((item) =>
