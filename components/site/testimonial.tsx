@@ -39,9 +39,11 @@ export function Testimonial() {
                 Don&rsquo;t take our <span className="grad-text">word</span> for it.
               </h2>
               <p className="mt-5 max-w-md text-muted">
-                Catherine Flowers runs <span className="text-ink">Security Compliance Academy</span> and{" "}
+                Catherine Flowers is Director of Training at{" "}
+                <span className="text-ink">Security Compliance Academy</span> and{" "}
                 <span className="text-ink">P.I. Leadership Academy</span> &mdash; two of the training brands in our
-                work. Here she is, in her own words.
+                work &mdash; and a retired Raleigh police officer with 25+ years in the field. Here she is, in her own
+                words.
               </p>
               <a
                 href={LINKEDIN_POST}
@@ -93,7 +95,7 @@ export function Testimonial() {
                 <div>
                   <span className="block font-medium">Catherine Flowers</span>
                   <span className="mono block text-xs text-muted">
-                    Security Compliance Academy &middot; P.I. Leadership Academy
+                    Director of Training &mdash; Security Compliance Academy &middot; P.I. Leadership Academy
                   </span>
                 </div>
                 <span className="mono text-[11px] uppercase tracking-[0.16em] text-muted">Client</span>
