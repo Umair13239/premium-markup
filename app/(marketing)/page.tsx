@@ -159,9 +159,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* real client testimonial (LinkedIn embed) */}
-      <Testimonial />
-
       {/* process — dark band */}
       <section className="band">
         <div className="container-editorial py-20 md:py-28">
@@ -225,6 +222,10 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Real client video testimonial — sits immediately before the CTA, where
+          doubt peaks and proof does the most work. */}
+      <Testimonial />
 
       {/* final CTA — oversized monogram */}
       <section className="band">
