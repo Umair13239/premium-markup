@@ -123,17 +123,18 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      {/* Instant, lightweight background — always painted first (23KB webp). */}
+      {/* Hero background = JUST the agency video. Its poster frame paints
+          instantly (16KB); the video fades in over it once the page is idle.
+          No dev-grid, no separate static image — they clashed with the video. */}
       <Image
-        src="/generated/hero-ambient.webp"
+        src="/generated/hero-poster.webp"
         alt=""
         aria-hidden="true"
         fill
         priority
         sizes="100vw"
-        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.20] [mask-image:radial-gradient(ellipse_75%_65%_at_72%_35%,#000,transparent_78%)]"
+        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
       />
-      {/* Video mounts only after the page is idle, then fades in over the webp. */}
       {showVideo && mountVideo && (
         <video
           src={videoSrc}
@@ -152,7 +153,6 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
         />
       )}
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-0 -z-10 hero-grid" aria-hidden="true" />
 
       <div className="container-editorial grid items-center gap-12 pt-14 pb-16 md:pt-24 md:pb-24 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="max-w-2xl">

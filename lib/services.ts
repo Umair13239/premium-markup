@@ -387,6 +387,43 @@ export const services: Service[] = [
     seoTitle: "Graphic & Digital Design — brand-aligned assets",
     seoDescription: "Brand-aligned graphic and digital design: social graphics, campaign visuals and interface assets as one consistent system. Premium Markup.",
   },
+  {
+    slug: "social-media",
+    nav: "Social Media",
+    title: "Social Media Management",
+    h1: "Social Media Management",
+    keyword: "social media management",
+    tagline: "Content that sounds like your business — planned, written and posted, not left to chance.",
+    intro:
+      "A website brings people in; social keeps you in front of them. We run social media that actually sounds like your business — a clear plan, on-brand graphics and captions that read like a person wrote them, posted consistently so you stay visible without it becoming another job you don't have time for.",
+    problems: [
+      "You post when you remember, then go quiet for weeks.",
+      "The content feels generic and off-brand.",
+      "You're not sure what to post, or what's even working.",
+      "Keeping up with it eats time you don't have.",
+    ],
+    whoFor: [
+      "Businesses that want a consistent presence without doing it themselves.",
+      "Brands whose social doesn't match the quality of their work.",
+      "Owners who'd rather focus on the business than the feed.",
+    ],
+    deliverables: [
+      "A simple monthly content plan mapped to your goals",
+      "On-brand graphics and short-form visuals",
+      "Captions written in your voice, not filler",
+      "Scheduling and consistent posting",
+      "A plain report on what's landing, so we do more of it",
+    ],
+    faqs: [
+      { q: "Which platforms do you cover?", a: "The ones your customers actually use — usually Instagram, Facebook, LinkedIn or TikTok. We focus effort where it pays off rather than trying to be everywhere." },
+      { q: "Do you write the content or do I?", a: "We do — plan, graphics and captions in your voice. You approve before anything goes out, and you can feed us photos or news whenever you have them." },
+      { q: "Can you guarantee it goes viral?", a: "No honest agency can. We build a consistent, on-brand presence that keeps you visible and credible, and we report on what actually moves — reach and enquiries, not vanity likes." },
+    ],
+    related: ["graphic-design", "web-design", "landing-pages"],
+    visual: "motion",
+    seoTitle: "Social Media Management — on-brand content, done for you",
+    seoDescription: "Social media management that sounds like your business: a clear plan, on-brand graphics and captions in your voice, posted consistently. Premium Markup.",
+  },
 ];
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug);

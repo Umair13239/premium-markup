@@ -87,6 +87,10 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Real client video testimonial — placed high, right after the stats,
+          so social proof lands before the pitch. */}
+      <Testimonial />
+
       {/* brand statement */}
       <BrandStatement />
 
@@ -222,10 +226,6 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* Real client video testimonial — sits immediately before the CTA, where
-          doubt peaks and proof does the most work. */}
-      <Testimonial />
 
       {/* final CTA — oversized monogram */}
       <section className="band">
