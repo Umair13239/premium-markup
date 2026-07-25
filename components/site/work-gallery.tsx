@@ -62,7 +62,7 @@ export function WorkGallery({ projects }: { projects: ProjectDTO[] }) {
               initial={reduce ? false : { opacity: 0, y: 26 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               exit={reduce ? undefined : { opacity: 0, scale: 0.97 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, margin: "-60px" }}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: (i % 2) * 0.06 }}
             >
               <Link href={`/work/${p.slug}`} className="group block" data-cursor={"View project ↗"}>

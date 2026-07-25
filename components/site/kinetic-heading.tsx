@@ -27,7 +27,7 @@ export function KineticHeading({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLHeadingElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: false, margin: "-60px" });
   const Heading = as;
   const words = text.split(" ");
 

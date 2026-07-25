@@ -21,9 +21,11 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      // once:false → the element fades back out when it leaves the viewport and
+      // re-animates when it returns, so scrolling *up* isn't static either.
+      viewport={{ once: false, margin: "-60px 0px -60px 0px" }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}

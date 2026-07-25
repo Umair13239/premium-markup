@@ -24,13 +24,13 @@ export function MediaReveal({
       className={className}
       initial={{ clipPath: from }}
       whileInView={{ clipPath: "inset(0 0 0 0)" }}
-      viewport={{ once: true, margin: "-70px" }}
+      viewport={{ once: false, margin: "-70px" }}
       transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
         initial={{ scale: 1.08 }}
         whileInView={{ scale: 1 }}
-        viewport={{ once: true, margin: "-70px" }}
+        viewport={{ once: false, margin: "-70px" }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         className="h-full w-full"
       >

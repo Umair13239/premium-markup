@@ -25,7 +25,7 @@ export function ServiceVisual({ variant }: { variant: ServiceVisualVariant }) {
   // Gate every set of motion props through here: no-op under reduced motion,
   // and `any` keeps framer's strict Target typing happy for dynamic props.
   const m = (o: Record<string, unknown>): any => (reduce ? {} : o);
-  const rise = (i: number) => m({ initial: { opacity: 0, y: 14 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-40px" }, transition: { duration: 0.5, ease, delay: i * 0.08 } });
+  const rise = (i: number) => m({ initial: { opacity: 0, y: 14 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: false, margin: "-40px" }, transition: { duration: 0.5, ease, delay: i * 0.08 } });
   const loop = (d = 0) => m({ animate: { y: [0, -6, 0] }, transition: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: d } });
 
   return (
@@ -111,7 +111,7 @@ export function ServiceVisual({ variant }: { variant: ServiceVisualVariant }) {
             <g key={i}>
               {i > 0 && <line x1="100" y1="34" x2={p[0]} y2={p[1]} stroke="var(--color-line)" strokeWidth="1.5" />}
               <motion.circle cx={p[0]} cy={p[1]} r={i === 0 ? 9 : 6} fill={i === 0 ? iris : "var(--color-surface)"} stroke={iris} strokeWidth="1.5"
-                {...m({ initial: { scale: 0 }, whileInView: { scale: 1 }, viewport: { once: true }, transition: { delay: i * 0.12, type: "spring", stiffness: 300, damping: 18 } })} />
+                {...m({ initial: { scale: 0 }, whileInView: { scale: 1 }, viewport: { once: false }, transition: { delay: i * 0.12, type: "spring", stiffness: 300, damping: 18 } })} />
             </g>
           ))}
           {!reduce && <motion.circle r="3" fill={iris} animate={{ cx: [100, 50], cy: [34, 84] }} transition={{ duration: 1.6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />}

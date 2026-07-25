@@ -63,7 +63,7 @@ export function BrandStatement() {
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: false, margin: "-80px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 max-w-2xl text-lg leading-relaxed text-muted"
         >

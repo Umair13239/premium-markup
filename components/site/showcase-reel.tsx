@@ -33,7 +33,7 @@ export function ShowcaseReel({ src, poster }: { src: string; poster?: string }) 
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.2, 0.85, 0.25, 1] }}
         >
           <p className="mono text-xs uppercase tracking-[0.2em] text-muted">Showreel</p>
@@ -45,7 +45,7 @@ export function ShowcaseReel({ src, poster }: { src: string; poster?: string }) 
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.2, 0.85, 0.25, 1] }}
           className="mt-10"
         >

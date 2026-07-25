@@ -44,7 +44,7 @@ export function AboutPortrait({ src, alt }: { src: string; alt: string }) {
           style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
           initial={reduce ? false : { opacity: 0, y: 40, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ type: "spring", stiffness: 90, damping: 18 }}
           className="relative aspect-[3/4] w-full"
         >
@@ -96,7 +96,7 @@ export function AboutPortrait({ src, alt }: { src: string; alt: string }) {
                 className={`glass absolute ${pos} mono rounded-full px-3 py-1.5 text-[11px] font-medium text-ink shadow-lg`}
                 initial={reduce ? false : { opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 0.4 + i * 0.12, type: "spring", stiffness: 200, damping: 14 }}
                 animate={reduce ? undefined : { y: [0, i % 2 ? 8 : -8, 0] }}
                 {...(!reduce && { transition: { delay: 0.4 + i * 0.12, y: { duration: 3.5 + i, repeat: Infinity, ease: "easeInOut" } } })}

@@ -93,22 +93,6 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
   // Agency-at-work video behind the hero. Only when the file exists (page passes
   // the src) and motion is allowed — otherwise the ambient still does the job.
   const showVideo = !!videoSrc && !reduce;
-  // Defer the video OUT of the critical load path: paint the 23KB webp ambient
-  // instantly, then mount + fade in the 432KB video only once the page is idle.
-  // This keeps first paint fast and stops the video competing for bandwidth
-  // during initial load (which was pushing the `load` event way out).
-  const [mountVideo, setMountVideo] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  useEffect(() => {
-    if (!showVideo) return;
-    const w = window as unknown as { requestIdleCallback?: (cb: () => void) => number };
-    const start = () => setMountVideo(true);
-    const id = w.requestIdleCallback ? w.requestIdleCallback(start) : window.setTimeout(start, 1200);
-    return () => {
-      if (w.requestIdleCallback) (window as unknown as { cancelIdleCallback?: (n: number) => void }).cancelIdleCallback?.(id as number);
-      else clearTimeout(id as number);
-    };
-  }, [showVideo]);
 
   const [count, setCount] = useState(reduce ? OPEN.length + CLOSE.length : 0);
   const total = OPEN.length + CLOSE.length;
@@ -123,20 +107,10 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      {/* Hero background = JUST the agency video. Its poster frame paints
-          instantly (16KB); the video fades in over it once the page is idle.
-          No dev-grid, no separate static image — they clashed with the video. */}
-      <Image
-        src="/generated/hero-poster.webp"
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        style={{ opacity: showVideo && videoReady ? 0 : 0.34, transition: "opacity 700ms ease" }}
-        className="pointer-events-none absolute inset-0 -z-10 object-cover [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
-      />
-      {showVideo && mountVideo && (
+      {/* Hero background = JUST the agency video (single element). Its own poster
+          frame paints instantly and the video plays over it — no separate static
+          image, no grid. Reduced-motion users get the poster as a still. */}
+      {showVideo ? (
         <video
           src={videoSrc}
           poster="/generated/hero-poster.webp"
@@ -144,13 +118,21 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           disablePictureInPicture
           aria-hidden="true"
           tabIndex={-1}
-          onLoadedData={() => setVideoReady(true)}
-          style={{ opacity: videoReady ? 0.34 : 0 }}
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover transition-opacity duration-700 [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
+        />
+      ) : (
+        <Image
+          src="/generated/hero-poster.webp"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
         />
       )}
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight" aria-hidden="true" />
