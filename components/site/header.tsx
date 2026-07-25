@@ -170,10 +170,17 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile dropdown menu — floating glass card under the capsule */}
+      {/* Mobile dropdown menu — solid card + dimming backdrop (no bleed-through) */}
       {open && (
-        <div className="container-editorial mt-2 lg:hidden">
-          <div className="glass max-h-[78vh] overflow-y-auto rounded-2xl p-2 shadow-[0_28px_70px_-30px_rgba(6,8,24,0.7)]">
+        <>
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="fixed inset-x-0 bottom-0 top-[70px] z-0 bg-[rgba(6,8,20,0.55)] backdrop-blur-sm lg:hidden"
+          />
+          <div className="container-editorial relative z-10 mt-2 lg:hidden">
+            <div className="max-h-[78vh] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-[0_30px_70px_-18px_rgba(6,8,24,0.85)]">
             <nav className="flex flex-col" aria-label="Mobile">
               {siteConfig.nav.map((item) =>
                 item.href === "/services" ? (
@@ -223,8 +230,9 @@ export function Header() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </nav>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
