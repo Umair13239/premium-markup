@@ -316,7 +316,20 @@ h1,h2,h3{font-family:var(--disp);font-weight:600;line-height:.94;letter-spacing:
 .tl-yr{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--acc)}
 .tl-role{font-family:var(--disp);font-weight:600;font-size:clamp(20px,2vw,28px);margin-top:6px}
 .tl-org{color:var(--muted);font-size:14px;margin-top:3px}
-.tl-note{color:var(--muted);font-size:14px;line-height:1.55;margin-top:10px;max-width:46ch}
+.tl-note{color:var(--muted);font-size:14px;line-height:1.55;margin-top:10px;max-width:46ch;transition:color .35s}
+/* Interactive timeline: items slide + the dot glows on hover */
+.tl-item{transition:transform .45s cubic-bezier(.2,.85,.25,1)}
+.tl-item:hover{transform:translateX(9px)}
+.tl-item::before{transition:background .35s,box-shadow .35s,transform .35s;z-index:2}
+.tl-item:hover::before{background:var(--acc);transform:scale(1.3);box-shadow:0 0 18px 3px color-mix(in srgb,var(--acc) 55%,transparent)}
+.tl-role{transition:color .35s}
+.tl-item:hover .tl-role{color:var(--acc)}
+.tl-item:hover .tl-note{color:var(--ink)}
+/* glowing head that travels down the rail as it fills */
+#rail-head{position:absolute;left:3px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--acc);box-shadow:0 0 16px 4px color-mix(in srgb,var(--acc) 60%,transparent);opacity:0;pointer-events:none;z-index:3}
+/* a soft live pulse on the very first (current) timeline dot */
+.tl-item:first-child::before{animation:tlPulse 2.4s ease-in-out infinite}
+@keyframes tlPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--acc) 45%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--acc) 0%,transparent)}}
 .about-side p{color:var(--muted);font-size:clamp(15px,1.1vw,17px);line-height:1.65;margin-bottom:20px}
 .about-side p strong{color:var(--ink);font-weight:600}
 .about-stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:30px;border-top:1px solid var(--line);padding-top:30px}

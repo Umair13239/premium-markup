@@ -240,10 +240,18 @@
   /* ---------- About timeline ---------- */
   function aboutTimeline() {
     const rail = $('#about-rail');
-    if (rail) gsap.fromTo('#rail-fill', { scaleY: 0 }, { scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: rail, start: 'top 60%', end: 'bottom 70%', scrub: 1 } });
-    $$('.tl-item').forEach((it) => gsap.from(it, { opacity: 0, y: 40, duration: 0.8, ease: 'power2.out',
-      scrollTrigger: { trigger: it, start: 'top 82%' } }));
+    if (rail) {
+      gsap.fromTo('#rail-fill', { scaleY: 0 }, { scaleY: 1, ease: 'none',
+        scrollTrigger: { trigger: rail, start: 'top 60%', end: 'bottom 70%', scrub: 1 } });
+      // glowing head that rides the fill as you scroll
+      const head = document.createElement('div'); head.id = 'rail-head'; rail.appendChild(head);
+      gsap.fromTo(head, { y: 0, opacity: 0 }, { y: () => rail.offsetHeight - 24, opacity: 1, ease: 'none',
+        scrollTrigger: { trigger: rail, start: 'top 60%', end: 'bottom 70%', scrub: 1,
+          onUpdate: (self) => { head.style.opacity = self.progress > 0.02 && self.progress < 0.98 ? 1 : 0; } } });
+    }
+    // Richer entrance: items slide in from the rail with a slight scale + stagger.
+    $$('.tl-item').forEach((it) => gsap.from(it, { opacity: 0, x: -30, y: 32, scale: 0.98, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: it, start: 'top 84%' } }));
   }
 
   /* ---------- Expertise interactive index ---------- */
