@@ -16,7 +16,7 @@ export async function savePortfolio(data: PortfolioData, visible: boolean) {
     update: { data: JSON.stringify(data), visible },
     create: { id: "portfolio", data: JSON.stringify(data), visible },
   });
-  revalidatePath("/cv");
+  revalidatePath("/portfolio");
   revalidatePath("/admin/portfolio");
   return { ok: true };
 }

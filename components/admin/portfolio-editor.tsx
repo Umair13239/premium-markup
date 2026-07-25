@@ -153,7 +153,7 @@ export function PortfolioEditor({
       const r = await savePortfolio(cleaned, visible);
       if (r.ok) {
         setData(cleaned);
-        setMsg("Saved — refresh /cv to see it live.");
+        setMsg("Saved — refresh /portfolio to see it live.");
       } else setMsg(r.error || "Save failed");
     } catch {
       setMsg("Save failed");
@@ -167,18 +167,18 @@ export function PortfolioEditor({
         <div>
           <h1 className="text-2xl">Portfolio</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted">
-            The projects shown at <code className="rounded bg-paper px-1 py-0.5">/cv</code>. Images are URLs (paste an
+            The projects shown at <code className="rounded bg-paper px-1 py-0.5">/portfolio</code>. Images are URLs (paste an
             imgbb or any hosted link). Edits go live on save — no rebuild.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <a
-            href="/cv"
+            href="/portfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-10 items-center gap-2 rounded-[6px] border border-line px-3 text-sm hover:border-cobalt"
           >
-            <ExternalLink className="h-4 w-4" /> View /cv
+            <ExternalLink className="h-4 w-4" /> View /portfolio
           </a>
           <button
             onClick={save}
@@ -197,7 +197,7 @@ export function PortfolioEditor({
             checked={visible}
             onChange={(e) => setVisible(e.target.checked)}
           />
-          Visible <span className="text-muted">(off → /cv projects hidden)</span>
+          Visible <span className="text-muted">(off → /portfolio projects hidden)</span>
         </label>
         {msg && <span className="text-sm text-cobalt">{msg}</span>}
       </div>

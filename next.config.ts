@@ -26,18 +26,25 @@ const nextConfig: NextConfig = {
   // (304 when unchanged — still fast); the heavy image assets stay cacheable.
   async headers() {
     return [
-      { source: "/cv", headers: [{ key: "Cache-Control", value: "no-cache" }] },
-      { source: "/cv/index.html", headers: [{ key: "Cache-Control", value: "no-cache" }] },
-      { source: "/cv/:file(homepage.js|work-explorer.js)", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+      { source: "/portfolio", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+      { source: "/portfolio/index.html", headers: [{ key: "Cache-Control", value: "no-cache" }] },
+      { source: "/portfolio/:file(homepage.js|work-explorer.js)", headers: [{ key: "Cache-Control", value: "no-cache" }] },
     ];
   },
   async rewrites() {
     return [
-      { source: "/cv", destination: "/cv/index.html" },
+      { source: "/portfolio", destination: "/portfolio/index.html" },
       // The portfolio's project data is served from the DB so admin edits show
-      // up on /cv without a rebuild. (The static public/cv/projects-data.js was
+      // up on /portfolio without a rebuild. (The static projects-data.js was
       // removed; without it this afterFiles rewrite takes effect.)
-      { source: "/cv/projects-data.js", destination: "/api/portfolio" },
+      { source: "/portfolio/projects-data.js", destination: "/api/portfolio" },
+    ];
+  },
+  // Keep old /cv links working (QR codes, shares, indexed URLs) → /portfolio.
+  async redirects() {
+    return [
+      { source: "/cv", destination: "/portfolio", permanent: true },
+      { source: "/cv/:path*", destination: "/portfolio/:path*", permanent: true },
     ];
   },
 };
