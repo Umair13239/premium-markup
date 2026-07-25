@@ -133,7 +133,8 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
         fill
         priority
         sizes="100vw"
-        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
+        style={{ opacity: showVideo && videoReady ? 0 : 0.34, transition: "opacity 700ms ease" }}
+        className="pointer-events-none absolute inset-0 -z-10 object-cover [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
       />
       {showVideo && mountVideo && (
         <video
