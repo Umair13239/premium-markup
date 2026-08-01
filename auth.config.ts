@@ -18,6 +18,7 @@ export const authConfig = {
       if (pathname.startsWith("/api/")) {
         if (
           pathname.startsWith("/api/contact") ||
+          pathname.startsWith("/api/chat") ||
           pathname.startsWith("/api/auth") ||
           pathname.startsWith("/api/portfolio")
         )
