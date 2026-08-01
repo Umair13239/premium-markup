@@ -46,11 +46,22 @@ export function chatSystemPrompt(): string {
   ].join("\n");
 }
 
-/** Fold the chat history into a single transcript for the (non-streaming) model call. */
+/** Fold the chat history into a single clear instruction for the model. Giving
+ * it an explicit task (rather than a "You:" completion) is what makes it reply. */
 export function chatTranscript(messages: ChatMessage[]): string {
   const recent = messages.slice(-12);
-  const lines = recent.map((m) => (m.role === "user" ? "Visitor" : "You") + ": " + m.content);
-  return lines.join("\n") + "\nYou:";
+  const last = recent[recent.length - 1];
+  const prior = recent.slice(0, -1);
+  const ctx = prior.length
+    ? "Conversation so far:\n" +
+      prior.map((m) => (m.role === "user" ? "Visitor" : "You") + ": " + m.content).join("\n") +
+      "\n\n"
+    : "";
+  return (
+    ctx +
+    'The visitor just said: "' + (last ? last.content : "") + '"\n\n' +
+    "Write your reply now, as the assistant, in 1 to 3 short sentences. No dashes."
+  );
 }
 
 /** Opening line + quick replies shown when the widget first opens. */
