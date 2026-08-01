@@ -38,8 +38,8 @@ export default function ServicesPage() {
           {services.map((s, i) => (
             <Reveal key={s.slug}>
               <div className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}>
-                <div className="group/img relative overflow-hidden rounded-[10px] border border-line" style={{ aspectRatio: "16 / 9" }}>
-                  <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]" />
+                <div className="group/img relative overflow-hidden rounded-[10px] border border-line bg-surface-2 transition-all duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-cobalt/50 hover:shadow-[0_28px_60px_-32px_color-mix(in_oklab,var(--color-cobalt)_45%,transparent)]" style={{ aspectRatio: "16 / 9" }}>
+                  <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
                 </div>
                 <div>
                   <p className="tag-label">{`<!-- ${s.keyword} -->`}</p>

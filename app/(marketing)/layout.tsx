@@ -5,6 +5,7 @@ import { CustomCursor } from "@/components/site/custom-cursor";
 import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { Preloader } from "@/components/site/preloader";
 import { SiteSchema } from "@/components/site/site-schema";
+import { ChatWidget } from "@/components/site/chat-widget";
 
 export default function MarketingLayout({
   children,
@@ -29,6 +30,7 @@ export default function MarketingLayout({
         {children}
       </main>
       <Footer />
+      <ChatWidget />
     </>
   );
 }
