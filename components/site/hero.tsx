@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Button } from "./button";
 import { Magnetic } from "./magnetic";
@@ -90,6 +89,10 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const codeY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 90]);
+  // Soft iris glow that follows the cursor — hero only.
+  const glowX = useMotionValue(0);
+  const glowY = useMotionValue(0);
+  const [glow, setGlow] = useState(false);
 
   const [count, setCount] = useState(reduce ? OPEN.length + CLOSE.length : 0);
   const total = OPEN.length + CLOSE.length;
@@ -103,18 +106,23 @@ export function Hero() {
   const closeText = count > OPEN.length ? CLOSE.slice(0, count - OPEN.length) : "";
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden">
-      {/* Hero background = a single lightweight still (no video). Paints instantly,
-          zero playback cost. */}
-      <Image
-        src="/generated/hero-poster.webp"
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
-      />
+    <section
+      ref={sectionRef}
+      onMouseMove={reduce ? undefined : (e) => { const r = sectionRef.current?.getBoundingClientRect(); if (r) { glowX.set(e.clientX - r.left); glowY.set(e.clientY - r.top); } }}
+      onMouseEnter={() => { if (!reduce) setGlow(true); }}
+      onMouseLeave={() => setGlow(false)}
+      className="relative overflow-hidden"
+    >
+      {/* Cursor-follow glow (no background image). */}
+      {!reduce && (
+        <motion.div
+          aria-hidden
+          style={{ left: glowX, top: glowY, background: "radial-gradient(circle at center, color-mix(in oklab, var(--color-cobalt) 32%, transparent) 0%, transparent 66%)" }}
+          animate={{ opacity: glow ? 1 : 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="pointer-events-none absolute -z-10 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
+        />
+      )}
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight" aria-hidden="true" />
 
       <div className="container-editorial grid items-center gap-12 pt-14 pb-16 md:pt-24 md:pb-24 lg:grid-cols-[1.05fr_0.95fr]">
@@ -128,7 +136,7 @@ export function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-cobalt)]" /> UK web development · hand-coded
           </motion.span>
 
-          <h1 className="mt-6 text-[2.6rem] leading-[1.02] sm:text-5xl md:text-6xl">
+          <h1 className="mt-6 text-[2.6rem] leading-[1.1] tracking-[0.005em] sm:text-5xl md:text-6xl">
             <span aria-hidden="true" className="mono block text-base font-normal tracking-normal text-tag md:text-lg">{openText || " "}</span>
             <motion.span className="block py-1" initial={reduce ? false : { opacity: 0, y: 10 }} animate={typed ? { opacity: 1, y: 0 } : undefined} transition={{ duration: 0.5 }}>
               Hand-built websites that <span className="grad-text">win customers</span>.

@@ -103,11 +103,11 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.005em;
-    line-height: 1.08;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
     text-wrap: balance;
   }
-  h1 { letter-spacing: -0.012em; }
+  h1 { letter-spacing: 0.005em; }
   a { color: inherit; }
   :focus-visible {
     outline: 2px solid var(--color-cobalt);
@@ -123,12 +123,6 @@
   @media (min-width: 768px) { .container-editorial { padding-inline: 2.5rem; } }
 
   .mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
-
-  /* Logo mark swaps by theme: white on dark, colour on light. */
-  .logo-light { display: none; }
-  .logo-dark { display: block; }
-  :root[data-theme="light"] .logo-light { display: block; }
-  :root[data-theme="light"] .logo-dark { display: none; }
 
   /* HTML-comment section labels — <!-- services --> */
   .tag-label {

@@ -68,8 +68,7 @@ export function Header() {
             className="group flex items-center gap-2.5 font-display text-lg font-extrabold"
             aria-label={`${siteConfig.name} home`}
           >
-            <Image src="/brand/pm-mark-white.webp" alt="" aria-hidden width={28} height={27} priority className="logo-dark h-7 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
-            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} priority className="logo-light h-7 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
+            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} priority className="h-7 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
             Premium&nbsp;<span className="grad-text">Markup</span>
           </Link>
 
