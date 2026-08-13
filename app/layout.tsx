@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, Jost } from "next/font/google";
+import { IBM_Plex_Mono, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { siteConfig } from "@/site.config";
@@ -12,11 +12,11 @@ const gendy = localFont({
   display: "swap",
 });
 
-// Body font. Jost is a free, Futura-geometric near-match for CocoGothic — used
-// because the CocoGothic *trial* files carry a "ZETAFONTS.COM" watermark. Once
-// the LICENSED CocoGothic is dropped in public/fonts, swap this back to a
-// localFont({ src: [...cocogothic.woff2...] }) — one-line change.
-const coco = Jost({
+// Body font. Poppins is a free geometric sans standing in for CocoGothic (the
+// CocoGothic *trial* files carry a "ZETAFONTS.COM" watermark + non-commercial
+// licence). Once the LICENSED CocoGothic is dropped in public/fonts, swap this
+// to localFont({ src: [...cocogothic.woff2...] }) — one line.
+const coco = Poppins({
   variable: "--font-coco",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
