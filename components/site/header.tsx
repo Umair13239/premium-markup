@@ -9,7 +9,7 @@ import { siteConfig } from "@/site.config";
 import { services } from "@/lib/services";
 import { ThemeToggle } from "./theme-toggle";
 import { Magnetic } from "./magnetic";
-import { PMMark } from "./pm-mark";
+import Image from "next/image";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,7 +68,8 @@ export function Header() {
             className="group flex items-center gap-2.5 font-display text-lg font-extrabold tracking-tight"
             aria-label={`${siteConfig.name} home`}
           >
-            <PMMark className="h-6 w-6 transition-transform duration-300 group-hover:-translate-y-0.5" />
+            <Image src="/brand/pm-mark-white.webp" alt="" aria-hidden width={26} height={25} priority className="logo-dark h-6 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
+            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={26} height={25} priority className="logo-light h-6 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
             Premium<span className="grad-text">Markup</span>
           </Link>
 

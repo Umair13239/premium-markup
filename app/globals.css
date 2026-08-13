@@ -124,6 +124,12 @@
 
   .mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
 
+  /* Logo mark swaps by theme: white on dark, colour on light. */
+  .logo-light { display: none; }
+  .logo-dark { display: block; }
+  :root[data-theme="light"] .logo-light { display: block; }
+  :root[data-theme="light"] .logo-dark { display: none; }
+
   /* HTML-comment section labels — <!-- services --> */
   .tag-label {
     font-family: var(--font-mono); font-size: 0.8125rem;

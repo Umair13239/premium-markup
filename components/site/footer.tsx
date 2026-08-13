@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/site.config";
 import { Socials } from "./socials";
@@ -10,7 +11,9 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-paper">
       <div className="container-editorial grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div>
-          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
+          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold tracking-tight">
+            <Image src="/brand/pm-mark-white.webp" alt="" aria-hidden width={26} height={25} className="logo-dark h-7 w-auto" />
+            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={26} height={25} className="logo-light h-7 w-auto" />
             Premium<span className="text-cobalt">Markup</span>
           </Link>
           <p className="mt-4 max-w-xs text-muted">{siteConfig.tagline}</p>
