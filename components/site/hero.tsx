@@ -85,14 +85,11 @@ function CodeWindow() {
 }
 
 /* ---------------------------- hero ---------------------------- */
-export function Hero({ videoSrc }: { videoSrc?: string }) {
+export function Hero() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const codeY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 90]);
-  // Agency-at-work video behind the hero. Only when the file exists (page passes
-  // the src) and motion is allowed — otherwise the ambient still does the job.
-  const showVideo = !!videoSrc && !reduce;
 
   const [count, setCount] = useState(reduce ? OPEN.length + CLOSE.length : 0);
   const total = OPEN.length + CLOSE.length;
@@ -107,34 +104,17 @@ export function Hero({ videoSrc }: { videoSrc?: string }) {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      {/* Hero background = JUST the agency video (single element). Its own poster
-          frame paints instantly and the video plays over it — no separate static
-          image, no grid. Reduced-motion users get the poster as a still. */}
-      {showVideo ? (
-        <video
-          src={videoSrc}
-          poster="/generated/hero-poster.webp"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          disablePictureInPicture
-          aria-hidden="true"
-          tabIndex={-1}
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
-        />
-      ) : (
-        <Image
-          src="/generated/hero-poster.webp"
-          alt=""
-          aria-hidden="true"
-          fill
-          priority
-          sizes="100vw"
-          className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
-        />
-      )}
+      {/* Hero background = a single lightweight still (no video). Paints instantly,
+          zero playback cost. */}
+      <Image
+        src="/generated/hero-poster.webp"
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none absolute inset-0 -z-10 object-cover opacity-[0.34] [mask-image:radial-gradient(ellipse_90%_85%_at_60%_40%,#000,transparent_92%)]"
+      />
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight" aria-hidden="true" />
 
       <div className="container-editorial grid items-center gap-12 pt-14 pb-16 md:pt-24 md:pb-24 lg:grid-cols-[1.05fr_0.95fr]">

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import fs from "node:fs";
-import path from "node:path";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
@@ -43,8 +41,6 @@ const compare = [
 
 // The hero's agency-at-work video is optional: it appears once the file exists
 // in public/generated/ (checked at build time — the page is fully static).
-const genDir = path.join(process.cwd(), "public", "generated");
-const heroVideo = fs.existsSync(path.join(genDir, "hero-office.mp4")) ? "/generated/hero-office.mp4" : undefined;
 
 export default async function HomePage() {
   const { data: portfolio } = await getPortfolio();
@@ -59,7 +55,7 @@ export default async function HomePage() {
   }));
   return (
     <>
-      <Hero videoSrc={heroVideo} />
+      <Hero />
 
       {/* 3D project showcase slider — replaces the old video reel */}
       <section className="band relative overflow-hidden py-16 md:py-24" aria-label="Project showcase">
