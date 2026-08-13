@@ -103,11 +103,11 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    letter-spacing: -0.005em;
+    line-height: 1.08;
     text-wrap: balance;
   }
-  h1 { letter-spacing: -0.035em; }
+  h1 { letter-spacing: -0.012em; }
   a { color: inherit; }
   :focus-visible {
     outline: 2px solid var(--color-cobalt);
@@ -300,7 +300,7 @@ html[data-preloaded] .pm-pre { display: none !important; }
   animation: pm-wipe 0.55s cubic-bezier(0.76, 0, 0.24, 1) 0.85s forwards;
 }
 .pm-pre-word {
-  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.005em;
   font-size: 1.35rem; opacity: 0; transform: translateY(8px);
   animation: pm-fade 0.5s ease 1.25s forwards;
 }

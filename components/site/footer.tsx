@@ -11,10 +11,10 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-paper">
       <div className="container-editorial grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold tracking-tight">
-            <Image src="/brand/pm-mark-white.webp" alt="" aria-hidden width={26} height={25} className="logo-dark h-7 w-auto" />
-            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={26} height={25} className="logo-light h-7 w-auto" />
-            Premium<span className="text-cobalt">Markup</span>
+          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold">
+            <Image src="/brand/pm-mark-white.webp" alt="" aria-hidden width={28} height={27} className="logo-dark h-7 w-auto" />
+            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} className="logo-light h-7 w-auto" />
+            Premium&nbsp;<span className="text-cobalt">Markup</span>
           </Link>
           <p className="mt-4 max-w-xs text-muted">{siteConfig.tagline}</p>
           <p className="mt-2 max-w-xs text-sm text-muted">
