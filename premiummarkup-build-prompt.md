@@ -64,7 +64,7 @@ The hero headline is wrapped in visible, styled HTML tags — e.g. `<h1 class="p
 
 ## 2.5 BUSINESS CONTACT DETAILS & SOCIAL PROFILES (use these throughout the site)
 
-**Phone:** +44 7451 296502 — display in the header CTA area, contact page, and footer. Make it a `tel:+447451296502` link, and also add a WhatsApp deep link (https://wa.me/447451296502) as a secondary contact option on the contact page.
+**Phone:** +44 7441 484408 — display in the header CTA area, contact page, and footer. Make it a `tel:+447441484408` link, and also add a WhatsApp deep link (https://wa.me/447441484408) as a secondary contact option on the contact page.
 
 **Email addresses (domain-based, being set up — wire them in now):**
 - hello@premiummarkup.com — primary public email: contact page, footer, JSON-LD, mailto links

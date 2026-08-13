@@ -5,7 +5,7 @@
  *   2. Send it:  "I allow callmebot to send me messages"
  *   3. It replies with your API key.
  *   4. Put these in website/.env (and Vercel env):
- *        WHATSAPP_NOTIFY_PHONE=447451296502   (your number, digits only, no +)
+ *        WHATSAPP_NOTIFY_PHONE=447441484408   (your number, digits only, no +)
  *        CALLMEBOT_APIKEY=xxxxxxx
  * Without those two env vars this is a silent no-op (nothing breaks).
  */
