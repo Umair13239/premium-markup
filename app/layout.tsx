@@ -1,13 +1,25 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Jost } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { siteConfig } from "@/site.config";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+// Gendy (logo/display), self-hosted for speed.
+const gendy = localFont({
+  src: "../public/fonts/gendy.woff2",
+  variable: "--font-gendy",
+  display: "swap",
+});
+
+// Body font. Jost is a free, Futura-geometric near-match for CocoGothic — used
+// because the CocoGothic *trial* files carry a "ZETAFONTS.COM" watermark. Once
+// the LICENSED CocoGothic is dropped in public/fonts, swap this back to a
+// localFont({ src: [...cocogothic.woff2...] }) — one-line change.
+const coco = Jost({
+  variable: "--font-coco",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -55,7 +67,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`${archivo.variable} ${plexMono.variable} h-full`}
+      className={`${gendy.variable} ${coco.variable} ${plexMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <Script id="pm-theme-init" strategy="beforeInteractive">

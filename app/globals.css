@@ -25,8 +25,8 @@
   --color-paper-dim: #cdd0d8;
 
   /* Fonts (wired by next/font in layout.tsx) */
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-gendy), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-coco), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Modular type scale (~1.25) */
