@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-paper">
       <div className="container-editorial grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold">
+          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-normal">
             <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} className="h-7 w-auto" />
             Premium&nbsp;<span className="text-cobalt">Markup</span>
           </Link>
