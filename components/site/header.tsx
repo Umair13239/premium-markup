@@ -65,7 +65,7 @@ export function Header() {
         >
           <Link
             href="/"
-            className="group flex items-center gap-2.5 font-display text-lg font-normal"
+            className="group flex items-center gap-2.5 font-display text-lg font-bold tracking-tight"
             aria-label={`${siteConfig.name} home`}
           >
             <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} priority className="h-7 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />

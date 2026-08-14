@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, Poppins } from "next/font/google";
-import localFont from "next/font/local";
+import { IBM_Plex_Mono, Poppins, Sora } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/site.config";
 
-// Gendy (logo/display), self-hosted for speed.
-const gendy = localFont({
-  src: "../public/fonts/gendy.woff2",
-  variable: "--font-gendy",
+// Headings: Sora — a clean, confident, professional grotesk with real bold weights.
+const head = Sora({
+  variable: "--font-head",
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -67,7 +67,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`${gendy.variable} ${coco.variable} ${plexMono.variable} h-full`}
+      className={`${head.variable} ${coco.variable} ${plexMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <Script id="pm-theme-init" strategy="beforeInteractive">

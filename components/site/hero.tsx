@@ -136,7 +136,7 @@ export function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-cobalt)]" /> UK web development · hand-coded
           </motion.span>
 
-          <h1 className="mt-6 text-[2.6rem] font-normal leading-[1.12] tracking-[0.03em] sm:text-5xl md:text-6xl">
+          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.05] tracking-[-0.025em] sm:text-5xl md:text-6xl">
             <span aria-hidden="true" className="mono block text-base font-normal tracking-normal text-tag md:text-lg">{openText || " "}</span>
             <motion.span className="block py-1" initial={reduce ? false : { opacity: 0, y: 10 }} animate={typed ? { opacity: 1, y: 0 } : undefined} transition={{ duration: 0.5 }}>
               Hand-built websites that <span className="grad-text">win customers</span>.
