@@ -109,7 +109,7 @@ export default async function HomePage() {
                 >
                   <div className="relative overflow-hidden rounded-xl border border-line bg-surface-2 transition-all duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-cobalt/60 group-hover:shadow-[0_28px_60px_-32px_color-mix(in_oklab,var(--color-cobalt)_55%,transparent)]">
                     <div className="relative" style={{ aspectRatio: "16 / 9" }}>
-                      <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 33vw" className="pm-shot object-contain" />
+                      <Image src={`/generated/service-${s.slug}.webp`} alt={`${s.title} — Premium Markup`} fill sizes="(max-width: 768px) 100vw, 33vw" className="pm-shot object-cover object-top" />
                       <span className="card-shine" aria-hidden="true" />
                     </div>
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100" style={{ background: "linear-gradient(180deg, transparent 45%, color-mix(in oklab, var(--color-cobalt) 32%, transparent))" }} />
