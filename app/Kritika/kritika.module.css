@@ -1,0 +1,365 @@
+/* ============================================================
+   For Kritika — a private tribute page.
+   Palette pulled straight from the actual photos: deep theatre-
+   curtain wine, warm gold, cream. Signature element: three
+   candid screenshots reframed as kept polaroids.
+   ============================================================ */
+
+.kr-root {
+  --wine-deep: #2b070c;
+  --wine-curtain: #6e1b26;
+  --wine-curtain-2: #4a1219;
+  --gold: #cc9a4a;
+  --gold-soft: #e8c887;
+  --cream: #f7ead8;
+  --blush: #e3a6ab;
+  --ink-soft: #241014;
+
+  --font-display: var(--font-kr-display), "Georgia", serif;
+  --font-body: var(--font-kr-body), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-kr-script), cursive;
+
+  background: var(--wine-deep);
+  color: var(--cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.kr-root :global(em) {
+  font-style: italic;
+  color: var(--gold-soft);
+}
+
+/* ---------- shared ---------- */
+
+.kr-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin: 0 0 1.25rem;
+}
+
+.kr-eyebrow--dark {
+  color: var(--wine-curtain);
+}
+
+/* ---------- hero ---------- */
+
+.kr-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 1.5rem 4rem;
+  isolation: isolate;
+}
+
+.kr-curtain {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      100deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 2px,
+      transparent 2px,
+      transparent 34px
+    ),
+    radial-gradient(120% 90% at 50% -10%, var(--wine-curtain) 0%, var(--wine-curtain-2) 46%, var(--wine-deep) 100%);
+  z-index: -2;
+}
+
+.kr-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 50% 40%, transparent 40%, rgba(10, 2, 4, 0.65) 100%);
+  z-index: -1;
+}
+
+.kr-hero-inner {
+  max-width: 42rem;
+}
+
+.kr-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem;
+  color: var(--cream);
+  text-shadow: 0 2px 40px rgba(204, 154, 74, 0.25);
+}
+
+.kr-title em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.kr-sub {
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  color: var(--blush);
+  max-width: 26rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.kr-scrollcue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.kr-scrollcue-line {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: kr-cue 2.2s ease-in-out infinite;
+}
+
+@keyframes kr-cue {
+  0%, 100% { transform: scaleY(1); opacity: 0.5; }
+  50% { transform: scaleY(1.3); opacity: 1; }
+}
+
+/* ---------- keepsakes / polaroids (signature element) ---------- */
+
+.kr-keepsakes {
+  position: relative;
+  padding: 6rem 1.5rem 7rem;
+  background: var(--wine-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kr-polaroid-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2.5rem 1.5rem;
+  max-width: 60rem;
+  margin-top: 1rem;
+}
+
+.kr-polaroid {
+  background: var(--cream);
+  padding: 0.9rem 0.9rem 1.6rem;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 20px 40px -12px rgba(0, 0, 0, 0.55);
+  width: 15.5rem;
+  transform: translateY(var(--offset, 0px)) rotate(var(--tilt, 0deg));
+  transition: box-shadow 0.3s ease;
+}
+
+.kr-polaroid:hover {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 28px 56px -14px rgba(0, 0, 0, 0.6);
+}
+
+.kr-polaroid-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #1a0a0d;
+}
+
+.kr-polaroid-img {
+  object-fit: cover;
+  /* biased down + right: crops the phone status bar off the top and the
+     stream UI off the left edge, keeps the face centred */
+  object-position: 62% 30%;
+}
+
+.kr-polaroid figcaption {
+  font-family: var(--font-script);
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding-top: 0.85rem;
+  line-height: 1.3;
+}
+
+/* ---------- words ---------- */
+
+.kr-words {
+  padding: 5rem 1.5rem 6rem;
+  background: linear-gradient(180deg, var(--wine-deep) 0%, var(--wine-curtain-2) 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.kr-words-card {
+  position: relative;
+  max-width: 38rem;
+  background: var(--cream);
+  color: var(--ink-soft);
+  border-radius: 4px;
+  padding: 3.5rem 2.25rem 3rem;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.6);
+  border-top: 3px solid var(--gold);
+}
+
+.kr-quotemark {
+  position: absolute;
+  top: -1.2rem;
+  left: 2rem;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-style: italic;
+  color: var(--gold);
+  background: var(--cream);
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+
+.kr-pullquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  line-height: 1.45;
+  color: var(--wine-curtain);
+  margin: 0.5rem 0 2rem;
+}
+
+.kr-words-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+/* ---------- signoff ---------- */
+
+.kr-signoff {
+  padding: 6rem 1.5rem 7rem;
+  background: var(--wine-curtain-2);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.kr-signoff-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kr-flourish {
+  width: 8rem;
+  height: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 1.75rem;
+}
+
+.kr-signature {
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: var(--cream);
+  margin: 0 0 2.5rem;
+}
+
+.kr-keepwrap {
+  position: relative;
+}
+
+.kr-keepbtn {
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--wine-deep);
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2.4rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 12px 30px -10px rgba(204, 154, 74, 0.55);
+}
+
+.kr-keepbtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -10px rgba(204, 154, 74, 0.7);
+}
+
+.kr-keepbtn:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
+.kr-sparkle-field {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kr-sparkle {
+  position: absolute;
+  border-radius: 999px;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 640px) {
+  .kr-hero {
+    padding: 5rem 1.25rem 3.5rem;
+  }
+
+  .kr-polaroid {
+    width: min(78vw, 17rem);
+  }
+
+  .kr-polaroid-row {
+    gap: 2.25rem 1rem;
+  }
+
+  .kr-words-card {
+    padding: 3rem 1.5rem 2.25rem;
+  }
+
+  .kr-quotemark {
+    left: 1.25rem;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .kr-scrollcue-line {
+    animation: none;
+  }
+
+  .kr-polaroid,
+  .kr-keepbtn {
+    transition: none;
+  }
+}
