@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import {
   motion,
+  useAnimation,
   useReducedMotion,
   type Variants,
 } from "framer-motion";
@@ -13,6 +14,13 @@ const photos = [
   { src: "/kritika/photo-1.jpg", tilt: -7, caption: "mid-laugh, didn't even notice", offset: 0 },
   { src: "/kritika/photo-2.jpg", tilt: 4, caption: "that quiet, no-filter kind of pretty", offset: 26 },
   { src: "/kritika/photo-3.jpg", tilt: -3, caption: "still stealing the show, on or off screen", offset: 4 },
+];
+
+const reasons = [
+  { icon: "✨", title: "You light up every room", body: "and every call, and every chat — you don't even have to try." },
+  { icon: "😂", title: "Your laugh is contagious", body: "genuinely — I've caught myself laughing at your laugh before I even heard the joke." },
+  { icon: "🛡️", title: "You make hard days easier", body: "just by being someone I can actually talk to. That's rarer than people think." },
+  { icon: "💎", title: "You're one in a million", body: "and I don't say that lightly. I mean it exactly as much as it sounds." },
 ];
 
 const fadeUp: Variants = {
@@ -32,25 +40,30 @@ function HeartIcon({ className }: { className?: string }) {
   );
 }
 
-/* ---------- ambient floating hearts + bubbles (pure CSS drift) ---------- */
-function FloatingAmbient() {
+/* ---------- ambient floating hearts, bubbles, confetti (pure CSS drift) ---------- */
+const CONFETTI_COLORS = ["#ff4d94", "#ffd60a", "#4cc9f0", "#9b5de5", "#7CFFB2"];
+
+function FloatingAmbient({ dense = false }: { dense?: boolean }) {
   const reduce = useReducedMotion();
   const particles = useMemo(() => {
-    const n = 20;
+    const n = dense ? 34 : 22;
     return Array.from({ length: n }, (_, i) => {
-      const isHeart = i % 2 === 0;
+      const kind = i % 3; // 0 heart, 1 bubble, 2 confetti
       return {
         id: i,
-        isHeart,
+        kind,
         left: Math.round(Math.random() * 100),
-        size: isHeart ? 10 + Math.random() * 16 : 6 + Math.random() * 20,
-        duration: 14 + Math.random() * 12,
+        size: kind === 1 ? 6 + Math.random() * 22 : 8 + Math.random() * 14,
+        duration: 10 + Math.random() * 14,
         delay: -(Math.random() * 22),
-        drift: Math.round((Math.random() - 0.5) * 120),
-        opacity: 0.16 + Math.random() * 0.28,
+        drift: Math.round((Math.random() - 0.5) * 140),
+        opacity: 0.35 + Math.random() * 0.45,
+        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+        rotate: Math.round(Math.random() * 360),
       };
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dense]);
 
   if (reduce) return null;
 
@@ -59,18 +72,27 @@ function FloatingAmbient() {
       {particles.map((p) => (
         <span
           key={p.id}
-          className={p.isHeart ? styles["kr-amb-heart"] : styles["kr-amb-bubble"]}
+          className={
+            p.kind === 0
+              ? styles["kr-amb-heart"]
+              : p.kind === 1
+              ? styles["kr-amb-bubble"]
+              : styles["kr-amb-confetti"]
+          }
           style={{
             left: `${p.left}%`,
             width: p.size,
-            height: p.size,
+            height: p.kind === 2 ? p.size * 0.4 : p.size,
             opacity: p.opacity,
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
+            color: p.kind === 0 ? p.color : undefined,
+            background: p.kind === 2 ? p.color : undefined,
             ["--drift" as string]: `${p.drift}px`,
+            ["--rot" as string]: `${p.rotate}deg`,
           }}
         >
-          {p.isHeart ? <HeartIcon className={styles["kr-amb-heart-svg"]} /> : null}
+          {p.kind === 0 ? <HeartIcon className={styles["kr-amb-heart-svg"]} /> : null}
         </span>
       ))}
     </div>
@@ -80,34 +102,35 @@ function FloatingAmbient() {
 function Sparkles({ trigger }: { trigger: number }) {
   const reduce = useReducedMotion();
   if (!trigger) return null;
-  const count = reduce ? 8 : 20;
+  const count = reduce ? 10 : 34;
   const particles = Array.from({ length: count }, (_, i) => {
     const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
-    const dist = 90 + Math.random() * 110;
+    const dist = 100 + Math.random() * 160;
     return {
       id: `${trigger}-${i}`,
       x: Math.cos(angle) * dist,
-      y: Math.sin(angle) * dist - 30,
-      delay: Math.random() * 0.15,
-      size: 4 + Math.random() * 6,
-      kind: i % 3,
+      y: Math.sin(angle) * dist - 40,
+      delay: Math.random() * 0.18,
+      size: 5 + Math.random() * 8,
+      kind: i % 4,
+      color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
     };
   });
   return (
     <span className={styles["kr-sparkle-field"]}>
       {particles.map((p) =>
-        p.kind === 2 ? (
+        p.kind === 3 ? (
           <motion.span
             key={p.id}
             className={styles["kr-sparkle-heart"]}
-            style={{ width: p.size * 2, height: p.size * 2 }}
+            style={{ width: p.size * 2.2, height: p.size * 2.2, color: p.color }}
             initial={{ opacity: 1, scale: 0, x: 0, y: 0, rotate: 0 }}
             animate={
               reduce
                 ? { opacity: [1, 0] }
-                : { opacity: [1, 1, 0], scale: [0, 1, 0.7], x: p.x, y: p.y, rotate: p.x > 0 ? 20 : -20 }
+                : { opacity: [1, 1, 0], scale: [0, 1, 0.7], x: p.x, y: p.y, rotate: p.x > 0 ? 30 : -30 }
             }
-            transition={{ duration: reduce ? 0.6 : 1.1, delay: p.delay, ease: "easeOut" }}
+            transition={{ duration: reduce ? 0.6 : 1.2, delay: p.delay, ease: "easeOut" }}
           >
             <HeartIcon />
           </motion.span>
@@ -116,20 +139,18 @@ function Sparkles({ trigger }: { trigger: number }) {
             key={p.id}
             className={styles["kr-sparkle"]}
             style={{
-              width: p.size,
-              height: p.size,
-              background:
-                p.kind === 0
-                  ? "radial-gradient(circle, #f3d99a 0%, #c8963f 100%)"
-                  : "radial-gradient(circle, #f3c9cd 0%, #d98e95 100%)",
+              width: p.kind === 2 ? p.size * 1.6 : p.size,
+              height: p.kind === 2 ? p.size * 0.6 : p.size,
+              background: p.color,
+              borderRadius: p.kind === 2 ? "2px" : "999px",
             }}
-            initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
+            initial={{ opacity: 1, scale: 0, x: 0, y: 0, rotate: 0 }}
             animate={
               reduce
                 ? { opacity: [1, 0], scale: [1, 1] }
-                : { opacity: [1, 1, 0], scale: [0, 1, 0.6], x: p.x, y: p.y }
+                : { opacity: [1, 1, 0], scale: [0, 1, 0.6], x: p.x, y: p.y, rotate: p.x * 1.4 }
             }
-            transition={{ duration: reduce ? 0.6 : 1.1, delay: p.delay, ease: "easeOut" }}
+            transition={{ duration: reduce ? 0.6 : 1.2, delay: p.delay, ease: "easeOut" }}
           />
         )
       )}
@@ -141,14 +162,20 @@ function Sparkles({ trigger }: { trigger: number }) {
 function OpenGate({ onOpen }: { onOpen: () => void }) {
   const reduce = useReducedMotion();
   const [unlocked, setUnlocked] = useState(false);
-  const TRACK = 220;
-  const HANDLE = 56;
+  const handleControls = useAnimation();
+  const TRACK = 240;
+  const HANDLE = 60;
   const MAX_X = TRACK - HANDLE;
 
   const trigger = () => {
     if (unlocked) return;
     setUnlocked(true);
-    setTimeout(onOpen, reduce ? 120 : 520);
+    handleControls.start({ x: MAX_X, transition: { duration: 0.25, ease: "easeOut" } });
+    setTimeout(onOpen, reduce ? 120 : 560);
+  };
+
+  const snapBack = () => {
+    handleControls.start({ x: 0, transition: { type: "spring", stiffness: 500, damping: 32 } });
   };
 
   return (
@@ -156,9 +183,8 @@ function OpenGate({ onOpen }: { onOpen: () => void }) {
       className={styles["kr-gate"]}
       exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
     >
-      <div className={styles["kr-curtain"]} aria-hidden="true" />
-      <div className={styles["kr-vignette"]} aria-hidden="true" />
-      <FloatingAmbient />
+      <div className={styles["kr-aurora"]} aria-hidden="true" />
+      <FloatingAmbient dense />
 
       <motion.button
         type="button"
@@ -167,31 +193,32 @@ function OpenGate({ onOpen }: { onOpen: () => void }) {
         aria-label="Open — tap the heart, or drag the slider below"
         animate={
           unlocked
-            ? { scale: [1, 1.15, 0] }
+            ? { scale: [1, 1.2, 0], rotate: [0, 12, -12, 0] }
             : reduce
             ? {}
-            : { scale: [1, 1.06, 1] }
+            : { scale: [1, 1.08, 1], boxShadow: ["0 0 30px 4px rgba(255,77,148,.55)", "0 0 55px 14px rgba(155,93,229,.6)", "0 0 30px 4px rgba(255,77,148,.55)"] }
         }
-        transition={unlocked ? { duration: 0.5, ease: "easeIn" } : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        transition={unlocked ? { duration: 0.55, ease: "easeIn" } : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
       >
         <HeartIcon className={styles["kr-seal-heart"]} />
       </motion.button>
 
       <p className={styles["kr-gate-label"]}>for my best friend, Kritika</p>
-      <p className={styles["kr-gate-sub"]}>tap the heart, or slide it open</p>
+      <p className={styles["kr-gate-sub"]}>tap the heart, or slide it open ✨</p>
 
       <div className={styles["kr-slide-track"]} style={{ width: TRACK }}>
         <motion.div
           className={styles["kr-slide-handle"]}
-          drag="x"
+          drag={unlocked ? false : "x"}
           dragConstraints={{ left: 0, right: MAX_X }}
           dragElastic={0.05}
           dragMomentum={false}
+          animate={handleControls}
           onDragEnd={(_, info) => {
-            if (info.offset.x >= MAX_X - 24) trigger();
+            if (info.offset.x >= MAX_X * 0.6) trigger();
+            else snapBack();
           }}
-          animate={unlocked ? { x: MAX_X } : { x: 0 }}
-          whileTap={{ scale: 1.08 }}
+          whileTap={{ scale: 1.1 }}
         >
           <HeartIcon className={styles["kr-slide-heart"]} />
         </motion.div>
@@ -210,26 +237,24 @@ export function KritikaClient() {
   return (
     <main className={styles["kr-root"]}>
       {!opened && <OpenGate onOpen={() => setOpened(true)} />}
-
       {opened && <FloatingAmbient />}
 
       {/* ---------- HERO ---------- */}
       <section className={styles["kr-hero"]}>
-        <div className={styles["kr-curtain"]} aria-hidden="true" />
-        <div className={styles["kr-vignette"]} aria-hidden="true" />
+        <div className={styles["kr-aurora"]} aria-hidden="true" />
         <motion.div
           className={styles["kr-hero-inner"]}
           initial={reduce || !opened ? undefined : "hidden"}
           animate={opened ? "show" : undefined}
         >
           <motion.p custom={0} variants={fadeUp} className={styles["kr-eyebrow"]}>
-            <HeartIcon className={styles["kr-eyebrow-heart"]} /> a little something for my best friend
+            ✨ made just for my best friend ✨
           </motion.p>
           <motion.h1 custom={1} variants={fadeUp} className={styles["kr-title"]}>
             For <em>Kritika</em>
           </motion.h1>
           <motion.p custom={2} variants={fadeUp} className={styles["kr-sub"]}>
-            three moments I didn&rsquo;t want to just scroll past.
+            the most beautiful person I know — and I&rsquo;m not exaggerating.
           </motion.p>
         </motion.div>
         <motion.div
@@ -243,16 +268,46 @@ export function KritikaClient() {
         </motion.div>
       </section>
 
-      {/* ---------- POLAROIDS ---------- */}
-      <section className={styles["kr-keepsakes"]}>
+      {/* ---------- REASONS ---------- */}
+      <section className={styles["kr-reasons"]}>
         <motion.p
-          className={`${styles["kr-eyebrow"]} ${styles["kr-eyebrow--dark"]}`}
+          className={styles["kr-eyebrow"]}
           initial={reduce ? undefined : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15%" }}
           transition={{ duration: 0.6 }}
         >
-          <HeartIcon className={styles["kr-eyebrow-heart"]} /> the ones I kept
+          🎉 a few things, off the top of my head 🎉
+        </motion.p>
+        <div className={styles["kr-reasons-grid"]}>
+          {reasons.map((r, i) => (
+            <motion.div
+              key={r.title}
+              className={styles["kr-reason-card"]}
+              initial={reduce ? undefined : { opacity: 0, y: 40, scale: 0.92 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={reduce ? undefined : { y: -8, scale: 1.03 }}
+            >
+              <span className={styles["kr-reason-icon"]}>{r.icon}</span>
+              <h3>{r.title}</h3>
+              <p>{r.body}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- POLAROIDS ---------- */}
+      <section className={styles["kr-keepsakes"]}>
+        <motion.p
+          className={styles["kr-eyebrow"]}
+          initial={reduce ? undefined : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 0.6 }}
+        >
+          📸 moments I couldn&rsquo;t just scroll past 📸
         </motion.p>
         <div className={styles["kr-polaroid-row"]}>
           {photos.map((p, i) => (
@@ -264,7 +319,7 @@ export function KritikaClient() {
               whileInView={{ opacity: 1, y: 0, rotate: p.tilt, scale: 1 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 0.8, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={reduce ? undefined : { rotate: 0, scale: 1.05, y: -6 }}
+              whileHover={reduce ? undefined : { rotate: 0, scale: 1.06, y: -8 }}
             >
               <span className={styles["kr-polaroid-frame"]}>
                 <Image
@@ -295,7 +350,7 @@ export function KritikaClient() {
           </span>
           <p className={styles["kr-pullquote"]}>
             some people light up a room. you light up a phone screen from
-            across the internet, which is honestly a harder trick.
+            across the internet — which is honestly the harder trick.
           </p>
           <div className={styles["kr-words-body"]}>
             <p>
@@ -317,6 +372,7 @@ export function KritikaClient() {
 
       {/* ---------- SIGNOFF ---------- */}
       <section className={styles["kr-signoff"]}>
+        <div className={styles["kr-aurora"]} aria-hidden="true" />
         <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -337,7 +393,7 @@ export function KritikaClient() {
                 setKept(true);
               }}
             >
-              {kept ? "kept ✦" : "keep this"}
+              {kept ? "kept ✦" : "keep this ✨"}
               <Sparkles trigger={burst} />
             </button>
           </div>
