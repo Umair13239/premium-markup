@@ -58,7 +58,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const messages = Array.isArray(body.messages) ? body.messages : [];
+  // Cap what a visitor can push into the AI prompt (length = cost): the last 12
+  // turns, 1,000 characters each.
+  const messages = (Array.isArray(body.messages) ? body.messages : [])
+    .slice(-12)
+    .map((m) => ({ ...m, content: String(m?.content ?? "").slice(0, 1000) }));
   const last = messages[messages.length - 1];
   if (!last || last.role !== "user" || !String(last.content || "").trim()) {
     return NextResponse.json({ error: "Say something first." }, { status: 400 });
