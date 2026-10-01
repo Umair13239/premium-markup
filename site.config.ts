@@ -15,9 +15,9 @@ export const siteConfig = {
     "PremiumMarkup is a UK web development and social media agency. We hand-code fast, search-friendly websites for small businesses — no page builders, no bloat.",
 
   phone: {
-    display: "+92 315 9430132",
-    tel: "+923159430132",
-    whatsapp: "https://wa.me/923159430132",
+    display: "+92 341 5481381",
+    tel: "+923415481381",
+    whatsapp: "https://wa.me/923415481381",
   },
 
   email: {
