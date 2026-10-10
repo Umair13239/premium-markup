@@ -1,0 +1,31 @@
+{
+  "slug": "triarc",
+  "name": "TriArc Consultant",
+  "assets": "public/cases/triarc",
+  "scenes": "scripts/brand-kit/scenes/triarc",
+  "font": "Jost",
+  "colors": { "gold": "#D4A537", "goldLight": "#E6C46A", "goldDeep": "#B3872A", "graphite": "#0E0F10", "graphite2": "#1C1F21", "stone": "#F4F1EA" },
+  "tagline": "Plan. Design. Build.",
+  "services": ["Architecture", "Planning", "Interiors", "3D Visualisation", "Landscape", "Construction"],
+  "person": { "name": "Hamza Fareed", "role": "CEO & Co-Founder" },
+  "contact": {
+    "address": "Ground Floor, Super Market Plaza, Office# 38, Church Rd, Sahiwal",
+    "phones": "+92 319 4470078 · +92 319 4633578",
+    "email": "triarcconsultant@gmail.com",
+    "web": "www.triarcconsultant.com",
+    "handle": "@triarcconsultant"
+  },
+  "mockups": [
+    { "id": "sign", "scene": "sign.jpg", "art": "@lockup-h", "quad": [[303,256],[1647,256],[1647,785],[303,785]], "pad": 0.14, "light": 0.25, "depth": 7 },
+    { "id": "reception", "scene": "reception.jpg", "art": "logo-reversed.png", "box": [953, 335, 300], "light": 0.15, "depth": 8 },
+    { "id": "cards", "scene": "cards.jpg", "layers": [
+      { "art": "../../portfolio/assets/portfolio/triarc-card-back.webp", "quad": [[316,474],[875,117],[1131,331],[576,683]], "light": 0.25 },
+      { "art": "../../portfolio/assets/portfolio/triarc-card-front.webp", "quad": [[789,651],[1318,303],[1647,529],[1131,879]], "light": 0.25 } ] },
+    { "id": "phone", "scene": "phone.jpg", "art": "@phone-profile", "quad": [[543,401],[943,401],[943,1188],[543,1188]], "light": 0.12 },
+    { "id": "tote", "scene": "tote.jpg", "art": "logo-color.png", "box": [700, 900, 300], "blend": "multiply", "light": 0.25 },
+    { "id": "hoodie", "scene": "hoodie.jpg", "art": "icon-gold.png", "box": [728, 790, 170], "light": 0.45 },
+    { "id": "helmet", "scene": "helmet.jpg", "art": "icon-color.png", "box": [688, 800, 165], "light": 0.35 },
+    { "id": "badge", "scene": "badge.jpg", "art": "@id-card", "quad": [[480,715],[819,549],[1115,923],[773,1104]], "light": 0.3 }
+  ],
+  "boards": ["app-home", "app-icons", "social", "flat-stationery", "pattern"]
+}

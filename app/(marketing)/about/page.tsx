@@ -14,7 +14,7 @@ import { siteConfig } from "@/site.config";
 export const metadata: Metadata = {
   title: "About — the developer behind PremiumMarkup",
   description:
-    "PremiumMarkup is a hands-on UK developer who builds every website personally. No account managers, no outsourcing — just careful, hand-coded work.",
+    "PremiumMarkup is a hands-on developer in Pakistan who builds every website personally. No account managers, no outsourcing — just careful, hand-coded work.",
   alternates: { canonical: "/about" },
 };
 
@@ -27,7 +27,7 @@ const values = [
 const story = [
   "I started PremiumMarkup after watching too many small businesses pay for websites that quietly worked against them — slow to load, invisible in search, and impossible to change without paying the same agency again.",
   "So I do the opposite. I build every site by hand, from scratch, for speed and search. No account manager between us, no junior quietly doing the real work. You talk to the person writing the code, and you watch it take shape in the browser — the real thing, on real devices.",
-  "I work remotely with businesses across the UK. That keeps overheads low and pricing honest, and it means where you are never limits who can build you something excellent.",
+  "I work remotely with businesses around the world. That keeps overheads low and pricing honest, and it means where you are never limits who can build you something excellent.",
 ];
 
 export default function AboutPage() {
@@ -47,6 +47,7 @@ export default function AboutPage() {
             </Reveal>
             <KineticHeading
               text="One developer. Every site, built personally."
+              as="h1"
               className="mt-3 max-w-2xl text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
             />
             <Reveal delay={0.1}>

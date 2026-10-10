@@ -15,8 +15,8 @@
   --color-ink: #17151c;
   --color-surface: #ffffff;
   --color-surface-2: #f6f4ee;
-  --color-cobalt: #5b57e6;      /* accent — iris (light) */
-  --color-cobalt-ink: #4a46cc;
+  --color-cobalt: #683ce7;      /* accent — brand violet (light) */
+  --color-cobalt-ink: #5233b7;
   --color-tag: #b0413e;         /* code-comment eyebrow — maroon */
   --color-muted: #5c5866;
   --color-line: #e2ded4;
@@ -25,8 +25,8 @@
   --color-paper-dim: #cdd0d8;
 
   /* Fonts (wired by next/font in layout.tsx) */
-  --font-display: var(--font-head), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-coco), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Modular type scale (~1.25) */
@@ -50,8 +50,8 @@
   --color-ink: #ece8e1;         /* warm ivory, never pure white */
   --color-surface: #1a1822;
   --color-surface-2: #221f2b;
-  --color-cobalt: #7c7bff;      /* accent — luminous iris */
-  --color-cobalt-ink: #9a99ff;
+  --color-cobalt: #a29afe;      /* accent — brand violet (dark) */
+  --color-cobalt-ink: #cdc8fd;
   --color-tag: #e79490;
   --color-muted: #9e99a8;       /* chosen mauve-grey */
   --color-line: #2a2733;
@@ -286,7 +286,7 @@ html[data-preloaded] .pm-pre { display: none !important; }
 .pm-pre-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .pm-pre-mark { width: 92px; height: 92px; }
 .pm-pre-p {
-  stroke-dasharray: 320; stroke-dashoffset: 320;
+  stroke-dasharray: 1100; stroke-dashoffset: 1100;
   animation: pm-draw 0.85s ease 0.15s forwards;
 }
 .pm-pre-m {
@@ -298,7 +298,7 @@ html[data-preloaded] .pm-pre { display: none !important; }
   font-size: 1.35rem; opacity: 0; transform: translateY(8px);
   animation: pm-fade 0.5s ease 1.25s forwards;
 }
-.pm-pre-word span { color: var(--color-cobalt); }
+.pm-pre-word span { font-weight: 400; }
 .pm-pre-line { width: 120px; height: 2px; background: var(--color-line); overflow: hidden; border-radius: 2px; }
 .pm-pre-line i { display: block; height: 100%; width: 100%; background: var(--color-cobalt);
   transform: scaleX(0); transform-origin: left; animation: pm-load 1.6s ease forwards; }
@@ -351,3 +351,14 @@ html[data-preloaded] .pm-pre { display: none !important; }
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Premium Markup logo (components/brand/logo.tsx) — sized by font-size. */
+.pm-logo { display: inline-flex; align-items: baseline; white-space: nowrap; line-height: 1; letter-spacing: -0.025em; color: inherit; font-family: var(--font-inter), system-ui, sans-serif; font-weight: 400; }
+.pm-logo-i { height: 0.94em; width: auto; align-self: flex-end; margin: 0 0.015em 0.005em 0; transform: translateY(0.02em); }
+.pm-logo b { font-weight: 650; }
+.pm-logo sup { font-size: 0.32em; font-weight: 500; margin-left: 0.15em; vertical-align: top; position: relative; top: -0.15em; }
+
+:root[data-theme="dark"] { --logo-icon: url(#pmgrad); }
+.pm-logo-i .pm-grad { display: none; }
+.pfoot .pm-logo-i .pm-solid, .gnav.dk .pm-logo-i .pm-solid, :root[data-theme="dark"] .pm-logo-i .pm-solid { display: none; }
+.pfoot .pm-logo-i .pm-grad, .gnav.dk .pm-logo-i .pm-grad, :root[data-theme="dark"] .pm-logo-i .pm-grad { display: inline; }

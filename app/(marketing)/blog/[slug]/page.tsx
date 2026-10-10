@@ -64,7 +64,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {post.coverImage && (
         <div className="container-editorial pt-10">
-          <img src={post.coverImage} alt="" className="mx-auto max-h-[440px] w-full max-w-4xl rounded-[10px] border border-line object-cover" />
+          <img src={post.coverImage} alt={post.title} className="mx-auto max-h-[440px] w-full max-w-4xl rounded-[10px] border border-line object-cover" />
         </div>
       )}
 

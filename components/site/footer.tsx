@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { PMLogo } from "@/components/brand/logo";
 import { Phone, Mail, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/site.config";
 import { Socials } from "./socials";
@@ -12,12 +12,11 @@ export function Footer() {
       <div className="container-editorial grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div>
           <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-bold tracking-tight">
-            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} className="h-7 w-auto" />
-            Premium&nbsp;<span className="text-cobalt">Markup</span>
+            <PMLogo className="text-[26px]" />
           </Link>
           <p className="mt-4 max-w-xs text-muted">{siteConfig.tagline}</p>
           <p className="mt-2 max-w-xs text-sm text-muted">
-            A UK web development and social media agency for small businesses.
+            Leads Portal and premium websites, built in Pakistan.
           </p>
           <Socials className="mt-6 -ml-2.5" />
         </div>
@@ -68,7 +67,7 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="container-editorial flex flex-col gap-3 py-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {siteConfig.legalName}. {siteConfig.address.region}. Serving the UK, USA &amp; worldwide.
+            © {year} {siteConfig.legalName}. {siteConfig.address.region}. Serving clients worldwide.
           </p>
           <div className="flex items-center gap-5">
             <Link href="/privacy" className="hover:text-cobalt">Privacy</Link>

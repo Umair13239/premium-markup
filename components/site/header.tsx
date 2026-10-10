@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { PMLogo } from "@/components/brand/logo";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -9,7 +10,6 @@ import { siteConfig } from "@/site.config";
 import { services } from "@/lib/services";
 import { ThemeToggle } from "./theme-toggle";
 import { Magnetic } from "./magnetic";
-import Image from "next/image";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,8 +68,7 @@ export function Header() {
             className="group flex items-center gap-2.5 font-display text-lg font-bold tracking-tight"
             aria-label={`${siteConfig.name} home`}
           >
-            <Image src="/brand/pm-mark.webp" alt="" aria-hidden width={28} height={27} priority className="h-7 w-auto transition-transform duration-300 group-hover:-translate-y-0.5" />
-            Premium&nbsp;<span className="grad-text">Markup</span>
+            <PMLogo className="text-[22px] transition-transform duration-300 group-hover:-translate-y-0.5" />
           </Link>
 
           {/* Centered link group inside a glass sub-pill */}

@@ -1,36 +1,18 @@
-import { Header } from "@/components/site/header";
-import { Footer } from "@/components/site/footer";
-import { ScrollProgress } from "@/components/site/scroll-progress";
-import { CustomCursor } from "@/components/site/custom-cursor";
-import { SmoothScroll } from "@/components/site/smooth-scroll";
-import { Preloader } from "@/components/site/preloader";
+import { Shell } from "@/components/home/shell";
 import { SiteSchema } from "@/components/site/site-schema";
 import { ChatWidget } from "@/components/site/chat-widget";
+import "@/components/home/home.css";
 
-export default function MarketingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// Older pages (about, contact, services, blog, legal) share the v2 shell — same glass nav, mobile menu,
+// footer and smooth scroll — while keeping their own content until each is redesigned.
+export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="pm2 pm2-legacy">
       <SiteSchema />
-      <Preloader />
-      <SmoothScroll />
-      <CustomCursor />
-      <ScrollProgress />
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-[6px] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
-      >
-        Skip to content
-      </a>
-      <Header />
-      <main id="main" className="flex-1">
-        {children}
-      </main>
-      <Footer />
-      <ChatWidget />
-    </>
+      <Shell>
+        <main id="main" className="legacy-main">{children}</main>
+        <ChatWidget />
+      </Shell>
+    </div>
   );
 }

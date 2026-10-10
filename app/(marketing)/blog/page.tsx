@@ -8,9 +8,9 @@ import { prisma } from "@/lib/prisma";
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: "Journal — web design & marketing for UK small businesses",
+  title: "Journal: Websites, Speed & SEO",
   description:
-    "Plain-English writing on websites, speed, SEO and getting more from your online presence — for UK small business owners.",
+    "Plain-English writing on websites, speed, SEO and getting more from your online presence — for small business owners.",
   alternates: { canonical: "/blog" },
 };
 
@@ -29,7 +29,7 @@ export default async function BlogPage() {
       <PageHeader
         label="journal"
         title="Plain-English notes on getting online right."
-        intro="No jargon, no hot takes. Practical writing for business owners who want a website that pulls its weight."
+        intro="No jargon, no hot takes. Practical writing for business owners who want a website that pulls its weight: what a website should cost, why speed decides whether visitors stay, how Google decides who shows up first, and how to judge a designer before you pay a deposit. Every article is written from real projects, not from a template."
       />
       <div className="container-editorial py-16 md:py-20">
         {posts.length === 0 ? (
@@ -41,7 +41,7 @@ export default async function BlogPage() {
                 <li>
                   <Link href={`/blog/${post.slug}`} className="group flex flex-col gap-4 py-8 md:flex-row md:items-center md:gap-10">
                     {post.coverImage && (
-                      <img src={post.coverImage} alt="" className="h-40 w-full shrink-0 rounded-[8px] border border-line object-cover md:h-28 md:w-44" />
+                      <img src={post.coverImage} alt={post.title} className="h-40 w-full shrink-0 rounded-[8px] border border-line object-cover md:h-28 md:w-44" />
                     )}
                     <div className="min-w-0 flex-1">
                       <p className="mono text-sm text-muted">

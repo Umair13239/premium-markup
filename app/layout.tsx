@@ -1,25 +1,13 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, Poppins, Sora } from "next/font/google";
+import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/site.config";
 
-// Headings: Sora — a clean, confident, professional grotesk with real bold weights.
-const head = Sora({
-  variable: "--font-head",
+// Brand typeface (Premium Markup brand guide): Inter for headings, body and the wordmark.
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  display: "swap",
-});
-
-// Body font. Poppins is a free geometric sans standing in for CocoGothic (the
-// CocoGothic *trial* files carry a "ZETAFONTS.COM" watermark + non-commercial
-// licence). Once the LICENSED CocoGothic is dropped in public/fonts, swap this
-// to localFont({ src: [...cocogothic.woff2...] }) — one line.
-const coco = Poppins({
-  variable: "--font-coco",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -34,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s — ${siteConfig.name}`,
+    template: `%s | Premium Markup`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -65,9 +53,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en-GB"
+      lang="en"
       suppressHydrationWarning
-      className={`${head.variable} ${coco.variable} ${plexMono.variable} h-full`}
+      className={`${inter.variable} ${plexMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <Script id="pm-theme-init" strategy="beforeInteractive">

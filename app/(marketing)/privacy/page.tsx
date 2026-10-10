@@ -58,7 +58,7 @@ export default function PrivacyPage() {
 
           <h2>Your rights</h2>
           <p>
-            Under UK GDPR you can ask to access, correct, delete or restrict your data, or object to its processing. Email
+            Under data protection law you can ask to access, correct, delete or restrict your data, or object to its processing. Email
             us and we&rsquo;ll respond within one month. You also have the right to complain to the Information
             Commissioner&rsquo;s Office (ICO).
           </p>

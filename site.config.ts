@@ -6,13 +6,13 @@ export const siteConfig = {
   legalName: "PremiumMarkup Ltd",
   domain: "premiummarkup.com",
   url: "https://premiummarkup.com",
-  locale: "en_GB",
+  locale: "en_US",
   // Private Leads Portal (runs on the office PC, exposed over Tailscale — only
   // your signed-in devices can reach it). Update here if the tailnet URL changes.
   leadsPortalUrl: "https://leads.premiummarkup.com",
-  tagline: "Hand-built websites that win customers.",
+  tagline: "Find clients. Win them faster.",
   description:
-    "PremiumMarkup is a UK web development and social media agency. We hand-code fast, search-friendly websites for small businesses — no page builders, no bloat.",
+    "Premium Markup is a Pakistan-based studio behind Leads Portal: 130,000 local businesses checked for WhatsApp, with one-click demo work to pitch them. We also design and build premium websites and brand identities.",
 
   phone: {
     display: "+92 341 5481381",
@@ -37,7 +37,7 @@ export const siteConfig = {
 
   address: {
     // TODO: replace with registered business details.
-    region: "United Kingdom",
+    region: "Pakistan",
     companiesHouse: "Company no. TODO",
   },
 
@@ -53,7 +53,7 @@ export const siteConfig = {
   socials: [
     { name: "Instagram", href: "https://instagram.com/premiummarkup", handle: "@premiummarkup", enabled: true },
     { name: "TikTok", href: "https://tiktok.com/@premiummarkup", handle: "@premiummarkup", enabled: true },
-    { name: "LinkedIn", href: "https://linkedin.com/company/premiummarkup", handle: "premiummarkup", enabled: true },
+    { name: "LinkedIn", href: "https://linkedin.com/company/premiummarkup", handle: "premiummarkup", enabled: false }, // page not created yet (404)
     { name: "Facebook", href: "https://facebook.com/premiummarkup", handle: "premiummarkup", enabled: true },
     { name: "X", href: "https://x.com/premiummarkup", handle: "@premiummarkup", enabled: true },
   ],

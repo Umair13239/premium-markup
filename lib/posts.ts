@@ -17,16 +17,16 @@ export const posts: Post[] = [
       "It looked fine when you built it. But a slow, template site quietly turns visitors away and hides you from search. Here's how to tell, and what to do.",
     date: "2026-02-12",
     readingTime: "5 min read",
-    keywords: ["Wix alternative", "small business website design UK", "website speed"],
+    keywords: ["Wix alternative", "small business website design", "website speed"],
   },
   {
     slug: "what-a-500-website-actually-gets-you",
-    title: "What a £500 website actually gets you — and what it doesn't",
+    title: "What a $500 website actually gets you",
     excerpt:
-      "There's nothing wrong with a small budget. There is something wrong with not knowing what it buys. A plain-English breakdown for UK business owners.",
+      "There's nothing wrong with a small budget. There is something wrong with not knowing what it buys. A plain-English breakdown for business owners.",
     date: "2026-01-20",
     readingTime: "6 min read",
-    keywords: ["cheap website UK", "website cost", "web development agency UK"],
+    keywords: ["cheap website", "website cost", "web development agency"],
   },
 ];
 

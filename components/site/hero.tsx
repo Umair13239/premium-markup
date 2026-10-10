@@ -133,7 +133,7 @@ export function Hero() {
             transition={{ duration: 0.5 }}
             className="mono inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs text-muted"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-cobalt)]" /> UK web development · hand-coded
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-cobalt)]" /> Web development · hand-coded
           </motion.span>
 
           <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.05] tracking-[-0.025em] sm:text-5xl md:text-6xl">

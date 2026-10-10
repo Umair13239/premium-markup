@@ -10,7 +10,7 @@ import { Magnetic } from "@/components/site/magnetic";
 import { services } from "@/lib/services";
 
 export const metadata: Metadata = {
-  title: "Services — web design, development, e-commerce, SEO & more",
+  title: "Services: Web Design, Development & SEO",
   description:
     "Digital services built for better online experiences: website design and development, animated web experiences, e-commerce, UI/UX, SEO, redesign, landing pages, maintenance and graphic design.",
   alternates: { canonical: "/services" },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const hubFaqs = [
   { q: "Can I combine several services?", a: "Yes — most projects do. A typical engagement pairs design and development, often with SEO foundations and some graphic design. We scope it as one project." },
-  { q: "Do you work with clients outside the UK and USA?", a: "Yes. We work remotely with businesses internationally. Time zones and currency are easy to work around; clear communication matters more." },
+  { q: "Do you work with clients outside Pakistan?", a: "Yes. We work remotely with businesses internationally. Time zones and currency are easy to work around; clear communication matters more." },
   { q: "How do projects usually start?", a: "With a short call and a clear brief. We agree scope and a fixed price in writing before any work begins, so there are no surprises." },
   { q: "How much does a project cost?", a: "Most sites land between £1,000 and £6,000 depending on scope; larger builds and e-commerce more. We quote a fixed price after understanding what you need." },
 ];

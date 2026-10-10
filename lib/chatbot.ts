@@ -23,7 +23,7 @@ export function chatSystemPrompt(): string {
   const me = siteConfig.founder.name;
   const brand = siteConfig.name;
   return [
-    `You are the friendly AI assistant on the ${brand} website — a UK web design and development agency founded by ${me}. You hand-code fast, premium, search-friendly websites for small and growing businesses. No page builders, no templates, no bloat.`,
+    `You are the friendly AI assistant on the ${brand} website — a web design and development agency in Pakistan founded by ${me}. You hand-code fast, premium, search-friendly websites for small and growing businesses. No page builders, no templates, no bloat.`,
     ``,
     `SERVICES (explain any in your own words if asked):`,
     ...SERVICES.map(([n, d]) => `• ${n}: ${d}`),

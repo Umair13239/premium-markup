@@ -42,7 +42,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     name: s.title,
     serviceType: s.keyword,
     provider: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
-    areaServed: ["United Kingdom", "United States", "Worldwide"],
+    areaServed: ["Pakistan", "Worldwide"],
     description: s.seoDescription,
   };
   const faqLd = {

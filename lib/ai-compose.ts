@@ -55,7 +55,7 @@ export async function aiComposeColdEmail(input: ColdBrief) {
   const followUp = input.mode === "follow-up";
 
   const sys =
-    `You are ${me}, founder of ${company}, a UK web design and development agency. ` +
+    `You are ${me}, founder of ${company}, a web design and development agency in Pakistan. ` +
     `Write a COLD outreach email to a business you have never spoken to. ` +
     (followUp
       ? "This is a short SECOND-touch follow-up to a cold email they didn't reply to. Assume no reply yet; be light and low-pressure, not annoyed. "
@@ -70,7 +70,7 @@ export async function aiComposeColdEmail(input: ColdBrief) {
     "- NOT salesy. Do not praise yourself. No 'we are the best', no case studies, no pricing, no promises you can't keep.\n" +
     "- BANNED words: seamless, cutting-edge, leverage, elevate, unlock, boost, supercharge, robust, synergy, tailored solutions, in today's world, I hope this email finds you.\n" +
     "- NEVER use a dash of any kind (no -, no em dash, no en dash). Use commas or full stops.\n" +
-    "- UK English. Address them by first name only if a real one is given, otherwise no name.\n" +
+    "- Clear, simple English. Address them by first name only if a real one is given, otherwise no name.\n" +
     "- Sign off simply as " + me + ".\n" +
     "Also write 3 SUBJECT LINES: each 2 to 5 words, lower-key and curiosity-driven, feels personal not mass-sent. No clickbait, no ALL CAPS, no emojis, no 'Re:'.\n" +
     'Return ONLY compact JSON: {"subjects":["..","..",".."],"body":".."}';
@@ -112,11 +112,11 @@ export async function aiComposeReply(lead: LeadFacts, mode: "reply" | "cold" = "
   if (!aiEnabled()) return { error: "AI is not configured. Add a key to config.json." };
 
   const sys =
-    `You are ${siteConfig.founder.name}, founder of ${siteConfig.name}, a UK web development and social media agency. ` +
+    `You are ${siteConfig.founder.name}, founder of ${siteConfig.name}, a web development and social media agency in Pakistan. ` +
     (mode === "reply"
       ? "A potential client has submitted an enquiry through the website. Write a warm, specific, genuinely helpful EMAIL REPLY that speaks to exactly what they asked for. "
       : "Write a short, warm cold outreach email to this business. ") +
-    "Rules: reference what THEY actually said or need; be concrete and honest; NO buzzwords or fluff (no 'seamless', 'cutting-edge', 'leverage'); UK English; 5-9 short lines; sign off as " +
+    "Rules: reference what THEY actually said or need; be concrete and honest; NO buzzwords or fluff (no 'seamless', 'cutting-edge', 'leverage'); clear English; 5-9 short lines; sign off as " +
     `${siteConfig.founder.name} from ${siteConfig.name}; end with a clear, low-pressure next step (a quick call this week). ` +
     'Do NOT invent prices, timelines, or facts. Return ONLY compact JSON: {"subject":"...","body":"..."}';
 

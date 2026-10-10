@@ -59,7 +59,7 @@ export const services: Service[] = [
     ],
     related: ["web-development", "ui-ux-design", "website-redesign"],
     visual: "grid",
-    seoTitle: "Website Design — custom, responsive web design agency",
+    seoTitle: "Custom Website Design",
     seoDescription: "Custom website design shaped around your brand, audience and goals. Responsive, distinctive interfaces from Premium Markup — no templates.",
   },
   {
@@ -96,7 +96,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "ecommerce", "website-maintenance"],
     visual: "code",
-    seoTitle: "Website Development — hand-coded, fast, custom builds",
+    seoTitle: "Website Development, Hand-Coded",
     seoDescription: "Custom website development in clean, hand-written code. Fast, scalable and maintainable sites you own — from Premium Markup.",
   },
   {
@@ -132,7 +132,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "ui-ux-design", "web-development"],
     visual: "motion",
-    seoTitle: "Animated Website Design — scroll & interaction design",
+    seoTitle: "Animated Website Design",
     seoDescription: "Purposeful animation, scroll-based storytelling and interactive interfaces that stay fast and accessible. Animated web experiences by Premium Markup.",
   },
   {
@@ -168,7 +168,7 @@ export const services: Service[] = [
     ],
     related: ["web-development", "web-design", "seo"],
     visual: "commerce",
-    seoTitle: "E-commerce Development — conversion-focused online stores",
+    seoTitle: "E-commerce Website Development",
     seoDescription: "Conversion-focused e-commerce development: fast product discovery, a reassuring checkout and a store you can grow. Built by Premium Markup.",
   },
   {
@@ -204,7 +204,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "web-development", "seo"],
     visual: "redesign",
-    seoTitle: "Website Redesign Services — rebuild done properly",
+    seoTitle: "Website Redesign Services",
     seoDescription: "Website redesign that fixes speed, clarity and SEO without losing what works. SEO-safe migration and a platform you can grow. Premium Markup.",
   },
   {
@@ -240,7 +240,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "animated-websites", "seo"],
     visual: "landing",
-    seoTitle: "Landing Page Design — conversion-focused pages",
+    seoTitle: "Landing Page Design",
     seoDescription: "Focused, fast landing pages built to convert paid and earned traffic into action. Designed and built by Premium Markup.",
   },
   {
@@ -276,7 +276,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "animated-websites", "web-development"],
     visual: "uiux",
-    seoTitle: "UI/UX Design Agency — usable, accessible interfaces",
+    seoTitle: "UI/UX Design",
     seoDescription: "UI and UX design shaped around real behaviour: clear journeys, usable interfaces and accessible design. UX design agency Premium Markup.",
   },
   {
@@ -312,7 +312,7 @@ export const services: Service[] = [
     ],
     related: ["web-development", "website-redesign", "ecommerce"],
     visual: "seo",
-    seoTitle: "Technical & On-Page SEO — SEO-friendly development",
+    seoTitle: "Technical & On-Page SEO",
     seoDescription: "Technical and on-page SEO: architecture, structured data, Core Web Vitals and content structure that helps you get found. Premium Markup.",
   },
   {
@@ -348,7 +348,7 @@ export const services: Service[] = [
     ],
     related: ["web-development", "seo", "website-redesign"],
     visual: "maintenance",
-    seoTitle: "Website Maintenance — updates, security & support",
+    seoTitle: "Website Maintenance & Support",
     seoDescription: "Ongoing website maintenance: updates, security, backups, monitoring and support that keep your site fast and reliable. Premium Markup.",
   },
   {
@@ -384,7 +384,7 @@ export const services: Service[] = [
     ],
     related: ["web-design", "ui-ux-design", "animated-websites"],
     visual: "graphic",
-    seoTitle: "Graphic & Digital Design — brand-aligned assets",
+    seoTitle: "Graphic & Brand Design",
     seoDescription: "Brand-aligned graphic and digital design: social graphics, campaign visuals and interface assets as one consistent system. Premium Markup.",
   },
   {
@@ -421,7 +421,7 @@ export const services: Service[] = [
     ],
     related: ["graphic-design", "web-design", "landing-pages"],
     visual: "motion",
-    seoTitle: "Social Media Management — on-brand content, done for you",
+    seoTitle: "Social Media Management",
     seoDescription: "Social media management that sounds like your business: a clear plan, on-brand graphics and captions in your voice, posted consistently. Premium Markup.",
   },
 ];

@@ -1,12 +1,6 @@
-import { PM_P, PM_M, PM_VIEWBOX } from "./logo-paths";
+import { PMIcon } from "@/components/brand/logo";
 
-// Static PM monogram — outlined P + accent-filled M. Uses currentColor for the
-// P so it inherits text colour; the M always uses the iris accent.
-export function PMMark({ className = "", accent }: { className?: string; accent?: string }) {
-  return (
-    <svg viewBox={PM_VIEWBOX} className={className} aria-hidden="true" focusable="false">
-      <path d={PM_P} fill="none" stroke="currentColor" strokeWidth={6.5} strokeLinejoin="round" strokeLinecap="round" />
-      <path d={PM_M} fill={accent || "var(--color-cobalt)"} />
-    </svg>
-  );
+// Brand icon (kept under its old name for existing call sites).
+export function PMMark({ className = "" }: { className?: string; accent?: string }) {
+  return <PMIcon className={className} />;
 }

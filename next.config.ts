@@ -4,6 +4,8 @@ import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Hide the floating dev-tools "N" button (dev only; never shown in production).
+  devIndicators: false,
   // Allow markdown / MDX files to act as pages (used by the blog).
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   // Bundle the SQLite database into the serverless functions so Prisma can read
