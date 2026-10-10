@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     "/**": ["./prisma/dev.db"],
   },
   // Keep heavy native/portal deps out of the server bundle (loaded at runtime).
-  serverExternalPackages: ["playwright", "playwright-core", "whatsapp-web.js"],
+  serverExternalPackages: ["playwright", "playwright-core"],
   // Pin the workspace root to this project (a stray lockfile in the home dir
   // otherwise confuses Turbopack's root inference).
   turbopack: {
