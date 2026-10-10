@@ -9,8 +9,8 @@ export type Plan = {
 };
 
 export const PLANS: Plan[] = [
-  { id: "free", name: "Free", price: 0, blurb: "Try the portal on real leads.", leads: 1000, countries: 3, waChecks: 25, speed: "Slow", sitesPerDay: 0, emails: false, csv: false, board: false, team: false,
-    features: ["1,000 leads", "3 countries, every category", "Search, filters, tags & notes", "Star leads and track status", "One-tap WhatsApp pitch", "WhatsApp check · 25 / day", "Browser extension collector", "Website SEO audit · 1 / day", "Step-by-step video guides"] },
+  { id: "free", name: "Free", price: 0, blurb: "Try the portal on real leads.", leads: 1000, countries: 3, waChecks: 25, speed: "Slow", sitesPerDay: 1, emails: false, csv: false, board: false, team: false,
+    features: ["1,000 leads", "3 countries, every category", "Search, filters, tags & notes", "Star leads and track status", "One-tap WhatsApp pitch", "WhatsApp check · 25 / day", "Browser extension collector", "One-click demo website · 1 / day", "Website SEO audit · 1 / day", "Step-by-step video guides"] },
   { id: "starter", name: "Starter", price: 19, blurb: "For your first steady pipeline.", leads: 5000, countries: 5, waChecks: 500, speed: "Standard", sitesPerDay: 0, emails: true, csv: true, board: false, team: false,
     features: ["5,000 leads", "5 countries", "Emails + social links", "Edit contact details", "Email pitches from your own mailbox", "WhatsApp check · 500 / day", "Standard scraper speed", "CSV export", "Website SEO audits · 5 / day"], plus: "Free" },
   { id: "growth", name: "Growth", price: 39, blurb: "More markets, more replies.", leads: 15000, countries: 15, waChecks: 2000, speed: "Standard", sitesPerDay: 0, emails: true, csv: true, board: true, team: false,
