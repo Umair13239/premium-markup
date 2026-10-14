@@ -104,7 +104,7 @@
     box-shadow: 0 4px 14px rgba(0,0,0,.2), inset 0 0 0 1px rgba(104,60,231,.3); transition: width .35s var(--spring), height .35s var(--spring), margin .35s var(--spring); }
 .pm2 .gc.big { width: 66px; height: 66px; margin: -33px 0 0 -33px; }
 @media (hover: hover) and (pointer: fine) {
-.pm2, .pm2 a, .pm2 button { cursor: none; }
+
  }
 @media (hover: none), (pointer: coarse) {
 .pm2 .gc { display: none; }

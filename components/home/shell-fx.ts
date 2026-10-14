@@ -76,10 +76,10 @@ export function initShellFx(root: HTMLElement) {
 
   /* ---- cursor (clear glass ring) + magnetic buttons ---- */
   if (fine && !reduce) {
-    const gc = q("#gc");
+    const gc = document.getElementById("gc");
     let x = -100, y = -100, cx = x, cy = y;
-    addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; gc.classList.toggle("big", !!(e.target as Element).closest?.("a,button")); }, pas);
-    const loop = () => { if (!alive) return; cx += (x - cx) * .2; cy += (y - cy) * .2; gc.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); };
+    addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; gc?.classList.toggle("big", !!(e.target as Element).closest?.("a,button")); }, pas);
+    const loop = () => { if (!alive) return; cx += (x - cx) * .2; cy += (y - cy) * .2; if (gc) gc.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); };
     loop();
     qa(".pbtn").forEach((b) => {
       b.addEventListener("pointermove", (e) => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .15}px,${(e.clientY - r.top - r.height / 2) * .22}px) scale(1.04)`; }, sig);

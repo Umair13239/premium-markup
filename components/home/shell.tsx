@@ -9,7 +9,7 @@ import { initShellFx } from "./shell-fx";
 import { PMLogo } from "@/components/brand/logo";
 
 const NAV = [
-  { href: "/", label: "Leads Portal" },
+  { href: "https://leads.premiummarkup.com", label: "Leads Portal" },
   { href: "/pricing", label: "Pricing", hs: true },
   { href: "/work", label: "Work", hs: true },
   { href: "/about", label: "About" },
@@ -48,7 +48,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
         <small>© {new Date().getFullYear()} Premium Markup</small>
       </footer>
-      <div className="gc" id="gc" />
     </>
   );
 }
