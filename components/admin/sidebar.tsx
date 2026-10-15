@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Users, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Briefcase, Globe, ScrollText, Settings } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Globe, ScrollText, Settings } from "lucide-react";
 import { siteConfig } from "@/site.config";
 
 function ThemeRow() {
@@ -35,7 +35,6 @@ function ThemeRow() {
 const nav = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
   { label: "Leads", href: "/admin/leads", icon: Users, exact: false },
-  { label: "Work / Projects", href: "/admin/work", icon: Briefcase, exact: false },
   { label: "Blog", href: "/admin/blog", icon: PenSquare, exact: false },
   { label: "Site Images", href: "/admin/images", icon: ImageIcon, exact: false },
   { label: "Portfolio", href: "/admin/portfolio", icon: ScrollText, exact: false },

@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { Inbox, Radar, ArrowRight } from "lucide-react";
+import { Inbox, PenSquare, ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { STATUSES, SOURCES, statusTone, weeklyBuckets } from "@/lib/leads-data";
 import { LeadsChart } from "@/components/admin/leads-chart";
-import { siteConfig } from "@/site.config";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +20,11 @@ export default async function AdminHome() {
     },
     orderBy: { createdAt: "desc" },
   });
+
+  const [postsTotal, postsPublished] = await Promise.all([
+    prisma.post.count(),
+    prisma.post.count({ where: { status: "published" } }),
+  ]);
 
   const total = leads.length;
   const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -51,7 +55,7 @@ export default async function AdminHome() {
       <h1 className="text-2xl">Admin</h1>
       <p className="mt-1 text-sm text-muted">Choose a panel.</p>
 
-      {/* two-panel hub */}
+      {/* hub */}
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <Link href="/admin/leads" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-cobalt/10 text-cobalt">
@@ -70,19 +74,22 @@ export default async function AdminHome() {
           </p>
         </Link>
 
-        <a href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener noreferrer" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
+        <Link href="/admin/blog" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-cobalt/10 text-cobalt">
-            <Radar className="h-6 w-6" aria-hidden="true" />
+            <PenSquare className="h-6 w-6" aria-hidden="true" />
           </div>
           <h2 className="mt-5 flex items-center gap-2 text-xl">
-            Google Leads &amp; Scraper
+            Blog &amp; SEO
             <ArrowRight className="h-5 w-5 text-cobalt transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </h2>
           <p className="mt-2 text-sm text-muted">
-            The full portal: scan Google Maps for businesses, harvest contacts, check WhatsApp, and pitch.
+            Write posts with a live SEO score, see what is missing and publish when it is ready.
           </p>
-          <p className="mono mt-4 text-sm text-muted">Scan · enrich · WhatsApp · pitch</p>
-        </a>
+          <p className="mono mt-4 text-sm">
+            <span className="text-2xl font-semibold">{postsPublished}</span>
+            <span className="text-muted"> published · {postsTotal - postsPublished} draft{postsTotal - postsPublished === 1 ? "" : "s"}</span>
+          </p>
+        </Link>
       </div>
 
       <h2 className="mt-12 text-lg font-semibold">Website leads overview</h2>
