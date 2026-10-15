@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { prisma } from "@/lib/prisma";
 
-export const revalidate = false;
+export const revalidate = 60; // posts written in the portal appear within a minute
 
 export const metadata: Metadata = {
   title: "Journal: Websites, Speed & SEO",

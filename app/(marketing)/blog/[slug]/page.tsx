@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { PostCTA } from "@/components/site/post-cta";
 import { siteConfig } from "@/site.config";
 
-export const revalidate = false;
+export const revalidate = 60; // posts written in the portal appear within a minute
 export async function generateStaticParams() {
   const posts = await prisma.post.findMany({ where: { status: "published" }, select: { slug: true } });
   return posts.map((p) => ({ slug: p.slug }));
