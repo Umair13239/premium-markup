@@ -25,7 +25,7 @@ async function uniqueSlug(base: string, excludeId?: string) {
 type PostInput = {
   title?: string; slug?: string; excerpt?: string; content?: string;
   coverImage?: string; tags?: string; status?: string;
-  seoTitle?: string; seoDescription?: string;
+  seoTitle?: string; seoDescription?: string; focusKeyword?: string;
 };
 
 function refresh(slug?: string) {
@@ -49,6 +49,7 @@ export async function createPost(data: PostInput) {
       readingTime: readingTime(content),
       seoTitle: data.seoTitle || null,
       seoDescription: data.seoDescription || null,
+      focusKeyword: data.focusKeyword || null,
       publishedAt: status === "published" ? new Date() : null,
     },
   });
@@ -74,6 +75,7 @@ export async function updatePost(id: string, data: PostInput) {
       readingTime: readingTime(content),
       seoTitle: data.seoTitle ?? current.seoTitle,
       seoDescription: data.seoDescription ?? current.seoDescription,
+      focusKeyword: data.focusKeyword ?? current.focusKeyword,
       publishedAt: status === "published" ? (current.publishedAt || new Date()) : null,
     },
   });

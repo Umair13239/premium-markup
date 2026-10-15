@@ -11,6 +11,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
   const dto: PostDTO = {
     id: p.id, title: p.title, slug: p.slug, excerpt: p.excerpt, content: p.content,
     coverImage: p.coverImage, tags: p.tags, status: p.status, seoTitle: p.seoTitle, seoDescription: p.seoDescription,
+    focusKeyword: p.focusKeyword,
   };
   return <PostEditor post={dto} />;
 }

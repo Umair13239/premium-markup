@@ -155,7 +155,7 @@ export function Hero() {
               <Button href="/contact" variant="gradient">Start a project</Button>
             </Magnetic>
             <Magnetic strength={0.3}>
-              <Button href="/work" variant="secondary">See our work</Button>
+              <Button href="/pricing" variant="secondary">See pricing</Button>
             </Magnetic>
           </motion.div>
 

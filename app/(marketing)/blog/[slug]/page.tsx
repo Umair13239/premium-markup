@@ -23,8 +23,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: p.seoTitle || p.title,
     description: p.seoDescription || p.excerpt || undefined,
+    keywords: [p.focusKeyword, ...p.tags.split(",")].map((k) => k?.trim()).filter(Boolean) as string[],
     alternates: { canonical: `/blog/${p.slug}` },
-    openGraph: p.coverImage ? { images: [p.coverImage] } : undefined,
+    openGraph: {
+      type: "article",
+      title: p.seoTitle || p.title,
+      description: p.seoDescription || p.excerpt || undefined,
+      publishedTime: p.publishedAt?.toISOString(),
+      modifiedTime: p.updatedAt.toISOString(),
+      images: p.coverImage ? [p.coverImage] : undefined,
+    },
+    twitter: { card: p.coverImage ? "summary_large_image" : "summary", title: p.seoTitle || p.title, description: p.seoDescription || p.excerpt || undefined },
   };
 }
 
@@ -37,7 +46,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    description: post.excerpt || undefined,
+    description: post.seoDescription || post.excerpt || undefined,
+    keywords: post.tags || undefined,
+    mainEntityOfPage: `/blog/${post.slug}`,
     image: post.coverImage || undefined,
     datePublished: post.publishedAt?.toISOString(),
     dateModified: post.updatedAt.toISOString(),

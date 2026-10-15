@@ -22,14 +22,12 @@ export default function NotFound() {
 
         <div className="mt-9 flex flex-wrap justify-center gap-4">
           <Button href="/">Back to home</Button>
-          <Button href="/work" variant="secondary">See our work</Button>
+          <Button href="/pricing" variant="secondary">See pricing</Button>
           <Button href="/contact" variant="ghost">Start a project</Button>
         </div>
 
         <div className="mono mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted">
-          <Link href="/services" className="hover:text-cobalt">Services</Link>
-          <Link href="/about" className="hover:text-cobalt">About</Link>
-          <Link href="/process" className="hover:text-cobalt">Process</Link>
+          <Link href="/pricing" className="hover:text-cobalt">Pricing</Link>
           <Link href="/blog" className="hover:text-cobalt">Blog</Link>
         </div>
       </div>

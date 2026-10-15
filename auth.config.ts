@@ -9,6 +9,15 @@ export const authConfig = {
     signIn: "/admin/login",
   },
   callbacks: {
+    // role must be copied here (not only in auth.ts) because middleware runs this edge-safe config alone
+    jwt({ token, user }) {
+      if (user) token.role = (user as { role?: string }).role || "admin";
+      return token;
+    },
+    session({ session, token }) {
+      if (session.user) (session.user as { role?: string }).role = (token.role as string) || "admin";
+      return session;
+    },
     authorized({ auth, request }) {
       const { pathname } = request.nextUrl;
       const isLoggedIn = !!auth?.user;
@@ -24,6 +33,12 @@ export const authConfig = {
         )
           return true;
         return isLoggedIn;
+      }
+
+      // Blog-only accounts can use the blog dashboard and nothing else in the admin
+      const role = (auth?.user as { role?: string } | undefined)?.role;
+      if (isLoggedIn && role === "blog" && pathname.startsWith("/admin") && !pathname.startsWith("/admin/blog") && pathname !== "/admin/login") {
+        return Response.redirect(new URL("/admin/blog", request.nextUrl));
       }
 
       if (pathname === "/admin/login") {

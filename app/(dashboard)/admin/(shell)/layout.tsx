@@ -15,7 +15,7 @@ export default async function ShellLayout({
 
   return (
     <div className="flex min-h-dvh bg-paper">
-      <AdminSidebar email={session?.user?.email} signOutAction={doSignOut} />
+      <AdminSidebar email={session?.user?.email} role={(session?.user as { role?: string } | undefined)?.role} signOutAction={doSignOut} />
       <main className="min-w-0 flex-1">{children}</main>
     </div>
   );

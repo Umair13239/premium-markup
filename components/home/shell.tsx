@@ -11,8 +11,7 @@ import { PMLogo } from "@/components/brand/logo";
 const NAV = [
   { href: "https://leads.premiummarkup.com", label: "Leads Portal" },
   { href: "/pricing", label: "Pricing", hs: true },
-  { href: "/work", label: "Work", hs: true },
-  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -43,7 +42,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <footer className="pfoot" data-dark>
         <div className="fw">
           <div><PMLogo className="flogo" /><p>Leads Portal and premium websites, built in Pakistan.</p></div>
-          <nav aria-label="Footer"><Link href="/pricing">Pricing</Link><Link href="/work">Work</Link><Link href="/about">About</Link><Link href="/contact">Contact</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></nav>
+          <nav aria-label="Footer"><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></nav>
           <div><a href={"mailto:" + siteConfig.email.primary}>{siteConfig.email.primary}</a><a href={siteConfig.phone.whatsapp}>WhatsApp {siteConfig.phone.display}</a></div>
         </div>
         <small>© {new Date().getFullYear()} Premium Markup</small>

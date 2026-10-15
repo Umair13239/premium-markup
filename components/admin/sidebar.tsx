@@ -44,9 +44,11 @@ const nav = [
 
 export function AdminSidebar({
   email,
+  role,
   signOutAction,
 }: {
   email?: string | null;
+  role?: string;
   signOutAction: () => Promise<void>;
 }) {
   const pathname = usePathname();
@@ -60,7 +62,7 @@ export function AdminSidebar({
       </div>
 
       <nav className="flex-1 overflow-y-auto p-3" aria-label="Admin">
-        {nav.map((item) => {
+        {nav.filter((item) => role !== "blog" || item.href === "/admin/blog").map((item) => {
           const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           const Icon = item.icon;
           return (
@@ -77,6 +79,7 @@ export function AdminSidebar({
             </Link>
           );
         })}
+        {role !== "blog" && (
         <a
           href={siteConfig.leadsPortalUrl}
           target="_blank"
@@ -86,6 +89,7 @@ export function AdminSidebar({
           <Radar className="h-4.5 w-4.5" aria-hidden="true" />
           Leads Portal ↗
         </a>
+        )}
         <a
           href="/"
           target="_blank"
