@@ -71,6 +71,8 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
 <section className="shots" id="shots">
   <div className="shots-head"><div className="eyebrow">Real screens</div><h2>Everything happens in one portal.</h2></div>
   <div className="shots-grid">
+    <figure className="shot full"><img src="/home/feature-dashboard.webp" alt="Leads Portal dashboard: total leads, new this week, phone coverage and WhatsApp reachability" loading="lazy" width={1440} height={720} /><figcaption><b>One dashboard.</b> Total leads, new this week, phone coverage and WhatsApp reachability, live.</figcaption></figure>
+    <figure className="shot"><img src="/home/feature-tiles.webp" alt="Lead stats tiles in the Leads Portal" loading="lazy" width={1142} height={142} /><figcaption><b>Track the numbers</b> that matter: leads collected, phone coverage and WhatsApp reach.</figcaption></figure>
     <figure className="shot big"><img src="/home/feature-collect.webp" alt="Collect leads by category and city in the Leads Portal" loading="lazy" width={900} height={560} /><figcaption><b>Collect leads</b> by category and city, saved straight to your database.</figcaption></figure>
     <figure className="shot"><img src="/home/feature-whatsapp.webp" alt="WhatsApp number check in the Leads Portal" loading="lazy" width={235} height={205} /><figcaption><b>Check WhatsApp</b> numbers in the background.</figcaption></figure>
   </div>

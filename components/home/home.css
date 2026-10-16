@@ -752,3 +752,5 @@ html.lenis, html.lenis body { height: auto; }
 .pm2 .shot.big { grid-row: span 2; }
 .pm2 .shot.wide { grid-column: 2; }
 @media (max-width: 820px) { .pm2 .shots-grid { grid-template-columns: 1fr; } .pm2 .shot.big, .pm2 .shot.wide { grid-row: auto; grid-column: auto; } .pm2 .shots { padding: 64px 18px 24px; } }
+
+.pm2 .shot.full { grid-column: 1 / -1; }
