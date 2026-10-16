@@ -107,6 +107,14 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
+      <section className="how-video" aria-label="Explainer video">
+        <video controls playsInline preload="metadata" poster="/home/explainer-poster.webp">
+          <source src="/home/explainer.webm" type="video/webm" />
+          <source src="/home/explainer.mp4" type="video/mp4" />
+        </video>
+        <p>The 35-second explainer: what Leads Portal does, with a voiceover.</p>
+      </section>
+
       <section className="how-video" aria-label="Video tour">
         <video controls playsInline preload="metadata" poster="/home/portal-shot.png">
           <source src="/home/portal-tour.webm" type="video/webm" />
