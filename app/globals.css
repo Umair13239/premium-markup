@@ -276,7 +276,9 @@
     animation: routeLift 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.05s both;
   }
   @keyframes routeLift { to { transform: translateY(-100%); } }
-  @media (prefers-reduced-motion: reduce) { .route-panel { display: none; } }
+  .route-content { animation: routeFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
+  @keyframes routeFadeUp { from { opacity: 0; transform: translateY(16px); } }
+  @media (prefers-reduced-motion: reduce) { .route-panel { display: none; } .route-content { animation: none; } }
 }
 
 /* ============ Preloader ============ */
