@@ -113,15 +113,7 @@ export default function HowItWorksPage() {
           <source src="/home/general.webm" type="video/webm" />
           <source src="/home/general.mp4" type="video/mp4" />
         </video>
-        <p>A 75-second overview: signing up, the dashboard, and every tool, from collecting leads to one-click websites, SEO and blogs.</p>
-      </section>
-
-      <section className="how-video" aria-label="Video tour">
-        <video controls playsInline preload="metadata" poster="/home/portal-shot.png">
-          <source src="/home/portal-tour.webm" type="video/webm" />
-          <source src="/home/portal-tour.mp4" type="video/mp4" />
-        </video>
-        <p>A 36-second tour: the dashboard, collecting leads for a category and cities, and the blog editor with its SEO score.</p>
+        <p>An 80-second overview: signing up, the dashboard, and every tool, from collecting leads to one-click websites, SEO and blogs.</p>
       </section>
 
       <nav className="how-toc" aria-label="Topics">
