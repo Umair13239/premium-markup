@@ -29,7 +29,6 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
   <div className="tc lg tc2"><small>One-click demo work</small><b>Ready to pitch</b><span className="ptag v">Website</span><span className="ptag">SEO audit</span><span className="ptag">UI design</span></div>
   <div className="tc lg tc3"><small>AI receptionist · live</small><b>“Ahlan! How can I help?”</b><div className="wave"><i></i><i style={{ animationDelay: "-.2s" }}></i><i style={{ animationDelay: "-.5s" }}></i><i style={{ animationDelay: "-.1s" }}></i><i style={{ animationDelay: "-.7s" }}></i><i style={{ animationDelay: "-.3s" }}></i><i style={{ animationDelay: "-.6s" }}></i><i style={{ animationDelay: "-.4s" }}></i></div></div>
 </section>
-<section className="say" id="say"><div className="pin"><p id="sayp">{SAY}</p></div></section>
 <section className="prt" id="hero">
   <div className="pin">
     <div className="copy" id="copy">
@@ -39,6 +38,7 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
     <div className="stage3d" id="stage" data-dark><div className="device"><video className="device-video" autoPlay muted loop playsInline preload="auto" poster="/home/portal-shot.png" aria-label="Leads Portal tour: dashboard, collecting leads and the blog editor"><source src="/home/portal-tour.webm" type="video/webm" /><source src="/home/portal-tour.mp4" type="video/mp4" /></video></div></div>
   </div>
 </section>
+<section className="say" id="say"><div className="pin"><p id="sayp">{SAY}</p></div></section>
 <section className="story" id="story" data-dark>
   <div className="pin">
     <div>
