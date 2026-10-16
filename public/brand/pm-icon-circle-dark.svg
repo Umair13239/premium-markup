@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 2056 2056" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g transform="matrix(1,0,0,1,-6579.283333,-6022.516667)">
-        <g transform="matrix(4.166667,0,0,4.166667,0,0)">
-            <g transform="matrix(1,0,0,1,1825.652,1445.404)">
-                <path d="M0,493.248C-136.207,493.248 -246.624,382.831 -246.624,246.624C-246.624,110.417 -136.207,0 0,0C136.207,0 246.624,110.417 246.624,246.624C246.624,382.831 136.207,493.248 0,493.248" style="fill:rgb(26,19,43);fill-rule:nonzero;"/>
-            </g>
-        </g>
-        <g transform="matrix(4.166667,0,0,4.166667,0,0)">
-            <g transform="matrix(1,0,0,1,1789.3055,1698.8748)">
-                <path d="M0,-13.694L-54.779,-13.694L-13.695,41.085L-68.474,109.559L-13.695,109.559L41.085,41.085L0,-13.694ZM68.474,-123.253C113.855,-123.253 150.643,-86.465 150.643,-41.084C150.643,4.297 113.855,41.085 68.474,41.085L27.39,-13.694L68.474,-13.694C83.601,-13.694 95.864,-25.957 95.864,-41.084C95.864,-56.211 83.601,-68.473 68.474,-68.473L-68.474,-68.473L-13.695,-123.253L68.474,-123.253Z" style="fill:rgb(104,60,231);fill-rule:nonzero;"/>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:affinity="https://www.affinity.studio/" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" version="1.1" viewBox="0 0 2056 2056" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"><g><g><g><path d="M0,493.248C-136.207,493.248 -246.624,382.831 -246.624,246.624C-246.624,110.417 -136.207,0 0,0C136.207,0 246.624,110.417 246.624,246.624C246.624,382.831 136.207,493.248 0,493.248" style="fill:#1a132b;fill-rule:nonzero" transform="matrix(1,0,0,1,-6579.283333,-6022.516667) matrix(4.166667,0,0,4.166667,0,0) matrix(1,0,0,1,1825.652,1445.404)"/></g></g><g><g><path d="M0,-13.694L-54.779,-13.694L-13.695,41.085L-68.474,109.559L-13.695,109.559L41.085,41.085L0,-13.694ZM68.474,-123.253C113.855,-123.253 150.643,-86.465 150.643,-41.084C150.643,4.297 113.855,41.085 68.474,41.085L27.39,-13.694L68.474,-13.694C83.601,-13.694 95.864,-25.957 95.864,-41.084C95.864,-56.211 83.601,-68.473 68.474,-68.473L-68.474,-68.473L-13.695,-123.253L68.474,-123.253Z" style="fill:#683ce7;fill-rule:nonzero" transform="matrix(1,0,0,1,-6579.283333,-6022.516667) matrix(4.166667,0,0,4.166667,0,0) matrix(1,0,0,1,1789.3055,1698.8748)"/></g></g></g></svg>
