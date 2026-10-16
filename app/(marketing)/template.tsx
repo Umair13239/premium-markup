@@ -12,12 +12,7 @@ export default function MarketingTemplate({ children }: { children: React.ReactN
 
   return (
     <>
-      <motion.div
-        className="route-panel"
-        initial={{ transform: "translateY(0%)" }}
-        animate={{ transform: "translateY(-100%)" }}
-        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-      />
+      <div className="route-panel" aria-hidden="true" />
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}

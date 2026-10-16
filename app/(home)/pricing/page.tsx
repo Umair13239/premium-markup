@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { PLANS, fmt, type Plan } from "@/lib/plans";
 import { siteConfig } from "@/site.config";
+import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: { absolute: "Pricing | Leads Portal by Premium Markup" },
+export const metadata: Metadata = pageMeta({
+  title: "Pricing | Leads Portal by Premium Markup",
   description: "Start free with 1,000 leads. Paid plans from $9 a month add more leads, unlimited WhatsApp checks and one-click demo websites.",
-  alternates: { canonical: "/pricing" },
-};
+  path: "/pricing",
+});
 
 const PORTAL = siteConfig.leadsPortalUrl;
 const yes = (b: boolean) => (b ? <span className="ck" aria-label="Included">✓</span> : <span className="no" aria-label="Not included">–</span>);
@@ -31,12 +32,31 @@ const FAQ = [
   ["What counts as a lead?", "One local business in your portal: name, category, city, phone, and where we find them, email, website, rating and social links."],
   ["How does the WhatsApp check work?", "The portal checks each phone number and marks the ones on WhatsApp, so you only message people who can actually reply."],
   ["What is a one-click website?", "A demo site built from the business's own logo, photos and reviews in about 90 seconds. You send the link in your pitch."],
-  ["Can I try it before paying?", "Yes. The Free plan gives you 1,000 leads and 25 WhatsApp checks a day, no card needed."],
+  ["Can I try it before paying?", `Yes. The Free plan gives you ${fmt(PLANS[0].leads)} leads and ${fmt(PLANS[0].waChecks)} WhatsApp checks a day, no card needed.`],
 ];
 
 export default function PricingPage() {
+  const schema = [
+    breadcrumb([{ name: "Pricing", path: "/pricing" }]),
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQ.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "Leads Portal",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      url: `${siteConfig.url.replace(/\/$/, "")}/pricing`,
+      description: "Find local businesses, check WhatsApp, audit their websites and pitch with a one-click demo website.",
+      offers: PLANS.filter((p) => p.price !== null).map((p) => ({ "@type": "Offer", name: p.name, price: String(p.price), priceCurrency: "USD", url: `${siteConfig.url.replace(/\/$/, "")}/pricing` })),
+    },
+  ];
   return (
     <>
+      <JsonLd data={schema} />
       <section className="pghead">
         <div className="eyebrow rv">Pricing</div>
         <h1 className="rv" style={{ "--i": 1 } as React.CSSProperties}>Start free.<br /><span style={{ color: "var(--brand)" }}>Grow when it pays.</span></h1>

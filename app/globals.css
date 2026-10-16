@@ -268,11 +268,15 @@
   .grabbing { cursor: grabbing; user-select: none; }
 
   /* Route transition panel (see app/(marketing)/template.tsx) */
+  /* Light panel that lifts away with plain CSS, so it still clears if JavaScript is slow or missing. */
   .route-panel {
     position: fixed; inset: 0; z-index: 60; pointer-events: none;
-    background: var(--color-surface);
+    background: #fff;
     will-change: transform;
+    animation: routeLift 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.05s both;
   }
+  @keyframes routeLift { to { transform: translateY(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .route-panel { display: none; } }
 }
 
 /* ============ Preloader ============ */

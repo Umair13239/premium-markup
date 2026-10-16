@@ -417,7 +417,6 @@ export function HowItWorks() {
         <h2>Try step one now.</h2>
         <p>Pick one niche and one city. You will see real businesses in a few minutes.</p>
         <a className="pbtn brand" href={PORTAL}>Start free</a>
-        <small>Free plan: 1,000 leads, 100 WhatsApp checks and 3 demo websites a day.</small>
       </section>
     </main>
   );

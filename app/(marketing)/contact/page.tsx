@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 import { Phone, Mail, MessageCircle } from "lucide-react";
 import { PageHeader } from "@/components/site/page-header";
 import { ContactForm } from "@/components/site/contact-form";
 import { Socials } from "@/components/site/socials";
 import { siteConfig } from "@/site.config";
 
-export const metadata: Metadata = {
-  title: "Contact — start a project",
+export const metadata: Metadata = pageMeta({
+  title: "Contact — start a project | Premium Markup",
   description:
     "Tell us about your business and your website goals. We reply within one working day. Call, WhatsApp or email PremiumMarkup.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={[breadcrumb([{ name: "Contact", path: "/contact" }]), { "@context": "https://schema.org", "@type": "ContactPage", name: "Contact Premium Markup", url: "https://premiummarkup.com/contact" }]} />
       <PageHeader
         label="contact"
         title="Start a project."
