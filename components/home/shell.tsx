@@ -10,6 +10,7 @@ import { PMLogo } from "@/components/brand/logo";
 
 const NAV = [
   { href: "https://leads.premiummarkup.com", label: "Leads Portal" },
+  { href: "/how-it-works", label: "How it works", hs: true },
   { href: "/pricing", label: "Pricing", hs: true },
   { href: "/blog", label: "Blog" },
 ];
