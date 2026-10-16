@@ -12,7 +12,7 @@ export const siteConfig = {
   leadsPortalUrl: "https://leads.premiummarkup.com",
   tagline: "Find clients. Win them faster.",
   description:
-    "Premium Markup is a Pakistan-based studio behind Leads Portal: 130,000 local businesses checked for WhatsApp, with one-click demo work to pitch them. We also design and build premium websites and brand identities.",
+    "Premium Markup is a Pakistan-based studio behind Leads Portal: 232,000+ unique local businesses checked for WhatsApp, with one-click demo work to pitch them. We also design and build premium websites and brand identities.",
 
   phone: {
     display: "+92 341 5481381",
