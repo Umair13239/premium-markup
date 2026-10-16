@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope, Caveat } from "next/font/google";
 import { KritikaClient } from "./kritika-client";
 
+// Fraunces is a variable font: no fixed weight list (400, 500 and 600 all still work). A weight list together
+// with italics made the Vercel (Turbopack) build fail to resolve the font files.
 const display = Fraunces({
   variable: "--font-kr-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
