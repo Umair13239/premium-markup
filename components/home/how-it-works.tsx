@@ -186,15 +186,12 @@ function RedesignMock({ play }: { play: boolean }) {
         <div className="hw-after"><SiteHero n={6} /></div>
         <motion.div className="hw-before" style={{ clipPath: clip }}>
           <div className="hw-old">
-            <div className="hd"><b>Glow Skin Clinic</b><nav><u>Home</u><u>About Us</u><u>Contact</u></nav></div>
+            <div className="top">Call us: 042 0000000 | Mon{"–"}Sat 10am{"–"}7pm</div>
+            <div className="hd"><b>GLOW SKIN CLINIC</b><nav><span>Home</span><span>About</span><span>Services</span><span>Contact</span></nav></div>
+            <div className="banner"><span>Welcome to Glow Skin Clinic</span></div>
             <div className="bd">
-              <div className="img">Image coming soon</div>
-              <div className="txt">
-                <h5>Welcome to our website!</h5>
-                <p>We are a skin clinic in Lahore. We offer many services. Please call us for more information.</p>
-                <u>Click here</u>
-                <small>Visitors: 001234</small>
-              </div>
+              <p>We provide the best skin care services in Lahore with experienced staff. Contact us today for an appointment.</p>
+              <span className="btn">Read More</span>
             </div>
           </div>
         </motion.div>
