@@ -796,8 +796,11 @@ html.lenis, html.lenis body { height: auto; }
   .pm2 .eyebrow { margin-top: 0; }
 }
 
-/* LEAD section in the light theme, like the rest of the page */
-.pm2 .story { background: #fff; color: var(--ink); }
-.pm2 .story .pin { background: radial-gradient(760px 560px at 66% 55%, rgba(104,60,231,.08), transparent 70%); }
-.pm2 .story h2, .pm2 .story h3 { color: var(--ink); }
-.pm2 .story p { color: var(--ink-2); }
+
+.pm2 .device-video { display: block; width: 100%; height: auto; border-radius: 14px; background: #f3f3f6; }
+@media (max-width: 760px) { .pm2 .device-video { border-radius: 13px; } }
+
+.pm2 .how-video { margin: 36px 0 0; }
+.pm2 .how-video video { width: 100%; height: auto; display: block; border-radius: 22px; background: #0d0d14; box-shadow: 0 30px 70px -40px rgba(0,0,0,.35); }
+.pm2 .how-video p { margin: 12px 0 0; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 760px) { .pm2 .how-video video { border-radius: 14px; } }

@@ -36,10 +36,10 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
       <div className="eyebrow">The portal</div>
       <h2 className="h-xl" style={{ fontSize: "clamp(40px,5.6vw,80px)" }}>Everything you need.<br /><span style={{ color: "var(--brand)" }}>On one screen.</span></h2>
     </div>
-    <div className="stage3d" id="stage" data-dark><div className="device"><Image src="/home/portal-shot.png" alt="Leads Portal dashboard" width={1920} height={1080} sizes="(max-width: 1060px) 92vw, 980px" /></div></div>
+    <div className="stage3d" id="stage" data-dark><div className="device"><video className="device-video" autoPlay muted loop playsInline preload="auto" poster="/home/portal-shot.png" aria-label="Leads Portal tour: dashboard, collecting leads and the blog editor"><source src="/home/portal-tour.webm" type="video/webm" /><source src="/home/portal-tour.mp4" type="video/mp4" /></video></div></div>
   </div>
 </section>
-<section className="story" id="story">
+<section className="story" id="story" data-dark>
   <div className="pin">
     <div>
       <div className="eyebrow" style={{ color: "var(--brand-l)" }}>How it works</div>
@@ -71,7 +71,7 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
 <section className="shots" id="shots">
   <div className="shots-head"><div className="eyebrow">Real screens</div><h2>Everything happens in one portal.</h2></div>
   <div className="shots-grid">
-    <figure className="shot full"><video className="shot-video" autoPlay muted loop playsInline preload="metadata" poster="/home/feature-dashboard.webp" aria-label="Leads Portal dashboard, live numbers"><source src="/home/dashboard-loop.webm" type="video/webm" /></video><figcaption><b>One dashboard.</b> Total leads, new this week, phone coverage and WhatsApp reachability, live.</figcaption></figure>
+    <figure className="shot full"><img src="/home/feature-dashboard.webp" alt="Leads Portal dashboard: total leads, new this week, phone coverage and WhatsApp reachability" loading="lazy" width={2880} height={1800} /><figcaption><b>One dashboard.</b> Total leads, new this week, phone coverage and WhatsApp reachability, live.</figcaption></figure>
     <figure className="shot"><img src="/home/feature-tiles.webp" alt="Lead stats tiles in the Leads Portal" loading="lazy" width={1142} height={142} /><figcaption><b>Track the numbers</b> that matter: leads collected, phone coverage and WhatsApp reach.</figcaption></figure>
     <figure className="shot big"><img src="/home/feature-collect.webp" alt="Collect leads by category and city in the Leads Portal" loading="lazy" width={1800} height={900} /><figcaption><b>Collect leads</b> by category and city, saved straight to your database.</figcaption></figure>
     <figure className="shot"><img src="/home/feature-whatsapp.webp" alt="WhatsApp check in the Leads Portal: numbers checked, on WhatsApp, not on WhatsApp" loading="lazy" width={1472} height={660} /><figcaption><b>Check WhatsApp</b> numbers in the background.</figcaption></figure>

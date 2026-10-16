@@ -107,6 +107,14 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
+      <section className="how-video" aria-label="Video tour">
+        <video controls playsInline preload="metadata" poster="/home/portal-shot.png">
+          <source src="/home/portal-tour.webm" type="video/webm" />
+          <source src="/home/portal-tour.mp4" type="video/mp4" />
+        </video>
+        <p>A 36-second tour: the dashboard, collecting leads for a category and cities, and the blog editor with its SEO score.</p>
+      </section>
+
       <nav className="how-toc" aria-label="Topics">
         {TOPICS.map((t) => (
           <a key={t.id} href={"#" + t.id}>{t.title}</a>
