@@ -15,7 +15,9 @@ export function HomeFx() {
     const load = () => { if (sec && cv && gl && !dead) import("./glass-r").then((m) => { if (!dead) stopR = m.initGlassR(sec, cv); }).catch(() => sec.classList.add("nogl")); };
     const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
     if (w.requestIdleCallback) w.requestIdleCallback(load, { timeout: 2500 }); else setTimeout(load, 1200);
-    return () => { dead = true; stop(); stopR?.(); };
+    // If the 3D canvas never comes to life (slow phone, blocked WebGL), show the static logo instead of an empty space.
+    const fallback = setTimeout(() => { if (sec && !sec.classList.contains("ready")) sec.classList.add("nogl"); }, 5000);
+    return () => { dead = true; clearTimeout(fallback); stop(); stopR?.(); };
   }, []);
   return null;
 }

@@ -795,3 +795,9 @@ html.lenis, html.lenis body { height: auto; }
   .pm2 .stage3d { margin-top: 22px; }
   .pm2 .eyebrow { margin-top: 0; }
 }
+
+/* LEAD section in the light theme, like the rest of the page */
+.pm2 .story { background: #fff; color: var(--ink); }
+.pm2 .story .pin { background: radial-gradient(760px 560px at 66% 55%, rgba(104,60,231,.08), transparent 70%); }
+.pm2 .story h2, .pm2 .story h3 { color: var(--ink); }
+.pm2 .story p { color: var(--ink-2); }

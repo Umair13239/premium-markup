@@ -39,7 +39,7 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
     <div className="stage3d" id="stage" data-dark><div className="device"><Image src="/home/portal-shot.png" alt="Leads Portal dashboard" width={1920} height={1080} sizes="(max-width: 1060px) 92vw, 980px" /></div></div>
   </div>
 </section>
-<section className="story" id="story" data-dark>
+<section className="story" id="story">
   <div className="pin">
     <div>
       <div className="eyebrow" style={{ color: "var(--brand-l)" }}>How it works</div>
