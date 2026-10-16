@@ -269,7 +269,6 @@ const FEATURES: { f: string; v: Mark[] }[] = [
   { f: "Build and host your own business website", v: [0, 0, 0, 1, 1] },
   { f: "Find, check, build and pitch in one place", v: [1, 0, 0, 0, 0] },
 ];
-const CROSS = "✕";
 
 /* ---------------- sections ---------------- */
 
@@ -312,10 +311,16 @@ function StepSection({ s, i }: { s: Step; i: number }) {
   );
 }
 
+// Drawn as SVG strokes so the tick, dash and cross are the same weight and size at every scale.
+const MARK_PATH = { yes: "M5.5 12.5l4 4L18.5 7.5", part: "M7 12h10", no: "M8 8l8 8M16 8l-8 8" };
 function MarkIcon({ m, us }: { m: Mark; us?: boolean }) {
-  if (m === 1) return <span className={"hw-m yes" + (us ? " us" : "")} role="img" aria-label="Yes">{TICK}</span>;
-  if (m === 0.5) return <span className="hw-m part" role="img" aria-label="Partly">~</span>;
-  return <span className="hw-m no" role="img" aria-label="No">{CROSS}</span>;
+  const kind = m === 1 ? "yes" : m === 0.5 ? "part" : "no";
+  const label = m === 1 ? "Yes" : m === 0.5 ? "Partly" : "No";
+  return (
+    <span className={"hw-m " + kind + (us && m === 1 ? " us" : "")} role="img" aria-label={label}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={MARK_PATH[kind]} /></svg>
+    </span>
+  );
 }
 
 function Compare() {
