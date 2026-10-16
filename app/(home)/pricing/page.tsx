@@ -4,7 +4,7 @@ import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = {
   title: { absolute: "Pricing | Leads Portal by Premium Markup" },
-  description: "Start free with 1,000 leads. Paid plans from $19 a month add more leads, unlimited WhatsApp checks and one-click demo websites.",
+  description: "Start free with 1,000 leads. Paid plans from $9 a month add more leads, unlimited WhatsApp checks and one-click demo websites.",
   alternates: { canonical: "/pricing" },
 };
 
