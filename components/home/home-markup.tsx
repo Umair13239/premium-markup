@@ -9,7 +9,11 @@ const SAY = SAY_TEXT.split(" ").map((w, i) => (
   <span key={i} className={SAY_HL.has(w) ? "v" : undefined}>{w}{" "}</span>
 ));
 
-export function HomeMarkup() {
+export function HomeMarkup({ businesses }: { businesses: number }) {
+  // Live from the Leads Portal (rounded down). Never hardcode this number.
+  const long = Math.floor(businesses / 1000) * 1000;
+  const longTxt = long.toLocaleString("en-US") + "+";
+  const kTxt = Math.floor(businesses / 1000);
   return (
     <>
 
@@ -18,7 +22,7 @@ export function HomeMarkup() {
   <div className="tcopy">
     <div className="eyebrow">Leads Portal</div>
     <h1 className="h-xl">Find clients.<br /><span style={{ color: "var(--brand)" }}>Win them faster.</span></h1>
-    <p className="lede">300,000+ local businesses, checked for WhatsApp. One click builds the demo work you pitch: a website, an SEO audit, a UI design and more.</p>
+    <p className="lede">{longTxt} local businesses, checked for WhatsApp. One click builds the demo work you pitch: a website, an SEO audit, a UI design and more.</p>
     <div className="row"><a className="pbtn brand" href={PORTAL}>Start free</a><a className="plink" href="https://www.youtube.com/watch?v=zBpJ8hAKqtU" target="_blank" rel="noopener">Watch the 4-minute tour</a></div>
   </div>
   <div className="tc lg tc1"><small>WhatsApp check</small><b style={{ marginTop: "4px" }}>+966 5•• ••• 214</b><div style={{ marginTop: "8px" }}><i className="dot"></i><span className="ok">On WhatsApp</span></div></div>
@@ -41,7 +45,7 @@ export function HomeMarkup() {
       <div className="eyebrow" style={{ color: "var(--brand-l)" }}>How it works</div>
       <h2 style={{ marginTop: "12px" }}>The <span className="lead-w">LEAD</span> method.<br /><span style={{ color: "var(--brand-l)" }}>One new client.</span></h2>
       <div className="stepsw"><i className="bar" id="bar"></i><ol className="steps" id="steps">
-        <li className="on"><h3><span>01</span><em>L</em>ocate</h3><p>Pick a city and a category. 300,000+ businesses with phones, emails, ratings and socials.</p></li>
+        <li className="on"><h3><span>01</span><em>L</em>ocate</h3><p>Pick a city and a category. {longTxt} businesses with phones, emails, ratings and socials.</p></li>
         <li><h3><span>02</span><em>E</em>valuate</h3><p>Every number verified on WhatsApp, every detail checked, before you reach out.</p></li>
         <li><h3><span>03</span><em>A</em>ssemble</h3><p>One click builds the proof for whatever you sell: a demo website, an SEO audit, a UI design.</p></li>
         <li><h3><span>04</span><em>D</em>eliver</h3><p>One tap opens WhatsApp with the message and the demo ready. Track every reply.</p></li>
@@ -60,7 +64,7 @@ export function HomeMarkup() {
   </div>
 </section>
 <section className="stats" id="stats">
-  <div><b data-n="300" data-s="K+">0</b><span>local businesses</span></div>
+  <div><b data-n={kTxt} data-s="K+">0</b><span>local businesses</span></div>
   <div><b data-n="260" data-s="">0</b><span>demo sites built</span></div>
   <div><b data-n="90" data-s="s">0</b><span>to build a demo</span></div>
 </section>

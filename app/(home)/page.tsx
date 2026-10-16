@@ -36,15 +36,7 @@ export default async function HomePage() {
   const s = await getStats();
   return (
     <>
-      {s ? (
-        <section aria-label="Leads Portal numbers" style={{ padding: "18px 20px", textAlign: "center", fontSize: 15, borderBottom: "1px solid var(--color-line, #e5e5ea)" }}>
-          <strong>{fmt(s.businesses)}</strong> unique businesses · <strong>{s.countries}</strong> countries in the Leads Portal
-          <span style={{ display: "block", fontSize: 12, opacity: 0.7 }}>
-            Updated {new Date(s.updatedAt).toLocaleString("en-GB", { timeZone: "UTC", dateStyle: "medium", timeStyle: "short" })} UTC
-          </span>
-        </section>
-      ) : null}
-      <HomeMarkup />
+      <HomeMarkup businesses={s ? s.businesses : 232000} />
       <HomeFx />
     </>
   );
