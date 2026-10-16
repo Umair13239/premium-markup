@@ -123,39 +123,42 @@ export default function HowItWorksPage() {
       </nav>
 
       <style>{`
-        .ht{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;max-width:1180px;margin:110px auto 0;padding:0 24px}
-        .ht.rev{direction:rtl}.ht.rev>*{direction:ltr}
-        .ht.solo{grid-template-columns:1fr;max-width:820px}
-        .ht-num{font-size:13px;font-weight:800;letter-spacing:.16em;color:#683CE7;text-transform:uppercase}
-        .ht h2{font-size:clamp(32px,4vw,50px);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin:10px 0 14px}
-        .ht-sum{font-size:19px;color:#6E6E73;line-height:1.5;margin:0 0 26px}
-        .ht-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-        .ht-steps li{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.05);font-size:16px;line-height:1.45;color:#1D1D1F;opacity:0;transform:translateY(16px);animation:htIn .6s cubic-bezier(.2,.7,.2,1) forwards}
-        .ht-steps li i{flex:none;width:28px;height:28px;border-radius:99px;background:#683CE7;color:#fff;font-style:normal;font-size:13px;font-weight:800;display:grid;place-items:center}
-        .ht-fig{margin:0;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 40px 90px -30px rgba(40,20,120,.35),0 0 0 1px rgba(0,0,0,.06);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-        .ht-fig:hover{transform:translateY(-6px) scale(1.01)}
-        .ht-fig img{width:100%;height:auto;display:block}
-        @keyframes htIn{to{opacity:1;transform:none}}
-        @media (max-width:900px){.ht{grid-template-columns:1fr;gap:30px;margin-top:80px}.ht.rev{direction:ltr}}
-        @media (prefers-reduced-motion:reduce){.ht-steps li{animation:none;opacity:1;transform:none}.ht-fig{transition:none}}
+        .pmh{max-width:1180px;margin:150px auto 0;padding:0 24px;display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:start}
+        .pmh-l{position:sticky;top:150px}
+        .pmh-n{font-size:128px;font-weight:900;letter-spacing:-.06em;line-height:.8;color:transparent;-webkit-text-stroke:1.4px #1D1D1F}
+        .pmh-k{font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#8E8E93;margin-top:26px}
+        .pmh h2{font-size:clamp(34px,4vw,54px);font-weight:900;letter-spacing:-.045em;line-height:1.02;margin:12px 0 18px}
+        .pmh-s{font-size:18px;line-height:1.6;color:#6E6E73;margin:0;max-width:440px}
+        .pmh-r{border-top:1px solid rgba(0,0,0,.1)}
+        .pmh-fig{margin:28px 0 8px;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.05),0 40px 80px -40px rgba(0,0,0,.35)}
+        .pmh-fig img{width:100%;height:auto;display:block}
+        .pmh-ol{list-style:none;margin:0;padding:0}
+        .pmh-li{display:grid;grid-template-columns:48px 1fr;gap:10px;padding:22px 0;border-bottom:1px solid rgba(0,0,0,.08);font-size:18px;line-height:1.5;color:#1D1D1F;opacity:0;transform:translateY(12px);animation:pmIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+        .pmh-li b{font-size:13px;font-weight:700;color:#683CE7;padding-top:4px;font-variant-numeric:tabular-nums}
+        @keyframes pmIn{to{opacity:1;transform:none}}
+        @media (max-width:900px){.pmh{grid-template-columns:1fr;gap:20px;margin-top:90px}.pmh-l{position:static}.pmh-n{font-size:88px}}
+        @media (prefers-reduced-motion:reduce){.pmh-li{animation:none;opacity:1;transform:none}}
       `}</style>
       {TOPICS.map((t, ti) => (
-        <section key={t.id} id={t.id} className={"ht" + (t.shot ? (ti % 2 ? " rev" : "") : " solo")}>
-          <div>
-            <div className="ht-num">Step {ti + 1} of {TOPICS.length}</div>
+        <section key={t.id} id={t.id} className="pmh">
+          <div className="pmh-l">
+            <div className="pmh-n">{String(ti + 1).padStart(2, "0")}</div>
+            <div className="pmh-k">Step {ti + 1} of {TOPICS.length}</div>
             <h2>{t.title.replace(/^\d+\.\s*/, "")}</h2>
-            <p className="ht-sum">{t.summary}</p>
-            <ol className="ht-steps">
+            <p className="pmh-s">{t.summary}</p>
+          </div>
+          <div className="pmh-r">
+            {t.shot ? (
+              <figure className="pmh-fig">
+                <Image src={t.shot.src} alt={t.shot.alt} width={t.shot.w} height={t.shot.h} sizes="(max-width: 900px) 100vw, 640px" />
+              </figure>
+            ) : null}
+            <ol className="pmh-ol">
               {t.steps.map((s, si) => (
-                <li key={s} style={{ animationDelay: `${si * 140}ms` }}><i>{si + 1}</i><span>{s}</span></li>
+                <li key={s} className="pmh-li" style={{ animationDelay: `${si * 120}ms` }}><b>{String(si + 1).padStart(2, "0")}</b><span>{s}</span></li>
               ))}
             </ol>
           </div>
-          {t.shot ? (
-            <figure className="ht-fig">
-              <Image src={t.shot.src} alt={t.shot.alt} width={t.shot.w} height={t.shot.h} sizes="(max-width: 900px) 100vw, 600px" />
-            </figure>
-          ) : null}
         </section>
       ))}
 
