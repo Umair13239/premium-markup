@@ -775,3 +775,23 @@ html.lenis, html.lenis body { height: auto; }
 .pm2 .how-end { text-align: center; padding: 72px 0 40px; border-top: 1px solid rgba(0,0,0,.08); margin-top: 48px; }
 .pm2 .how-end p { color: var(--ink-2); font-size: 17px; margin: 0 0 22px; }
 @media (max-width: 720px) { .pm2 .how { padding: 96px 18px 56px; } }
+
+/* Mobile: slimmer device frame, no cropped corners on screenshots */
+@media (max-width: 760px) {
+  .pm2 .device { padding: 5px; border-radius: 18px; box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 24px 50px -30px rgba(50,30,140,.4); overflow: hidden; }
+  .pm2 .device img { border-radius: 13px; }
+  .pm2 .shot { padding: 10px; border-radius: 18px; }
+  .pm2 .shot img, .pm2 .shot-video { border-radius: 12px; }
+  .pm2 .shot figcaption { font-size: 14px; margin-top: 10px; }
+  .pm2 .how-shot { padding: 8px; border-radius: 16px; }
+  .pm2 .how-shot img { border-radius: 10px; }
+  .pm2 .shots { padding: 56px 14px 20px; }
+}
+
+/* Mobile: smaller logo mark sitting higher in the nav; tighter label spacing under the hero */
+@media (max-width: 760px) {
+  .pm2 .gnav { top: 8px; }
+  .pm2 .gnav .brandlink svg { height: 22px; width: auto; transform: scale(.85); transform-origin: left center; }
+  .pm2 .stage3d { margin-top: 22px; }
+  .pm2 .eyebrow { margin-top: 0; }
+}
