@@ -85,13 +85,14 @@ const TOPICS = [
 ];
 
 const COMPARE: [string, string, string][] = [
-  ["Business database", "Ready-made, collected from public listings in 25 countries", "Usually a lead list you buy or export per search"],
-  ["WhatsApp number check", "Built in, runs in the background, shows status per lead", "Usually not included, or a separate paid tool"],
-  ["Website audit per lead", "Built in, findings in plain language", "Usually a separate SEO tool, billed separately"],
-  ["Demo website per lead", "One click, included in the plan", "Not usually included"],
-  ["Outreach and pipeline", "WhatsApp and email from the portal, with a status board", "Often needs a separate CRM"],
-  ["Blog with SEO score", "Built in: score, what is missing and why", "Usually a separate CMS and an SEO tool"],
-  ["Free to start", "Yes, with real limits you can see on the pricing page", "Varies: often a trial, then monthly billing"],
+  ["Business database", "Ready-made list from public listings in 25 countries", "Apollo.io, ZoomInfo, Lusha (B2B contacts); Outscraper, Apify (Google Maps scraping)"],
+  ["WhatsApp number check", "Built in: runs in the background, status per lead", "No standard tool. WATI and Respond.io are messaging platforms, not list checkers"],
+  ["Website audit per lead", "Built in: plain-language findings with a fix for each", "Ahrefs and SEMrush site audits, Screaming Frog (desktop), Google PageSpeed Insights (free)"],
+  ["One-click demo website", "Built in, from the lead's own details", "Durable, Wix ADI, Framer AI (you build and set up each site)"],
+  ["AI receptionist", "Built into every demo website", "Goodcall, Smith.ai"],
+  ["Outreach and pipeline", "WhatsApp and email from the portal, with a status board", "HubSpot CRM, Pipedrive; Instantly or Lemlist for email sending"],
+  ["Blog with SEO score", "Built in: live score, what is missing and why", "Yoast SEO and Rank Math (WordPress plugins); Surfer SEO for content scoring"],
+  ["Free to start", "Free plan: 1,000 leads, 100 WhatsApp checks and 3 websites a day", "Most of these bill monthly per seat, with a short trial or none"],
 ];
 
 export default function HowItWorksPage() {
@@ -148,11 +149,11 @@ export default function HowItWorksPage() {
 
       <section id="compare" className="how-compare">
         <h2>How it compares</h2>
-        <p className="how-sum">Compared with the usual way people do this: a few separate tools, each billed on its own.</p>
+        <p className="how-sum">Each row names the tools people usually pay for separately. Leads Portal does the same job in one place.</p>
         <div className="how-table-wrap">
           <table className="how-table">
             <thead>
-              <tr><th scope="col">What you need</th><th scope="col">Leads Portal</th><th scope="col">Usual separate tools</th></tr>
+              <tr><th scope="col">What you need</th><th scope="col">Leads Portal</th><th scope="col">Tools people use instead</th></tr>
             </thead>
             <tbody>
               {COMPARE.map(([a, b, c]) => (
@@ -161,7 +162,7 @@ export default function HowItWorksPage() {
             </tbody>
           </table>
         </div>
-        <p className="how-note">The &quot;usual separate tools&quot; column describes common setups in general, not any single product. Check each tool&apos;s own pricing before you compare.</p>
+        <p className="how-note">Tool names are examples from each category, not a full list and not an endorsement. Check each tool&apos;s own pricing before you compare.</p>
       </section>
 
       <section className="how-end">
