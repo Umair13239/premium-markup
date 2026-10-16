@@ -108,11 +108,11 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="how-video" aria-label="Explainer video">
-        <video controls playsInline preload="metadata" poster="/home/explainer-poster.webp">
-          <source src="/home/explainer.webm" type="video/webm" />
-          <source src="/home/explainer.mp4" type="video/mp4" />
+        <video controls playsInline preload="metadata" poster="/home/general-poster.webp">
+          <source src="/home/general.webm" type="video/webm" />
+          <source src="/home/general.mp4" type="video/mp4" />
         </video>
-        <p>The 35-second explainer: what Leads Portal does, with a voiceover.</p>
+        <p>A 75-second overview: signing up, the dashboard, and every tool, from collecting leads to one-click websites, SEO and blogs.</p>
       </section>
 
       <section className="how-video" aria-label="Video tour">
