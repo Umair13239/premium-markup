@@ -17,7 +17,7 @@ export type CheckStatus = "pass" | "warn" | "fail";
 
 export type SeoCheck = {
   id: string;
-  group: "Title & meta" | "Keyword" | "Content" | "Structure" | "Media & links";
+  group: "Title & meta" | "Keyword" | "Content" | "Structure" | "Media & links" | "Writing quality";
   label: string;
   status: CheckStatus;
   weight: number;
@@ -270,6 +270,47 @@ export function analyseSeo(input: SeoInput): SeoResult {
     why: "Citing a credible source builds trust for claims, statistics and definitions.",
     fix: "Link to a reputable source for any statistic or claim you make.",
   });
+
+  // --- Writing quality. Not an AI detector (those are unreliable). It flags the habits that make text
+  // generic and forgettable: stock phrases, formula sentences, dash overuse and claims with no specifics.
+  const wq = (id: string, label: string, status: CheckStatus, message: string, why: string, fix: string) =>
+    checks.push({ id, group: "Writing quality", label, weight: 4, status, message, why, fix });
+  const lower = " " + text.toLowerCase() + " ";
+  const STOCK = ["delve", "in today's fast-paced", "in today’s fast-paced", "in the realm of", "it's important to note", "it’s important to note", "game-changer", "game changer", "unlock the power", "navigate the landscape", "tapestry", "look no further", "in conclusion", "elevate your", "seamless", "robust solution", "cutting-edge", "leverage", "at the end of the day"];
+  const stockHits = STOCK.filter((ph) => lower.indexOf(ph) !== -1);
+  wq("stock-phrases", "Stock phrases", stockHits.length === 0 ? "pass" : stockHits.length <= 2 ? "warn" : "fail",
+    stockHits.length ? `Found: ${stockHits.slice(0, 4).map((x) => `"${x}"`).join(", ")}${stockHits.length > 4 ? " …" : ""}` : "No stock phrases found.",
+    "Stock phrases like “delve” or “game-changer” show up in thousands of pages. Readers skim past them and stop trusting the writer.",
+    "Replace each with the plain thing you mean. Say what the seamless part actually is, with a detail only you would know.");
+  const per1k = (n: number) => (words ? Math.round((n / words) * 1000 * 10) / 10 : 0);
+  const notBut = (text.match(/not (just |only |merely )?[^.!?]{1,50}?,? (but|it's|it’s|it is|it's about|it’s about)/gi) || []).length;
+  wq("reveal-formula", "“Not X, it’s Y” formula", per1k(notBut) <= 2 ? "pass" : per1k(notBut) <= 4 ? "warn" : "fail",
+    `${notBut} use(s) of the “not X, but Y” pattern (${per1k(notBut)} per 1,000 words).`,
+    "Used everywhere, this pattern makes the piece feel like it is arguing with a straw man instead of informing the reader.",
+    "Keep at most one or two. Replace the rest with a direct statement of the point.");
+  const dashes = (text.match(/—|–/g) || []).length;
+  wq("dash-density", "Dash overuse", per1k(dashes) <= 5 ? "pass" : per1k(dashes) <= 8 ? "warn" : "fail",
+    `${dashes} dash(es) (${per1k(dashes)} per 1,000 words).`,
+    "Heavy use of long dashes is a common pattern in machine-written text and makes sentences harder to follow.",
+    "Use commas, full stops or brackets for most of them. Keep a dash only where it really adds a pause.");
+  const numbers = (text.match(/\d|£|\$|€|%/g) || []).length;
+  wq("specifics", "Specific numbers and examples", numbers >= 6 ? "pass" : numbers >= 3 ? "warn" : "fail",
+    `${numbers} number, currency or percentage mark(s) in the text.`,
+    "Concrete numbers, prices and examples are what make a claim believable and memorable. Vague text reads as generic.",
+    "Add real figures: a price, a timeline, a measured result, or a worked example with real numbers you can back up.");
+  const sents = text.split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter((x) => x.split(/\s+/).length > 2);
+  let run = 0, maxRun = 0, prev = "";
+  sents.forEach((x) => { const w = (x.split(/\s+/)[0] || "").toLowerCase(); run = w === prev ? run + 1 : 1; prev = w; maxRun = Math.max(maxRun, run); });
+  wq("sentence-starts", "Repeated sentence openings", maxRun <= 2 ? "pass" : maxRun === 3 ? "warn" : "fail",
+    maxRun > 2 ? `${maxRun} sentences in a row start with the same word.` : "Sentence openings vary.",
+    "A run of sentences that all start the same way reads like a template and loses the reader's rhythm.",
+    "Vary the openings: start with the subject, a condition, a number, or a short question.");
+  const firstSentence = (sents[0] || "").toLowerCase();
+  const generic = /^(in today|in this (article|post|guide|blog)|are you (looking|ready|tired)|have you ever|if you're looking)/.test(firstSentence);
+  wq("opening", "Opening line", generic ? "fail" : "pass",
+    generic ? "The opening is a generic introduction." : "The opening gets to the point.",
+    "Readers decide in the first sentence whether the article answers their question. Generic openers cost you readers from the start.",
+    "Open with the answer or the most useful fact, then explain. Example: “A £500 site buys a homepage and a contact form; that is all.”");
 
   const totalWeight = checks.reduce((a, c) => a + c.weight, 0);
   const earned = checks.reduce((a, c) => a + c.weight * (c.status === "pass" ? 1 : c.status === "warn" ? 0.5 : 0), 0);
