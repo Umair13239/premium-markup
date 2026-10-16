@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Users, LogOut, Radar, PenSquare, Sun, Moon, ImageIcon, Globe, ScrollText, Settings } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Radar, Sun, Moon, Globe, ScrollText, Settings } from "lucide-react";
 import { siteConfig } from "@/site.config";
 
 function ThemeRow() {
@@ -35,8 +35,6 @@ function ThemeRow() {
 const nav = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
   { label: "Leads", href: "/admin/leads", icon: Users, exact: false },
-  { label: "Blog", href: "/admin/blog", icon: PenSquare, exact: false },
-  { label: "Site Images", href: "/admin/images", icon: ImageIcon, exact: false },
   { label: "Portfolio", href: "/admin/portfolio", icon: ScrollText, exact: false },
   { label: "Settings", href: "/admin/settings", icon: Settings, exact: false },
 ];
@@ -61,7 +59,7 @@ export function AdminSidebar({
       </div>
 
       <nav className="flex-1 overflow-y-auto p-3" aria-label="Admin">
-        {nav.filter((item) => role !== "blog" || item.href === "/admin/blog").map((item) => {
+        {nav.map((item) => {
           const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           const Icon = item.icon;
           return (

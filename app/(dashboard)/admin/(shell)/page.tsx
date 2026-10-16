@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Inbox, PenSquare, ArrowRight } from "lucide-react";
+import { Inbox, Radar, ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { STATUSES, SOURCES, statusTone, weeklyBuckets } from "@/lib/leads-data";
+import { siteConfig } from "@/site.config";
 import { LeadsChart } from "@/components/admin/leads-chart";
 
 export const dynamic = "force-dynamic";
@@ -74,22 +75,22 @@ export default async function AdminHome() {
           </p>
         </Link>
 
-        <Link href="/admin/blog" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
+        <a href={`${siteConfig.leadsPortalUrl}/admin.html#blog`} target="_blank" rel="noopener noreferrer" className="group rounded-[10px] border border-line bg-surface p-7 transition-all hover:border-cobalt hover:shadow-[var(--shadow)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-cobalt/10 text-cobalt">
-            <PenSquare className="h-6 w-6" aria-hidden="true" />
+            <Radar className="h-6 w-6" aria-hidden="true" />
           </div>
           <h2 className="mt-5 flex items-center gap-2 text-xl">
             Blog &amp; SEO
             <ArrowRight className="h-5 w-5 text-cobalt transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </h2>
           <p className="mt-2 text-sm text-muted">
-            Write posts with a live SEO score, see what is missing and publish when it is ready.
+            Write posts and check their SEO score in the Leads Portal. Posts publish to this website.
           </p>
           <p className="mono mt-4 text-sm">
             <span className="text-2xl font-semibold">{postsPublished}</span>
             <span className="text-muted"> published · {postsTotal - postsPublished} draft{postsTotal - postsPublished === 1 ? "" : "s"}</span>
           </p>
-        </Link>
+        </a>
       </div>
 
       <h2 className="mt-12 text-lg font-semibold">Website leads overview</h2>

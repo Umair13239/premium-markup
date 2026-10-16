@@ -35,10 +35,10 @@ export const authConfig = {
         return isLoggedIn;
       }
 
-      // Blog-only accounts can use the blog dashboard and nothing else in the admin
+      // Blog-only accounts now write posts in the Leads Portal (Blog & SEO tab), not in this admin
       const role = (auth?.user as { role?: string } | undefined)?.role;
-      if (isLoggedIn && role === "blog" && pathname.startsWith("/admin") && !pathname.startsWith("/admin/blog") && pathname !== "/admin/login") {
-        return Response.redirect(new URL("/admin/blog", request.nextUrl));
+      if (isLoggedIn && role === "blog" && pathname.startsWith("/admin") && pathname !== "/admin/login") {
+        return Response.redirect("https://leads.premiummarkup.com/login.html");
       }
 
       if (pathname === "/admin/login") {
