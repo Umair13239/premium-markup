@@ -1,7 +1,7 @@
 "use client";
 // How it works: six steps, each with a small live UI "stage" that plays when the step scrolls into view.
 // Observers sit on the unclipped <section>, never on the clipped stage (see CLAUDE.md, Motion).
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import { siteConfig } from "@/site.config";
 import "./how.css";
@@ -170,20 +170,35 @@ function BuildMock({ play }: { play: boolean }) {
 
 function RedesignMock({ play }: { play: boolean }) {
   const reduce = useReducedMotion();
-  const loop = play && !reduce;
-  const tr = loop ? { duration: 4.2, repeat: Infinity, ease: "easeInOut" as const, delay: 0.4 } : { duration: 0.3 };
+  // one value drives both the clip and the handle, so the edge and the line can never drift apart
+  const x = useMotionValue(55);
+  const clip = useTransform(x, (v) => `inset(0 ${100 - v}% 0 0)`);
+  const left = useTransform(x, (v) => `${v}%`);
+  useEffect(() => {
+    if (!play || reduce) { x.set(55); return; }
+    const run = animate(x, [55, 86, 14, 55], { duration: 6, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.4 });
+    return () => run.stop();
+  }, [play, reduce, x]);
   return (
     <div className="hw-app">
       <AppBar title="Design Studio · redesign concept" />
       <div className="hw-ba">
         <div className="hw-after"><SiteHero n={6} /></div>
-        <motion.div className="hw-before" initial={false} animate={loop ? { clipPath: ["inset(0 0% 0 0)", "inset(0 72% 0 0)", "inset(0 0% 0 0)"] } : { clipPath: "inset(0 50% 0 0)" }} transition={tr}>
+        <motion.div className="hw-before" style={{ clipPath: clip }}>
           <div className="hw-old">
-            <div className="hd">Welcome to our website</div>
-            <div className="bd"><div className="img" /><div className="txt"><i /><i /><i /><i /><u>Click here</u></div></div>
+            <div className="hd"><b>Glow Skin Clinic</b><nav><u>Home</u><u>About Us</u><u>Contact</u></nav></div>
+            <div className="bd">
+              <div className="img">Image coming soon</div>
+              <div className="txt">
+                <h5>Welcome to our website!</h5>
+                <p>We are a skin clinic in Lahore. We offer many services. Please call us for more information.</p>
+                <u>Click here</u>
+                <small>Visitors: 001234</small>
+              </div>
+            </div>
           </div>
         </motion.div>
-        <motion.div className="hw-div" initial={false} animate={loop ? { left: ["100%", "28%", "100%"] } : { left: "50%" }} transition={tr} />
+        <motion.div className="hw-div" style={{ left }}><span>{"‹ ›"}</span></motion.div>
         <span className="hw-tag l">Before</span><span className="hw-tag r">After</span>
       </div>
     </div>
@@ -247,7 +262,12 @@ const FEATURES: { f: string; v: Mark[] }[] = [
   { f: "Before and after redesign concept", v: [1, 0, 0, 0, 0] },
   { f: "Pitch on WhatsApp in one tap", v: [1, 0, 0, 0.5, 0.5] },
   { f: "Email pitches and a pipeline board", v: [1, 1, 0, 1, 0.5] },
-  { f: "All of it in one place", v: [1, 0, 0, 0, 0] },
+  { f: "Free plan to start", v: [1, 1, 0.5, 1, 1] },
+  { f: "Verified B2B contacts (job titles, direct emails)", v: [0.5, 1, 0, 0.5, 0] },
+  { f: "Email sequences and automation", v: [0.5, 1, 0, 1, 0.5] },
+  { f: "Keyword research and rank tracking", v: [0, 0, 1, 0.5, 0.5] },
+  { f: "Build and host your own business website", v: [0, 0, 0, 1, 1] },
+  { f: "Find, check, build and pitch in one place", v: [1, 0, 0, 0, 0] },
 ];
 const CROSS = "✕";
 
@@ -304,12 +324,17 @@ function Compare() {
   const reduce = useReducedMotion();
   const play = on || !!reduce;
   // what each tool is missing that Leads Portal has (the last row is the summary, so it is left out)
-  const adds = TOOLS.slice(1).map((t, k) => ({ t, list: FEATURES.slice(0, -1).filter((r) => r.v[0] === 1 && r.v[k + 1] === 0).map((r) => r.f) }));
+  const rows = FEATURES.slice(0, -1);
+  const adds = TOOLS.slice(1).map((t, k) => ({
+    t,
+    list: rows.filter((r) => r.v[0] === 1 && r.v[k + 1] === 0).map((r) => r.f),
+    strong: rows.filter((r) => r.v[k + 1] === 1 && r.v[0] < 1).map((r) => r.f.replace(/ \(.*\)$/, "").toLowerCase()),
+  }));
   return (
     <section id="compare" className="hw-compare">
       <div className="eyebrow">How it compares</div>
       <h2>One portal instead of a stack of subscriptions.</h2>
-      <p>The best tools each do one part of the job. Leads Portal does the whole job, from finding the business to winning it.</p>
+      <p>Each of these tools is excellent at its own job. Here is an honest look at where they fit, and where Leads Portal does more for someone selling to local businesses.</p>
       <div ref={ref} className="hw-mx-wrap">
         <table className="hw-mx">
           <thead>
@@ -339,11 +364,12 @@ function Compare() {
       <div className="hw-legend"><span><MarkIcon m={1} />Included</span><span><MarkIcon m={0.5} />Partly, or through an add-on</span><span><MarkIcon m={0} />Not offered</span></div>
 
       <div className="hw-adds">
-        {adds.map(({ t, list }) => (
+        {adds.map(({ t, list, strong }) => (
           <div key={t.name} className="hw-add">
             <h3>Leads Portal vs {t.name}</h3>
-            <p>What you get that {t.name} does not offer:</p>
+            <p>Only in Leads Portal:</p>
             <ul>{list.map((f) => <li key={f}><i aria-hidden="true">+</i>{f}</li>)}</ul>
+            {strong.length ? <p className="hw-add-alt">Pick {t.name} if you mainly need {strong.join(" or ")}.</p> : null}
           </div>
         ))}
       </div>

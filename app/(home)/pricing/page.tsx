@@ -78,8 +78,8 @@ export default function PricingPage() {
         ))}
       </section>
 
-      <section className="end in" data-dark>
-        <h2>Not sure yet?<br /><span style={{ color: "var(--brand-l)" }}>Start on Free.</span></h2>
+      <section className="end in">
+        <h2>Not sure yet?<br /><span style={{ color: "var(--brand)" }}>Start on Free.</span></h2>
         <p>1,000 leads and the full portal. Upgrade when your first client says yes.</p>
         <div className="row" style={{ position: "relative" }}><a className="pbtn brand" href={PORTAL}>Start free</a></div>
       </section>

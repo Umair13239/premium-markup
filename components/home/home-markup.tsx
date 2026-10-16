@@ -35,15 +35,15 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
       <div className="eyebrow">The portal</div>
       <h2 className="h-xl" style={{ fontSize: "clamp(40px,5.6vw,80px)" }}>Everything you need.<br /><span style={{ color: "var(--brand)" }}>On one screen.</span></h2>
     </div>
-    <div className="stage3d" id="stage" data-dark><div className="device"><video className="device-video" autoPlay muted loop playsInline preload="auto" poster="/home/portal-shot.png" aria-label="Leads Portal tour: dashboard, collecting leads and the blog editor"><source src="/home/portal-tour.webm" type="video/webm" /><source src="/home/portal-tour.mp4" type="video/mp4" /></video></div></div>
+    <div className="stage3d" id="stage"><div className="device"><video className="device-video" autoPlay muted loop playsInline preload="auto" poster="/home/portal-shot.png" aria-label="Leads Portal tour: dashboard, collecting leads and the blog editor"><source src="/home/portal-tour.webm" type="video/webm" /><source src="/home/portal-tour.mp4" type="video/mp4" /></video></div></div>
   </div>
 </section>
 <section className="say" id="say"><div className="pin"><p id="sayp">{SAY}</p></div></section>
 <section className="story" id="story" data-dark>
   <div className="pin">
     <div>
-      <div className="eyebrow" style={{ color: "var(--brand-l)" }}>How it works</div>
-      <h2 style={{ marginTop: "12px" }}>The <span className="lead-w">LEAD</span> method.<br /><span style={{ color: "var(--brand-l)" }}>One new client.</span></h2>
+      <div className="eyebrow" style={{ color: "var(--brand)" }}>How it works</div>
+      <h2 style={{ marginTop: "12px" }}>The <span className="lead-w">LEAD</span> method.<br /><span style={{ color: "var(--brand)" }}>One new client.</span></h2>
       <div className="stepsw"><i className="bar" id="bar"></i><ol className="steps" id="steps">
         <li className="on"><h3><span>01</span><em>L</em>ocate</h3><p>Pick a city and a category. {longTxt} businesses with phones, emails, ratings and socials.</p></li>
         <li><h3><span>02</span><em>E</em>valuate</h3><p>Every number verified on WhatsApp, every detail checked, before you reach out.</p></li>
@@ -85,8 +85,8 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
   <div className="wc rv" data-tilt style={{ "--i": 1 } as React.CSSProperties}><small>Marketers</small><h3>Pitch with their own reviews and ratings.</h3><div className="vis"><div className="stars">★ 4.8<span>312 reviews · 9 unanswered</span></div></div></div>
   <div className="wc dk rv" data-tilt style={{ "--i": 2 } as React.CSSProperties}><small>Everyone</small><h3>An AI receptionist that answers their calls.</h3><div className="vis"><div className="wave big"><i></i><i style={{ animationDelay: "-.2s" }}></i><i style={{ animationDelay: "-.5s" }}></i><i style={{ animationDelay: "-.1s" }}></i><i style={{ animationDelay: "-.7s" }}></i><i style={{ animationDelay: "-.3s" }}></i><i style={{ animationDelay: "-.6s" }}></i><i style={{ animationDelay: "-.4s" }}></i><i style={{ animationDelay: "-.8s" }}></i><i style={{ animationDelay: "-.15s" }}></i><i style={{ animationDelay: "-.35s" }}></i><i style={{ animationDelay: "-.55s" }}></i></div></div></div>
 </div></div></section>
-<section className="end" data-dark>
-  <h2>Your next client is<br /><span style={{ color: "var(--brand-l)" }}>already in the list.</span></h2>
+<section className="end">
+  <h2>Your next client is<br /><span style={{ color: "var(--brand)" }}>already in the list.</span></h2>
   <p>Web designers, SEO experts, UI/UX designers, marketers. Find them, prepare the proof, send it in one tap.</p>
   <div className="chips"><span>Websites</span><span>SEO audits</span><span>UI/UX designs</span><span>AI receptionist</span><span>More coming</span></div>
   <div className="row" style={{ position: "relative" }}><a className="pbtn brand" href={PORTAL}>Start free</a></div>

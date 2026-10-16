@@ -40,7 +40,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <a className="pbtn brand" href={siteConfig.leadsPortalUrl} tabIndex={menu ? 0 : -1}>Start free</a>
       </div>
       {children}
-      <footer className="pfoot" data-dark>
+      <footer className="pfoot">
         <div className="fw">
           <div><PMLogo className="flogo" /><p>Leads Portal and premium websites, built in Pakistan.</p></div>
           <nav aria-label="Footer"><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></nav>
