@@ -68,6 +68,13 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
   <div><b data-n="260" data-s="">0</b><span>demo sites built</span></div>
   <div><b data-n="90" data-s="s">0</b><span>to build a demo</span></div>
 </section>
+<section className="shots" id="shots">
+  <div className="shots-head"><div className="eyebrow">Real screens</div><h2>Everything happens in one portal.</h2></div>
+  <div className="shots-grid">
+    <figure className="shot big"><img src="/home/feature-collect.webp" alt="Collect leads by category and city in the Leads Portal" loading="lazy" width={900} height={560} /><figcaption><b>Collect leads</b> by category and city, saved straight to your database.</figcaption></figure>
+    <figure className="shot"><img src="/home/feature-whatsapp.webp" alt="WhatsApp number check in the Leads Portal" loading="lazy" width={235} height={205} /><figcaption><b>Check WhatsApp</b> numbers in the background.</figcaption></figure>
+  </div>
+</section>
 <section className="who" id="who"><div className="pin"><div className="track" id="track">
   <div className="whead rv"><div className="eyebrow">Who it&apos;s for</div><h2>Built for anyone who<br /><span style={{ color: "var(--brand)" }}>sells to local business.</span></h2></div>
   <div className="wc rv" data-tilt style={{ "--i": 1 } as React.CSSProperties}><small>Web designers</small><h3>Send a live demo site, not a portfolio link.</h3><div className="vis"><div className="site" style={{ width: "78%" }}><div className="im"></div><i></i><i className="cta"></i></div></div></div>
