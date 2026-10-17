@@ -211,14 +211,8 @@
   }
 
   /* Cinematic hero background: spotlight + dev grid */
-  .hero-grid {
-    background-image:
-      linear-gradient(var(--color-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000 0%, transparent 75%);
-    opacity: 0.5;
-  }
+  /* The decorative grid was removed site-wide: the hero grid layer is kept in markup but not drawn. */
+  .hero-grid { display: none; }
   .spotlight {
     background:
       radial-gradient(600px 380px at 72% 32%, color-mix(in oklab, var(--color-cobalt) 22%, transparent), transparent 70%),
