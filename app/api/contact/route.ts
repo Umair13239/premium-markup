@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { contactSchema } from "@/lib/contact-schema";
 import { prisma } from "@/lib/prisma";
 import { sendLeadNotification } from "@/lib/email";
+import { siteConfig } from "@/site.config";
 
 // Best-effort in-memory rate limit (per IP). Resets on cold start — fine for a
 // single-instance app; swap for Upstash/Redis if you scale horizontally.
@@ -83,6 +84,24 @@ export async function POST(req: NextRequest) {
 
     // Fire the notification (no-op without a Resend key).
     await sendLeadNotification(lead);
+
+    // Also drop the enquiry into the Leads Portal so it is managed there. Best effort: the lead is already saved here.
+    const secret = process.env.PORTAL_ENQUIRY_SECRET;
+    if (secret) {
+      try {
+        await fetch(`${siteConfig.leadsPortalUrl.replace(/\/$/, "")}/api/website-enquiry`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-pm-secret": secret },
+          body: JSON.stringify({
+            name: data.name, company: data.company, email: data.email, phone: data.phone, website: data.currentWebsite,
+            projectType: data.projectType, budget: data.budget, timeline: data.timeline, message: data.message, attachmentUrl: data.attachmentUrl,
+          }),
+          signal: AbortSignal.timeout(5000),
+        });
+      } catch (e) {
+        console.error("[contact] portal hand-off failed:", e);
+      }
+    }
 
     return NextResponse.json({ ok: true });
   } catch (e) {
