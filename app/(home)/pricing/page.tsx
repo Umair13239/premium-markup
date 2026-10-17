@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { PLANS, fmt, type Plan } from "@/lib/plans";
 import { siteConfig } from "@/site.config";
 import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
+import { RegionProvider, RegionToggle, Price } from "@/components/home/region";
 
 export const metadata: Metadata = pageMeta({
   title: "Pricing | Leads Portal by Premium Markup",
-  description: "Start free with 1,000 leads. Paid plans from $9 a month add more leads, unlimited WhatsApp checks and one-click demo websites.",
+  description: "Start free with 1,000 leads. Paid plans from Rs 1,500 a month in Pakistan or $12 elsewhere add more leads, unlimited WhatsApp checks and one-click demo websites.",
   path: "/pricing",
 });
 
@@ -55,14 +56,15 @@ export default function PricingPage() {
     },
   ];
   return (
-    <>
+    <RegionProvider>
       <JsonLd data={schema} />
       <section className="pghead">
         <div className="eyebrow rv">Pricing</div>
         <h1 className="rv" style={{ "--i": 1 } as React.CSSProperties}>Start free.<br /><span style={{ color: "var(--brand)" }}>Grow when it pays.</span></h1>
-        <p className="lede rv" style={{ "--i": 2 } as React.CSSProperties}>Every plan includes the full portal. Prices are in US dollars, billed monthly.</p>
+        <p className="lede rv" style={{ "--i": 2 } as React.CSSProperties}>Every plan includes the full portal, billed monthly. Pakistan gets local PKR pricing; other regions pay in US dollars.</p>
       </section>
 
+      <div className="rgwrap"><RegionToggle /></div>
       <section className="plans" aria-label="Plans">
         {PLANS.map((p, i) => (
           <div key={p.id} className="rv" style={{ "--i": i % 3 } as React.CSSProperties}>
@@ -70,7 +72,7 @@ export default function PricingPage() {
               {p.featured && <span className="badge">Includes one-click websites</span>}
               <h2>{p.name}</h2>
               <p className="bl">{p.blurb}</p>
-              <div className="pr">{p.custom ? <b>Custom</b> : <><b>${p.price}</b><span>{p.price ? "/ month" : "forever"}</span></>}</div>
+              <div className="pr"><Price plan={p} /></div>
               <a className={"pbtn " + (p.featured ? "brand" : "ink")} href={p.custom ? siteConfig.phone.whatsapp : PORTAL}>{p.custom ? "Talk to us" : p.price ? `Choose ${p.name}` : "Start free"}</a>
               {p.plus && <p className="plus">Everything in {p.plus}, plus:</p>}
               <ul>{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
@@ -103,6 +105,6 @@ export default function PricingPage() {
         <p>1,000 leads and the full portal. Upgrade when your first client says yes.</p>
         <div className="row" style={{ position: "relative" }}><a className="pbtn brand" href={PORTAL}>Start free</a></div>
       </section>
-    </>
+    </RegionProvider>
   );
 }

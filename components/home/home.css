@@ -820,3 +820,10 @@ html.lenis, html.lenis body { height: auto; }
 .pm2 .legal-card .rich strong { color: var(--ink); font-weight: 600; }
 .pm2 .legal-card .rich a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .pm2 .legal { padding: 0 16px 72px; } .pm2 .legal-card { padding: 28px 22px; border-radius: 24px; } }
+
+/* ---------- regional pricing switch ---------- */
+.pm2 .rgwrap { display: flex; justify-content: center; padding: 0 20px 28px; }
+.pm2 .rgsw { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #F5F5F7; }
+.pm2 .rgsw button { border: 0; background: transparent; color: var(--ink-2); font: 600 14px var(--font-inter), sans-serif; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+.pm2 .rgsw button.on { background: #1D1D1F; color: #fff; }
+@media (max-width: 480px) { .pm2 .rgsw button { padding: 9px 12px; font-size: 13px; } }
