@@ -33,6 +33,7 @@ const FAQ = [
   ["What counts as a lead?", "One local business in your portal: name, category, city, phone, and where we find them, email, website, rating and social links."],
   ["How does the WhatsApp check work?", "The portal checks each phone number and marks the ones on WhatsApp, so you only message people who can actually reply."],
   ["What is a one-click website?", "A demo site built from the business's own logo, photos and reviews in about 90 seconds. You send the link in your pitch."],
+  ["Which currency do I pay in?", "Pakistan pays in PKR through local methods such as JazzCash and Easypaisa. Everywhere else, prices are shown in your own currency for reference and billed in US dollars at the listed USD price."],
   ["Can I try it before paying?", `Yes. The Free plan gives you ${fmt(PLANS[0].leads)} leads and ${fmt(PLANS[0].waChecks)} WhatsApp checks a day, no card needed.`],
 ];
 
@@ -61,7 +62,7 @@ export default function PricingPage() {
       <section className="pghead">
         <div className="eyebrow rv">Pricing</div>
         <h1 className="rv" style={{ "--i": 1 } as React.CSSProperties}>Start free.<br /><span style={{ color: "var(--brand)" }}>Grow when it pays.</span></h1>
-        <p className="lede rv" style={{ "--i": 2 } as React.CSSProperties}>Every plan includes the full portal, billed monthly. Pakistan gets local PKR pricing; other regions pay in US dollars.</p>
+        <p className="lede rv" style={{ "--i": 2 } as React.CSSProperties}>Every plan includes the full portal, billed monthly. Prices follow your location: local pricing in Pakistan, and your own currency elsewhere.</p>
       </section>
 
       <div className="rgwrap"><RegionToggle /></div>

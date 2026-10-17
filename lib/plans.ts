@@ -24,3 +24,21 @@ export const PLANS: Plan[] = [
 ];
 
 export const fmt = (n: number) => (n === INF ? "Unlimited" : n.toLocaleString("en-US"));
+
+const EUR = "AT BE CY DE EE ES FI FR GR HR IE IT LT LU LV MT NL PT SI SK".split(" ");
+const CUR: Record<string, [string, string, number]> = { PK: ["PKR", "Rs ", 1], IN: ["INR", "₹", 84], BD: ["BDT", "৳", 120], LK: ["LKR", "Rs ", 300], NP: ["NPR", "Rs ", 135], AE: ["AED", "AED ", 3.67], SA: ["SAR", "SAR ", 3.75],
+  QA: ["QAR", "QAR ", 3.64], KW: ["KWD", "KWD ", 0.31], OM: ["OMR", "OMR ", 0.385], BH: ["BHD", "BHD ", 0.377], JO: ["JOD", "JOD ", 0.71], EG: ["EGP", "E£", 49], TR: ["TRY", "₺", 34],
+  GB: ["GBP", "£", 0.78], CH: ["CHF", "CHF ", 0.88], SE: ["SEK", "SEK ", 10.5], NO: ["NOK", "NOK ", 10.8], DK: ["DKK", "DKK ", 6.9], PL: ["PLN", "PLN ", 4], CA: ["CAD", "C$", 1.37], AU: ["AUD", "A$", 1.52],
+  NZ: ["NZD", "NZ$", 1.65], SG: ["SGD", "S$", 1.34], MY: ["MYR", "RM ", 4.4], ID: ["IDR", "Rp ", 15800], PH: ["PHP", "₱", 57], JP: ["JPY", "¥", 150], ZA: ["ZAR", "R ", 18], NG: ["NGN", "₦", 1500],
+  KE: ["KES", "KSh ", 129], MX: ["MXN", "MX$", 18], BR: ["BRL", "R$", 5.5], US: ["USD", "$", 1] };
+EUR.forEach((c) => { CUR[c] = ["EUR", "€", 0.92]; });
+function niceRound(x: number) { return x >= 10000 ? Math.round(x / 1000) * 1000 : x >= 1000 ? Math.round(x / 100) * 100 : x >= 100 ? Math.round(x / 10) * 10 : x >= 10 ? Math.round(x) : Math.round(x * 2) / 2; }
+/* What one visitor should see for a plan: { amount, currency, label, usd, local } */
+export function priceFor(plan: Plan, country: string) {
+  const cc = String(country || "").toUpperCase(), c: [string, string, number] = CUR[cc] || ["USD", "$", 1], usd = plan.price || 0;
+  if (!usd) return { amount: 0, currency: c[0], label: c[1] + "0", usd: 0, local: cc === "PK" };
+  const amount = cc === "PK" && plan.pkr ? plan.pkr : c[0] === "USD" ? usd : niceRound(usd * c[2]);
+  return { amount, currency: c[0], label: c[1] + amount.toLocaleString("en-US"), usd, local: c[0] !== "USD" };
+}
+
+export function currencyOf(country: string) { const c = CUR[String(country || "").toUpperCase()] || ["USD", "$", 1]; return { currency: c[0], symbol: c[1] }; }
