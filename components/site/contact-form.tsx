@@ -16,8 +16,8 @@ import {
 } from "@/lib/contact-schema";
 
 const fieldBase =
-  "w-full min-h-11 rounded-[6px] border border-line bg-surface px-3.5 py-2.5 text-base outline-none transition-colors focus:border-cobalt focus:ring-2 focus:ring-cobalt/20";
-const labelBase = "mono block text-xs font-medium text-ink";
+  "w-full min-h-12 rounded-[14px] border border-[#E5E5EA] bg-white px-4 py-3 text-base text-[#1D1D1F] outline-none transition-colors placeholder:text-[#8E8E93] focus:border-[#683CE7] focus:ring-2 focus:ring-[#683CE7]/20";
+const labelBase = "block text-[13px] font-semibold text-[#1D1D1F]";
 
 type Upload = { url: string; name: string };
 
@@ -96,13 +96,13 @@ export function ContactForm() {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-[6px] border border-line bg-surface p-8"
+        className="rounded-[28px] bg-[#F5F5F7] p-8 text-[#1D1D1F]"
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-cobalt text-white">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#683CE7] text-white">
           <Check className="h-6 w-6" aria-hidden="true" />
         </div>
-        <h2 className="mt-5 text-2xl">Thanks — message received.</h2>
-        <p className="mt-3 text-muted">
+        <h2 className="mt-5 text-2xl font-bold">Thanks — message received.</h2>
+        <p className="mt-3 text-[#6E6E73]">
           We reply within one working day with honest, specific next steps. If it&rsquo;s
           urgent, call or WhatsApp us on the number on this page.
         </p>
@@ -181,7 +181,7 @@ export function ContactForm() {
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <p className="mono text-xs text-muted">Tap to add helpful detail to your brief:</p>
+            <p className="text-xs text-[#6E6E73]">Tap to add helpful detail to your brief:</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {suggestions.map((s, i) => (
                 <motion.button
@@ -193,9 +193,9 @@ export function ContactForm() {
                   transition={{ delay: i * 0.04 }}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.96 }}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-3 py-1.5 text-sm text-ink transition-colors hover:border-cobalt hover:text-cobalt"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E5EA] bg-white px-3 py-1.5 text-sm text-[#1D1D1F] transition-colors hover:border-[#683CE7] hover:text-[#683CE7]"
                 >
-                  <Plus className="h-3.5 w-3.5 text-cobalt" aria-hidden="true" />
+                  <Plus className="h-3.5 w-3.5 text-[#683CE7]" aria-hidden="true" />
                   {s}
                 </motion.button>
               ))}
@@ -224,14 +224,14 @@ export function ContactForm() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              className="mt-1.5 flex items-center gap-3 rounded-[6px] border border-line bg-surface px-3.5 py-3"
+              className="mt-1.5 flex items-center gap-3 rounded-[14px] border border-[#E5E5EA] bg-white px-3.5 py-3"
             >
-              <FileText className="h-5 w-5 shrink-0 text-cobalt" aria-hidden="true" />
+              <FileText className="h-5 w-5 shrink-0 text-[#683CE7]" aria-hidden="true" />
               <span className="min-w-0 flex-1 truncate text-sm">{upload.name}</span>
               <button
                 type="button"
                 onClick={removeUpload}
-                className="flex h-8 w-8 items-center justify-center rounded-[6px] text-muted transition-colors hover:bg-paper hover:text-tag"
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] text-[#6E6E73] transition-colors hover:bg-[#F5F5F7] hover:text-[#D70015]"
                 aria-label="Remove file"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
@@ -243,8 +243,8 @@ export function ContactForm() {
               onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
               onDragLeave={() => setDragging(false)}
               onDrop={(e) => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files?.[0]); }}
-              className={`mt-1.5 flex cursor-pointer items-center justify-center gap-2.5 rounded-[6px] border border-dashed px-4 py-6 text-sm transition-colors ${
-                dragging ? "border-cobalt bg-cobalt/5 text-cobalt" : "border-line text-muted hover:border-cobalt hover:text-ink"
+              className={`mt-1.5 flex cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border border-dashed px-4 py-6 text-sm transition-colors ${
+                dragging ? "border-[#683CE7] bg-[#683CE7]/5 text-[#683CE7]" : "border-[#D2D2D7] text-[#6E6E73] hover:border-[#683CE7] hover:text-[#1D1D1F]"
               }`}
             >
               {uploading ? (
@@ -261,7 +261,7 @@ export function ContactForm() {
             </label>
           )}
         </AnimatePresence>
-        {uploadError && <span role="alert" className="mt-1.5 block text-sm text-tag">{uploadError}</span>}
+        {uploadError && <span role="alert" className="mt-1.5 block text-sm text-[#D70015]">{uploadError}</span>}
       </div>
 
       <Field label="How did you hear about us? (optional)" error={errors.referral?.message}>
@@ -272,16 +272,16 @@ export function ContactForm() {
       </Field>
 
       <label className="flex items-start gap-3 text-sm">
-        <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-cobalt)]" {...register("consent")} />
-        <span className="text-muted">
+        <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[#683CE7]" {...register("consent")} />
+        <span className="text-[#6E6E73]">
           I&rsquo;m happy for Premium Markup to store these details and reply to my enquiry. See our{" "}
-          <a href="/privacy" className="text-cobalt link-underline">privacy policy</a>.
+          <a href="/privacy" className="text-[#683CE7] underline underline-offset-2">privacy policy</a>.
         </span>
       </label>
-      {errors.consent && <span role="alert" className="-mt-2 block text-sm text-tag">{errors.consent.message}</span>}
+      {errors.consent && <span role="alert" className="-mt-2 block text-sm text-[#D70015]">{errors.consent.message}</span>}
 
       {serverError && (
-        <p role="alert" className="rounded-[6px] border border-[color:#e3b6b5] bg-[color:#fbeeed] px-4 py-3 text-sm text-tag">
+        <p role="alert" className="rounded-[14px] bg-[#FFF1F0] px-4 py-3 text-sm text-[#D70015]">
           {serverError}
         </p>
       )}
@@ -291,12 +291,12 @@ export function ContactForm() {
         disabled={isSubmitting || uploading}
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.98 }}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] bg-cobalt px-6 font-medium text-white transition-colors hover:bg-[var(--color-cobalt-ink)] disabled:opacity-60"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1D1D1F] px-7 font-semibold text-white transition-colors hover:bg-[#683CE7] disabled:opacity-60"
       >
         {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
         {isSubmitting ? "Sending…" : "Send project brief"}
       </motion.button>
-      <p className="mono text-xs text-muted">We reply within one working day. No spam, ever.</p>
+      <p className="text-xs text-[#6E6E73]">We reply within one working day. No spam, ever.</p>
     </form>
   );
 }
@@ -315,11 +315,11 @@ function Field({
   return (
     <label className="block">
       <span className={labelBase}>
-        {label} {required && <span className="text-tag">*</span>}
+        {label} {required && <span className="text-[#D70015]">*</span>}
       </span>
       <span className="mt-1.5 block">{children}</span>
       {error && (
-        <span role="alert" className="mt-1.5 block text-sm text-tag">
+        <span role="alert" className="mt-1.5 block text-sm text-[#D70015]">
           {error}
         </span>
       )}

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 import { Phone, Mail, MessageCircle } from "lucide-react";
-import { PageHeader } from "@/components/site/page-header";
 import { ContactForm } from "@/components/site/contact-form";
 import { Socials } from "@/components/site/socials";
 import { siteConfig } from "@/site.config";
@@ -17,60 +16,47 @@ export default function ContactPage() {
   return (
     <>
       <JsonLd data={[breadcrumb([{ name: "Contact", path: "/contact" }]), { "@context": "https://schema.org", "@type": "ContactPage", name: "Contact Premium Markup", url: "https://premiummarkup.com/contact" }]} />
-      <PageHeader
-        label="contact"
-        title="Start a project."
-        intro="Tell us what you're building and what's gone wrong before. The more specific you are, the more useful our reply will be."
-      />
-      <div className="container-editorial grid gap-14 py-16 md:grid-cols-[1.3fr_1fr] md:py-20">
-        <div className="order-2 md:order-1">
+      <section className="pghead" style={{ paddingTop: 84 }}>
+        <div className="eyebrow">Contact</div>
+        <h1>Start a <span style={{ color: "var(--brand)" }}>project.</span></h1>
+        <p className="lede">Tell us what you&rsquo;re building and what&rsquo;s gone wrong before. The more specific you are, the more useful our reply will be.</p>
+      </section>
+      <div className="mx-auto grid max-w-[1120px] gap-8 px-5 pb-24 text-[#1D1D1F] md:grid-cols-[1.4fr_1fr] md:px-6">
+        <div className="order-2 rounded-[28px] bg-[#F5F5F7] p-6 md:order-1 md:p-9">
           <ContactForm />
         </div>
 
-        <aside className="order-1 md:order-2">
-          <p className="tag-label">{"<!-- direct -->"}</p>
-          <ul className="mt-4 space-y-4">
-            <li>
-              <a href={`tel:${siteConfig.phone.tel}`} className="flex items-center gap-3 hover:text-cobalt">
-                <Phone className="h-5 w-5 text-cobalt" aria-hidden="true" />
-                <span>
-                  <span className="mono block text-xs text-muted">Call</span>
-                  {siteConfig.phone.display}
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href={siteConfig.phone.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-cobalt">
-                <MessageCircle className="h-5 w-5 text-cobalt" aria-hidden="true" />
-                <span>
-                  <span className="mono block text-xs text-muted">WhatsApp</span>
-                  Message us
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${siteConfig.email.primary}`} className="flex items-center gap-3 hover:text-cobalt">
-                <Mail className="h-5 w-5 text-cobalt" aria-hidden="true" />
-                <span>
-                  <span className="mono block text-xs text-muted">Email</span>
-                  {siteConfig.email.primary}
-                </span>
-              </a>
-            </li>
+        <aside className="order-1 grid content-start gap-5 md:order-2">
+          <ul className="grid gap-3">
+            {[
+              { href: `tel:${siteConfig.phone.tel}`, Icon: Phone, k: "Call", v: siteConfig.phone.display, ext: false },
+              { href: siteConfig.phone.whatsapp, Icon: MessageCircle, k: "WhatsApp", v: "Message us", ext: true },
+              { href: `mailto:${siteConfig.email.primary}`, Icon: Mail, k: "Email", v: siteConfig.email.primary, ext: false },
+            ].map(({ href, Icon, k, v, ext }) => (
+              <li key={k}>
+                <a href={href} {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="flex items-center gap-4 rounded-[24px] bg-[#F5F5F7] p-5 transition-colors hover:bg-[#EDE8FF]">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#683CE7]"><Icon className="h-5 w-5" aria-hidden="true" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-medium text-[#6E6E73]">{k}</span>
+                    <span className="block truncate font-semibold">{v}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
           </ul>
 
-          <div className="mt-10 rounded-[6px] border border-line bg-surface p-6">
-            <p className="font-medium">What happens next</p>
-            <ol className="mt-3 space-y-2 text-sm text-muted">
+          <div className="rounded-[24px] bg-[#F5F5F7] p-6">
+            <p className="font-bold">What happens next</p>
+            <ol className="mt-3 grid gap-2 text-sm text-[#6E6E73]">
               <li>1. We read your brief and reply within one working day.</li>
               <li>2. A short call to confirm scope — no obligation.</li>
               <li>3. A fixed quote and timeline, in writing.</li>
             </ol>
           </div>
 
-          <div className="mt-8">
-            <p className="tag-label mb-2">{"<!-- social -->"}</p>
-            <Socials className="-ml-2.5" />
+          <div className="rounded-[24px] bg-[#F5F5F7] p-6">
+            <p className="font-bold">Follow along</p>
+            <Socials className="-ml-2.5 mt-2 [&_a]:!text-[#1D1D1F] [&_a:hover]:!text-[#683CE7]" />
           </div>
         </aside>
       </div>

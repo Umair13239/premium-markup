@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/site/page-header";
+import { LegalPage } from "@/components/site/legal-page";
 import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = {
@@ -11,13 +11,11 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <>
-      <PageHeader label="legal" title="Privacy Policy" intro="How we handle the information you share with us. Last updated: July 2026." />
-      <div className="container-editorial py-14 md:py-20">
-        <div className="rich max-w-3xl">
+      <LegalPage eyebrow="Legal" title={<>Privacy, <span style={{ color: "var(--brand)" }}>plainly.</span></>} intro="How we handle the information you share with us. Last updated: July 2026.">
+        <div className="rich">
           <h2>Who we are</h2>
           <p>
-            This site is operated by {siteConfig.legalName} (&ldquo;Premium Markup&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), a
+            This site is operated by Premium Markup (&ldquo;Premium Markup&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), a
             web design and development agency based in the {siteConfig.address.region}. For any privacy question, email{" "}
             <a href={`mailto:${siteConfig.email.primary}`}>{siteConfig.email.primary}</a>.
           </p>
@@ -58,9 +56,9 @@ export default function PrivacyPage() {
 
           <h2>Your rights</h2>
           <p>
-            Under data protection law you can ask to access, correct, delete or restrict your data, or object to its processing. Email
-            us and we&rsquo;ll respond within one month. You also have the right to complain to the Information
-            Commissioner&rsquo;s Office (ICO).
+            Under applicable data protection law you can ask to access, correct, delete or restrict your data, or object to its processing. Email
+            us and we&rsquo;ll respond within one month. You can also raise a complaint with the relevant data
+            protection authority in your country.
           </p>
 
           <h2>Cookies</h2>
@@ -75,7 +73,6 @@ export default function PrivacyPage() {
             <a href={`mailto:${siteConfig.email.primary}`}>{siteConfig.email.primary}</a>.
           </p>
         </div>
-      </div>
-    </>
+      </LegalPage>
   );
 }

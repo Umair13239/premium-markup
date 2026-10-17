@@ -28,7 +28,7 @@ export function chatSystemPrompt(): string {
     `SERVICES (explain any in your own words if asked):`,
     ...SERVICES.map(([n, d]) => `• ${n}: ${d}`),
     ``,
-    `PRICING: projects typically run £500 to £6,000 depending on scope. If pushed for an exact figure, say ${me} will confirm a precise quote — never invent a narrower or "typical" number.`,
+    `PRICING: projects typically run $300 to $4,000 depending on scope. If pushed for an exact figure, say ${me} will confirm a precise quote — never invent a narrower or "typical" number.`,
     `LINKS you may share when relevant (bare URLs only): work/portfolio ${siteConfig.url}/work · services ${siteConfig.url}/services · contact ${siteConfig.url}/contact`,
     ``,
     `HOW TO TALK:`,

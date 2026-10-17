@@ -232,13 +232,17 @@ html.lenis, html.lenis body { height: auto; }
 .pm2 .stars { font: 700 64px/1 var(--font-tight), var(--font-inter), sans-serif; letter-spacing: -.032em; color: #FF9F0A; text-align: center; }
 .pm2 .stars span { display: block; font: 500 15px var(--font-inter), sans-serif; color: var(--ink-2); margin-top: 10px; letter-spacing: 0; }
 
-.pm2 .pfoot { background: #FAFAFC; color: var(--ink-2); padding: 56px 24px 32px; font-size: 15px; border-top: 1px solid rgba(0,0,0,.06); }
-.pm2 .pfoot .fw { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
-.pm2 .pfoot img { height: 28px; } .pm2 .pfoot p { margin: 14px 0 0; max-width: 300px; }
-.pm2 .pfoot nav, .pm2 .pfoot .fw > div:last-child { display: flex; flex-direction: column; gap: 10px; }
-.pm2 .pfoot a { color: var(--ink); text-decoration: none; } .pm2 .pfoot a:hover { color: var(--brand); }
-.pm2 .pfoot small { display: block; max-width: 1120px; margin: 40px auto 0; color: #8E8E93; }
-@media (max-width: 760px) { .pm2 .pfoot .fw { grid-template-columns: 1fr; } }
+.pm2 .pfoot { background: #F5F5F7; color: var(--ink-2); padding: 64px 24px 28px; font-size: 15px; }
+.pm2 .pfoot .fw { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1.4fr; gap: 36px; }
+.pm2 .pfoot p { margin: 14px 0 0; max-width: 280px; line-height: 1.55; }
+.pm2 .pfoot nav, .pm2 .pfoot .fcontact { display: flex; flex-direction: column; gap: 11px; align-items: flex-start; min-width: 0; }
+.pm2 .pfoot h3 { margin: 0 0 4px; font: 700 12px/1 var(--font-inter), sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8E8E93; }
+.pm2 .pfoot a { color: var(--ink); text-decoration: none; transition: color .2s; overflow-wrap: anywhere; } .pm2 .pfoot a:hover { color: var(--brand); }
+.pm2 .pfoot .fsoc { margin: 14px 0 0 -10px; } .pm2 .pfoot .fsoc a { color: var(--ink); } .pm2 .pfoot .fsoc a:hover { color: var(--brand); }
+.pm2 .pfoot .fbase { max-width: 1120px; margin: 44px auto 0; padding-top: 22px; border-top: 1px solid rgba(0,0,0,.08); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.pm2 .pfoot small { color: #8E8E93; font-size: 13px; }
+@media (max-width: 960px) { .pm2 .pfoot .fw { grid-template-columns: 1fr 1fr; } .pm2 .pfoot .fbrand { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .pm2 .pfoot .fw { grid-template-columns: 1fr 1fr; gap: 28px 20px; } .pm2 .pfoot .fcontact { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .pm2 .prt { height: 170vh; } .pm2 .stage3d { top: 62%; }
   .pm2 .say { height: 160vh; } .pm2 .story { height: 340vh; } .pm2 .who { height: 260vh; }
@@ -805,3 +809,14 @@ html.lenis, html.lenis body { height: auto; }
 .pm2 .how-video video { width: 100%; height: auto; display: block; border-radius: 22px; background: #0d0d14; box-shadow: 0 30px 70px -40px rgba(0,0,0,.35); }
 .pm2 .how-video p { margin: 12px 0 0; font-size: 14px; color: var(--ink-2); }
 @media (max-width: 760px) { .pm2 .how-video video { border-radius: 14px; } }
+
+/* ---------- legal pages ---------- */
+.pm2 .legal { max-width: 820px; margin: 0 auto; padding: 0 24px 96px; }
+.pm2 .legal-card { background: #F5F5F7; border-radius: 28px; padding: 44px 48px; color: var(--ink); }
+.pm2 .legal-card .rich h2 { font: 700 22px/1.2 var(--font-tight), var(--font-inter), sans-serif; letter-spacing: -.02em; margin: 34px 0 10px; color: var(--ink); }
+.pm2 .legal-card .rich h2:first-child { margin-top: 0; }
+.pm2 .legal-card .rich p, .pm2 .legal-card .rich li { color: var(--ink-2); font-size: 16px; line-height: 1.7; }
+.pm2 .legal-card .rich ul { padding-left: 20px; margin: 10px 0 0; list-style: disc; display: grid; gap: 8px; }
+.pm2 .legal-card .rich strong { color: var(--ink); font-weight: 600; }
+.pm2 .legal-card .rich a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) { .pm2 .legal { padding: 0 16px 72px; } .pm2 .legal-card { padding: 28px 22px; border-radius: 24px; } }

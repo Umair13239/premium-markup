@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/site/page-header";
+import { LegalPage } from "@/components/site/legal-page";
 import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = {
@@ -11,13 +11,11 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <>
-      <PageHeader label="legal" title="Terms & Conditions" intro="The terms for using this site and working with us. Last updated: July 2026." />
-      <div className="container-editorial py-14 md:py-20">
-        <div className="rich max-w-3xl">
+      <LegalPage eyebrow="Legal" title={<>Terms, <span style={{ color: "var(--brand)" }}>plainly.</span></>} intro="The terms for using this site and working with us. Last updated: July 2026.">
+        <div className="rich">
           <h2>Using this website</h2>
           <p>
-            This website is provided by {siteConfig.legalName} for general information about our services. By using it you
+            This website is provided by Premium Markup for general information about our services. By using it you
             agree to these terms. If you don&rsquo;t agree, please don&rsquo;t use the site.
           </p>
 
@@ -55,8 +53,7 @@ export default function TermsPage() {
 
           <h2>Governing law</h2>
           <p>
-            These terms are governed by the laws of England and Wales, and any disputes are subject to the courts of England
-            and Wales.
+            These terms are governed by the laws of Pakistan, and any disputes are subject to the courts of Pakistan.
           </p>
 
           <h2>Contact</h2>
@@ -65,7 +62,6 @@ export default function TermsPage() {
             <a href={`mailto:${siteConfig.email.primary}`}>{siteConfig.email.primary}</a>.
           </p>
         </div>
-      </div>
-    </>
+      </LegalPage>
   );
 }

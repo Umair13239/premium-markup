@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/site.config";
 import { initShellFx } from "./shell-fx";
 import { PMLogo } from "@/components/brand/logo";
+import { Socials } from "@/components/site/socials";
 
 const NAV = [
   { href: "https://leads.premiummarkup.com", label: "Leads Portal" },
@@ -42,11 +43,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {children}
       <footer className="pfoot">
         <div className="fw">
-          <div><PMLogo className="flogo" /><p>Leads Portal and premium websites, built in Pakistan.</p></div>
-          <nav aria-label="Footer"><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></nav>
-          <div><a href={"mailto:" + siteConfig.email.primary}>{siteConfig.email.primary}</a><a href={siteConfig.phone.whatsapp}>WhatsApp {siteConfig.phone.display}</a></div>
+          <div className="fbrand">
+            <PMLogo className="flogo" />
+            <p>Leads Portal and premium websites, built in Pakistan.</p>
+            <Socials className="fsoc" iconClassName="h-[18px] w-[18px]" />
+          </div>
+          <nav aria-label="Product"><h3>Product</h3><a href={siteConfig.leadsPortalUrl}>Leads Portal</a><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link></nav>
+          <nav aria-label="Company"><h3>Company</h3><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
+          <nav aria-label="Legal"><h3>Legal</h3><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></nav>
+          <div className="fcontact"><h3>Get in touch</h3><a href={"mailto:" + siteConfig.email.primary}>{siteConfig.email.primary}</a><a href={siteConfig.phone.whatsapp}>WhatsApp {siteConfig.phone.display}</a></div>
         </div>
-        <small>© {new Date().getFullYear()} Premium Markup</small>
+        <div className="fbase"><small>© {new Date().getFullYear()} Premium Markup</small><small>Made in Pakistan</small></div>
       </footer>
     </>
   );
