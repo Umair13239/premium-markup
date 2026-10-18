@@ -11,6 +11,7 @@ export const BUDGETS = [
 
 // "Service required" — matches the agency's service pages, plus Other.
 export const PROJECT_TYPES = [
+  "Leads Portal (plan, account or support)",
   "New website",
   "Website redesign",
   "Website development",
@@ -43,6 +44,12 @@ export const REFERRALS = [
 // the brief so people know exactly what detail helps us quote fast. Services
 // without an entry simply show no chips.
 export const PROJECT_SUGGESTIONS: Record<string, string[]> = {
+  "Leads Portal (plan, account or support)": [
+    "Which Leads Portal plan fits you?",
+    "Are you already signed up? What email is it under?",
+    "What is not working (page, feature or payment)?",
+    "Are you paying from Pakistan or another country?",
+  ],
   "New website": [
     "Roughly how many pages?",
     "Do you already have branding / a logo?",
