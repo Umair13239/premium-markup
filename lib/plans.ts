@@ -3,7 +3,7 @@
 const INF = Infinity;
 
 export type Plan = {
-  id: string; name: string; price: number | null; pkr?: number; blurb: string; leads: number; countries: number;
+  id: string; name: string; price: number | null; public?: boolean; pkr?: number; blurb: string; leads: number; countries: number;
   waChecks: number; speed: "Slow" | "Standard" | "Fast"; sitesPerDay: number; emails: boolean; csv: boolean; board: boolean; team: boolean;
   features: string[]; plus?: string; featured?: boolean; custom?: boolean;
 };
@@ -17,11 +17,13 @@ export const PLANS: Plan[] = [
     features: ["15,000 business leads (name, phone, address, website)", "Get leads from 10 countries you pick", "Up to 15 industries of your choice", "Check 3,000 phone numbers a day to see who is on WhatsApp", "Board view to see who you pitched and who replied", "Reminders to follow up with each lead", "Build 10 demo websites a day in one click", "Website health reports for businesses, 25 a day", "Deep website check up to 200 pages, 5 a day"], plus: "Starter" },
   { id: "pro", name: "Pro", price: 59, pkr: 7500, blurb: "Pitch with a ready demo website.", leads: 30000, countries: INF, waChecks: INF, speed: "Fast", sitesPerDay: 25, emails: true, csv: true, board: true, team: false, featured: true,
     features: ["30,000 business leads (name, phone, address, website)", "Get leads from every country and every industry", "Unlimited checks of who is on WhatsApp", "Fast lead collection", "Build 25 demo websites a day in one click", "AI editor to change the demo website by typing", "Online food-ordering pages for restaurants", "AI voice assistant on every demo website that answers visitors", "Website health reports, 60 a day, with your own branding", "Deep website check up to 300 pages, 10 a day"], plus: "Growth" },
-  { id: "scale", name: "Scale", price: 119, pkr: 15000, blurb: "For teams pitching every day.", leads: 75000, countries: INF, waChecks: INF, speed: "Fast", sitesPerDay: 50, emails: true, csv: true, board: true, team: true,
+  { id: "scale", public: false, name: "Scale", price: 119, pkr: 15000, blurb: "For teams pitching every day.", leads: 75000, countries: INF, waChecks: INF, speed: "Fast", sitesPerDay: 50, emails: true, csv: true, board: true, team: true,
     features: ["75,000 business leads (name, phone, address, website)", "Build 50 demo websites a day in one click", "Website health reports for businesses, 150 a day", "Deep website check up to 500 pages, 30 a day", "Add team members to your account"], plus: "Pro" },
-  { id: "enterprise", name: "Enterprise", price: null, blurb: "The full database, run for you.", leads: INF, countries: INF, waChecks: INF, speed: "Fast", sitesPerDay: 100, emails: true, csv: true, board: true, team: true, custom: true,
+  { id: "enterprise", public: false, name: "Enterprise", price: null, blurb: "The full database, run for you.", leads: INF, countries: INF, waChecks: INF, speed: "Fast", sitesPerDay: 100, emails: true, csv: true, board: true, team: true, custom: true,
     features: ["Access to the whole lead database", "Collection runs set up just for you", "Build 100 demo websites a day in one click", "Automatic WhatsApp messaging to your leads", "Priority support and setup help"], plus: "Scale" },
 ];
+// Plans shown on the website and at signup (Scale and Enterprise are hidden; existing accounts keep them).
+export const PUBLIC_PLANS = PLANS.filter((p) => p.public !== false);
 
 export const fmt = (n: number) => (n === INF ? "Unlimited" : n.toLocaleString("en-US"));
 

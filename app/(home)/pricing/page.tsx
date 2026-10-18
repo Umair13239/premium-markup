@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PLANS, fmt, type Plan } from "@/lib/plans";
+import { PLANS, PUBLIC_PLANS, fmt, type Plan } from "@/lib/plans";
 import { siteConfig } from "@/site.config";
 import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 import { RegionProvider, RegionToggle, Price } from "@/components/home/region";
@@ -52,7 +52,7 @@ export default function PricingPage() {
       operatingSystem: "Web",
       url: `${siteConfig.url.replace(/\/$/, "")}/pricing`,
       description: "Find local businesses, check WhatsApp, audit their websites and pitch with a one-click demo website.",
-      offers: PLANS.filter((p) => p.price !== null).map((p) => ({ "@type": "Offer", name: p.name, price: String(p.price), priceCurrency: "USD", url: `${siteConfig.url.replace(/\/$/, "")}/pricing` })),
+      offers: PUBLIC_PLANS.filter((p) => p.price !== null).map((p) => ({ "@type": "Offer", name: p.name, price: String(p.price), priceCurrency: "USD", url: `${siteConfig.url.replace(/\/$/, "")}/pricing` })),
     },
   ];
   return (
@@ -66,7 +66,7 @@ export default function PricingPage() {
 
       <div className="rgwrap"><RegionToggle /></div>
       <section className="plans" aria-label="Plans">
-        {PLANS.map((p, i) => (
+        {PUBLIC_PLANS.map((p, i) => (
           <div key={p.id} className="rv" style={{ "--i": i % 3 } as React.CSSProperties}>
             <article className={"plan" + (p.featured ? " ft" : "")} data-tilt>
               {p.featured && <span className="badge">Includes one-click websites</span>}
@@ -85,9 +85,9 @@ export default function PricingPage() {
         <h2>Compare plans</h2>
         <div className="tw">
           <table>
-            <thead><tr><th scope="col"><span className="sr">Feature</span></th>{PLANS.map((p) => <th key={p.id} scope="col">{p.name}</th>)}</tr></thead>
+            <thead><tr><th scope="col"><span className="sr">Feature</span></th>{PUBLIC_PLANS.map((p) => <th key={p.id} scope="col">{p.name}</th>)}</tr></thead>
             <tbody>{ROWS.map(([label, get]) => (
-              <tr key={label}><th scope="row">{label}</th>{PLANS.map((p) => <td key={p.id}>{get(p)}</td>)}</tr>
+              <tr key={label}><th scope="row">{label}</th>{PUBLIC_PLANS.map((p) => <td key={p.id}>{get(p)}</td>)}</tr>
             ))}</tbody>
           </table>
         </div>
