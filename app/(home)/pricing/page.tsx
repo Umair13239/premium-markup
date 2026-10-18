@@ -34,7 +34,7 @@ const FAQ = [
   ["How does the WhatsApp check work?", "The portal checks each phone number and marks the ones on WhatsApp, so you only message people who can actually reply."],
   ["What is a one-click website?", "A demo site built from the business's own logo, photos and reviews in about 90 seconds. You send the link in your pitch."],
   ["Which currency do I pay in?", "Pakistan pays in PKR through local methods such as JazzCash and Easypaisa. Everywhere else, prices are shown in your own currency for reference and billed in US dollars at the listed USD price."],
-  ["Can I get an AI receptionist for my business?", "Pro and Scale include demo calls of the AI receptionist, so you can show a business how it answers. A phone line that rings for a real business is a separate add-on, priced on request."],
+  ["Can I use an AI receptionist on my website?", "Yes. Pro and Scale include AI receptionist demo calls, which you can use on your own website to show a business how it answers questions and takes bookings."],
   ["Can I try it before paying?", `Yes. The Free plan gives you ${fmt(PLANS[0].leads)} leads and ${fmt(PLANS[0].waChecks)} WhatsApp checks a day, no card needed.`],
 ];
 
