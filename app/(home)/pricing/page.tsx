@@ -26,7 +26,6 @@ const ROWS: [string, (p: Plan) => React.ReactNode][] = [
   ["One-tap WhatsApp pitch", () => yes(true)],
   ["Email from your own mailbox", (p) => yes(p.emails)],
   ["AI site editor", (p) => yes(p.sitesPerDay > 0)],
-  ["AI voice receptionist on demos", (p) => yes(p.sitesPerDay > 0)],
   ["WhatsApp outreach automation", (p) => yes(!!p.custom)],
 ];
 const FAQ = [
