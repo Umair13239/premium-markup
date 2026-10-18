@@ -13,22 +13,15 @@ export function RegionProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<Mode>("local");
   useEffect(() => {
     fetch("/api/geo", { cache: "no-store" }).then((r) => r.json()).then((j) => setCountry(String(j.country || ""))).catch(() => {});
-    try { if (localStorage.getItem("pm-price-mode") === "usd") setMode("usd"); } catch {}
   }, []);
-  const set = (m: Mode) => { setMode(m); try { localStorage.setItem("pm-price-mode", m); } catch {} };
+  // Currency follows the visitor's country automatically; there is no manual switch.
+  const set = (m: Mode) => setMode(m);
   return <Ctx.Provider value={{ country, mode, set }}>{children}</Ctx.Provider>;
 }
 
 export function RegionToggle() {
-  const { country, mode, set } = useContext(Ctx);
-  const cur = currencyOf(country).currency;
-  if (cur === "USD") return null;
-  return (
-    <div className="rgsw" role="group" aria-label="Pricing currency">
-      <button type="button" className={mode === "local" ? "on" : ""} aria-pressed={mode === "local"} onClick={() => set("local")}>{cur}{country === "PK" ? " · Pakistan" : ""}</button>
-      <button type="button" className={mode === "usd" ? "on" : ""} aria-pressed={mode === "usd"} onClick={() => set("usd")}>USD</button>
-    </div>
-  );
+  // Automatic currency: no switch is shown to the visitor.
+  return null;
 }
 
 export function Price({ plan }: { plan: Plan }) {
