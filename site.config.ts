@@ -9,6 +9,8 @@ export const siteConfig = {
   locale: "en_US",
   // Private Leads Portal (runs on the office PC, exposed over Tailscale — only
   // your signed-in devices can reach it). Update here if the tailnet URL changes.
+  // Beta: shows a strip at the bottom of every page. Set to false at the full launch.
+  beta: true,
   leadsPortalUrl: "https://leads.premiummarkup.com",
   tagline: "Find clients. Win them faster.",
   description:

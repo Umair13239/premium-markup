@@ -41,6 +41,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <a className="pbtn brand" href={siteConfig.leadsPortalUrl} tabIndex={menu ? 0 : -1}>Start free</a>
       </div>
       {children}
+      {siteConfig.beta && <div className="beta-strip" role="note"><b>Beta</b> We are still testing the Leads Portal and Brand Mockups, so some things may change.</div>}
       <footer className="pfoot">
         <div className="fw">
           <div className="fbrand">
