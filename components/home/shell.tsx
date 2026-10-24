@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { siteConfig } from "@/site.config";
+import { siteConfig, activeSocials } from "@/site.config";
 import { initShellFx } from "./shell-fx";
 import { PMLogo } from "@/components/brand/logo";
 import { Socials } from "@/components/site/socials";
@@ -44,17 +44,32 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {children}
       {siteConfig.beta && <div className="beta-strip" role="note"><b>Beta</b> We are still testing the Leads Portal and Brand Mockups, so some things may change.</div>}
       <footer className="pfoot">
-        <div className="fw">
+        <div className="fw fw-top">
           <div className="fbrand">
             <PMLogo className="flogo" />
-            <p>Leads Portal and premium websites, built in Pakistan.</p>
-            <Socials className="fsoc" iconClassName="h-[18px] w-[18px]" />
+            <p>Leads Portal and premium websites, built in Pakistan. We help businesses find clients and look the part online.</p>
           </div>
-          <nav aria-label="Product"><h3>Product</h3><a href={siteConfig.leadsPortalUrl}>Leads Portal</a><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link></nav>
-          <nav aria-label="Company"><h3>Company</h3><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
-          <nav aria-label="Legal"><h3>Legal</h3><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></nav>
-          <div className="fcontact"><h3>Get in touch</h3><a href={"mailto:" + siteConfig.email.primary}>{siteConfig.email.primary}</a><a href={siteConfig.phone.whatsapp}>WhatsApp {siteConfig.phone.display}</a></div>
+          <form className="fnews" action={"mailto:" + siteConfig.email.primary} method="post" encType="text/plain">
+            <h3>Subscribe to our newsletter</h3>
+            <div className="fnews-row">
+              <input type="email" name="Newsletter signup" placeholder="Enter your email" aria-label="Email address" required />
+              <button type="submit">Subscribe</button>
+            </div>
+            <small>No spam. Just useful notes for growing businesses.</small>
+          </form>
         </div>
+        <div className="fw fw-cols">
+          <nav aria-label="Main pages"><h3>Main pages</h3><Link href="/">Home</Link><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
+          <nav aria-label="Product"><h3>Product</h3><a href={siteConfig.leadsPortalUrl}>Leads Portal</a><Link href="/pricing">Plans</Link><Link href="/how-it-works">Demo websites</Link></nav>
+          <nav aria-label="Legal"><h3>Legal</h3><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></nav>
+          <nav aria-label="Social links"><h3>Social links</h3>{activeSocials.map((x) => <a key={x.name} href={x.href} target="_blank" rel="noopener">{x.name}</a>)}</nav>
+          <div className="fcontact">
+            <h3>Have a question?</h3>
+            <a href={siteConfig.phone.whatsapp} className="fc-item"><b>{siteConfig.phone.display}</b><small>Call or WhatsApp, Mon to Sat</small></a>
+            <a href={"mailto:" + siteConfig.email.primary} className="fc-item"><b>{siteConfig.email.primary}</b><small>We reply within one working day</small></a>
+          </div>
+        </div>
+        <div className="fbig" aria-hidden="true">Premium Markup</div>
         <div className="fbase"><small>© {new Date().getFullYear()} Premium Markup</small><small>Made in Pakistan</small></div>
       </footer>
     </>
