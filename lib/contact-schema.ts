@@ -12,16 +12,10 @@ export const BUDGETS = [
 // "Service required" — matches the agency's service pages, plus Other.
 export const PROJECT_TYPES = [
   "Leads Portal (plan, account or support)",
-  "New website",
-  "Website redesign",
-  "Website development",
-  "Animated website",
-  "E-commerce website",
-  "Landing page",
+  "Website (new build or redesign)",
+  "SEO audit",
   "UI/UX design",
-  "SEO",
-  "Website maintenance",
-  "Graphic design",
+  "AI receptionist",
   "Other",
 ] as const;
 
@@ -48,46 +42,28 @@ export const PROJECT_SUGGESTIONS: Record<string, string[]> = {
     "Which Leads Portal plan fits you?",
     "Are you already signed up? What email is it under?",
     "What is not working (page, feature or payment)?",
-    "Are you paying from Pakistan or another country?",
   ],
-  "New website": [
+  "Website (new build or redesign)": [
+    "Is this a new website or a redesign of an existing one?",
     "Roughly how many pages?",
-    "Do you already have branding / a logo?",
-    "Any sites you love the look of?",
+    "Do you already have branding or a logo?",
+    "What is the current website address, if any?",
     "Need online booking or payments?",
-    "Target launch date?",
   ],
-  "Website redesign": [
-    "What's the current website address?",
-    "What's not working about it today?",
-    "Keep the same content or start fresh?",
+  "SEO audit": [
+    "What is the website address to audit?",
+    "What search terms do you want to be found for?",
     "Any drop in enquiries or rankings?",
   ],
-  "Website development": [
-    "Do you have designs ready?",
-    "Any integrations needed (CRM, payments, booking)?",
-    "Roughly how many page templates?",
+  "UI/UX design": [
+    "What product or screen needs design?",
+    "Do you have brand colours or a style in mind?",
+    "Web, mobile app, or both?",
   ],
-  "Animated website": [
-    "What kind of feel are you after?",
-    "Any sites whose motion you admire?",
-    "New build or adding motion to an existing site?",
-  ],
-  "E-commerce website": [
-    "Roughly how many products?",
-    "On a platform already, or starting fresh?",
-    "Which payment methods matter?",
-    "Migrating an existing store?",
-  ],
-  "Landing page": [
-    "What's the single goal of the page?",
-    "Is it for a specific campaign?",
-    "Any deadline we should know about?",
-  ],
-  "SEO": [
-    "What terms do you want to be found for?",
-    "Is this a new site or an existing one?",
-    "Any past SEO work we should know about?",
+  "AI receptionist": [
+    "What kind of business is it?",
+    "Which languages should it speak?",
+    "Should it take bookings and send them to you?",
   ],
   Other: [
     "What problem are you trying to solve?",
