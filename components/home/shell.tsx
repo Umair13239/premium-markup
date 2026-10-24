@@ -11,6 +11,7 @@ import { Socials } from "@/components/site/socials";
 
 const NAV = [
   { href: "https://leads.premiummarkup.com", label: "Leads Portal" },
+  { href: "/products", label: "Products" },
   { href: "/how-it-works", label: "How it works", hs: true },
   { href: "/pricing", label: "Pricing", hs: true },
   { href: "/blog", label: "Blog" },
@@ -52,7 +53,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <NewsletterForm />
         </div>
         <div className="fw fw-cols">
-          <nav aria-label="Main pages"><h3>Main pages</h3><Link href="/">Home</Link><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
+          <nav aria-label="Main pages"><h3>Main pages</h3><Link href="/">Home</Link><Link href="/products">Products</Link><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
           <nav aria-label="Product"><h3>Product</h3><a href={siteConfig.leadsPortalUrl}>Leads Portal</a><Link href="/pricing">Plans</Link><Link href="/how-it-works">Demo websites</Link></nav>
           <nav aria-label="Legal"><h3>Legal</h3><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></nav>
           <nav aria-label="Social links"><h3>Social links</h3>{activeSocials.map((x) => <a key={x.name} href={x.href} target="_blank" rel="noopener">{x.name}</a>)}</nav>
@@ -62,7 +63,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <a href={"mailto:" + siteConfig.email.primary} className="fc-item"><b>{siteConfig.email.primary}</b><small>We reply within one working day</small></a>
           </div>
         </div>
-        <div className="fbig" aria-hidden="true">Premium Markup</div>
         <div className="fbase"><small>© {new Date().getFullYear()} Premium Markup</small><small>Made in Pakistan</small></div>
       </footer>
     </>
