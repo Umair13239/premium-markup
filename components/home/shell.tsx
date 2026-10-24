@@ -14,6 +14,7 @@ const NAV = [
   { href: "/how-it-works", label: "How it works", hs: true },
   { href: "/pricing", label: "Pricing", hs: true },
   { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -35,7 +36,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <button type="button" className={"mtoggle" + (menu ? " on" : "")} aria-label={menu ? "Close menu" : "Open menu"} aria-expanded={menu} onClick={() => setMenu(!menu)}><i /><i /></button>
       </nav>
       <div className={"mmenu" + (menu ? " open" : "")} aria-hidden={!menu}>
-        {[...NAV, { href: "/contact", label: "Contact" }].map((n, i) => (
+        {NAV.map((n, i) => (
           <Link key={n.href} href={n.href} style={{ "--i": i } as React.CSSProperties} className={path === n.href ? "on" : undefined} tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}>{n.label}</Link>
         ))}
         <a className="pbtn brand" href={siteConfig.leadsPortalUrl} tabIndex={menu ? 0 : -1}>Start free</a>
