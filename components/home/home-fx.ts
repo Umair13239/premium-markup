@@ -19,7 +19,7 @@ export function initHomeFx(root: HTMLElement) {
   /* ---- elements ---- */
   const top = q("#ptop"), hero = q("#hero"), stage = q("#stage"), copy = q("#copy");
   const story = q("#story"), slabs = qa(".slab"), floor = q("#floor"), lis = qa("#steps li"), bar = q("#bar");
-  const say = q("#say"), words = qa("#sayp span"), who = q("#who"), track = q("#track"), wcs = qa(".wc"), end = q(".end");
+  const say = q("#say"), words = qa("#sayp span"), end = q(".end");
   type Card = HTMLElement & { _h: number; _hx: number; _hy: number; _on: number; _d: number };
   const tcs = qa(".tc") as Card[];
   tcs.forEach((c, i) => {
@@ -36,8 +36,7 @@ export function initHomeFx(root: HTMLElement) {
     mx += (tmx - mx) * .07; my += (tmy - my) * .07; const T = t / 1000;
     // reads
     const rTop = top.getBoundingClientRect(), rHero = hero.getBoundingClientRect(), rStage = stage.getBoundingClientRect(), rStory = story.getBoundingClientRect();
-    const rSay = say.getBoundingClientRect(), rWho = who.getBoundingClientRect();
-    const wRects = vis(rWho) && !reduce ? wcs.map((c) => c.getBoundingClientRect()) : null;
+    const rSay = say.getBoundingClientRect();
     // hero cards: idle float + parallax + hover tilt
     if (vis(rTop) && !reduce) tcs.forEach((c, i) => {
       c._h += (c._on - c._h) * .12;
@@ -68,11 +67,6 @@ export function initHomeFx(root: HTMLElement) {
       });
       if (a !== act) { act = a; lis.forEach((l, i) => l.classList.toggle("on", i === a)); slabs.forEach((s, i) => s.classList.toggle("on", i === a)); }
       bar.style.height = sp * 100 + "%";
-    }
-    // who: pinned horizontal track, cards turn toward the centre
-    if (vis(rWho)) {
-      track.style.transform = `translate3d(${-prog(rWho) * (track.scrollWidth - innerWidth)}px,0,0)`;
-      wRects?.forEach((b, i) => { const d = (b.left + b.width / 2 - innerWidth / 2) / innerWidth; wcs[i].style.transform = `rotateY(${-d * 28}deg) translateZ(${-Math.abs(d) * 160}px)`; });
     }
   };
   requestAnimationFrame(frame);
