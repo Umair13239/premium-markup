@@ -77,61 +77,68 @@ export function HomeMarkup({ businesses }: { businesses: number }) {
     <figure className="shot"><img src="/home/feature-whatsapp.webp" alt="WhatsApp check in the Leads Portal: numbers checked, on WhatsApp, not on WhatsApp" loading="lazy" width={1472} height={660} /><figcaption><b>Check WhatsApp</b> numbers in the background.</figcaption></figure>
   </div>
 </section>
-<section className="who2" id="who">
-  <div className="w2-head rv">
-    <div className="eyebrow">Who it&apos;s for</div>
-    <h2>Built for anyone who<br /><span style={{ color: "var(--brand)" }}>sells to local business.</span></h2>
-    <p>Find the business, prepare the proof, and send it in one tap.</p>
-  </div>
-  <div className="w2-grid">
-    <article className="w2-card rv" style={{ "--i": 1 } as React.CSSProperties}>
-      <span className="w2-step">01</span>
-      <small>Web designers</small>
-      <h3>Send a live demo site, not a portfolio link.</h3>
-      <div className="w2-vis">
-        <div className="w2-browser"><i></i><i></i><i></i>
-          <div className="w2-page"><b></b><span></span><span className="s"></span><em></em></div>
+<section className="who2 w3" id="who">
+  <div className="w3-wrap">
+    <aside className="w3-side">
+      <div className="eyebrow">Who it&apos;s for</div>
+      <h2>Built for anyone who<br /><span style={{ color: "var(--brand)" }}>sells to local business.</span></h2>
+      <p>Find the business, prepare the proof, and send it in one tap.</p>
+      <ol className="w3-steps">
+        <li><b>Find</b> the business that needs help</li>
+        <li><b>Prepare</b> the proof for them</li>
+        <li><b>Send</b> it in one tap</li>
+      </ol>
+    </aside>
+    <div className="w3-bento">
+      <article className="w2-card w3-t1">
+        <span className="w2-step">01</span>
+        <small>Web designers</small>
+        <h3>Send a live demo site, not a portfolio link.</h3>
+        <div className="w2-vis">
+          <div className="w2-browser"><i></i><i></i><i></i>
+            <div className="w2-page"><b></b><span></span><span className="s"></span><em></em></div>
+          </div>
         </div>
-      </div>
-    </article>
-    <article className="w2-card rv" style={{ "--i": 2 } as React.CSSProperties}>
-      <span className="w2-step">02</span>
-      <small>SEO experts</small>
-      <h3>Open with a real audit, not a guess.</h3>
-      <div className="w2-vis">
-        <ul className="w2-checks">
-          <li className="ok"><i></i>Page title</li>
-          <li className="warn"><i></i>Meta description missing</li>
-          <li className="ok"><i></i>Mobile layout</li>
-          <li className="warn"><i></i>Images without alt text</li>
-        </ul>
-      </div>
-    </article>
-    <article className="w2-card rv" style={{ "--i": 1 } as React.CSSProperties}>
-      <span className="w2-step">03</span>
-      <small>UI/UX designers</small>
-      <h3>Show their app, redesigned.</h3>
-      <div className="w2-vis">
-        <div className="w2-phone"><i></i><i className="on"></i><i></i><i></i></div>
-      </div>
-    </article>
-    <article className="w2-card rv" style={{ "--i": 2 } as React.CSSProperties}>
-      <span className="w2-step">04</span>
-      <small>Marketers</small>
-      <h3>Reply to the reviews they already have.</h3>
-      <div className="w2-vis">
-        <div className="w2-review"><p>Great service, the team was on time.</p><span>Reply</span></div>
-        <div className="w2-review"><p>Waited a little long for the table.</p><span>Reply</span></div>
-      </div>
-    </article>
-    <article className="w2-card w2-wide dk rv" style={{ "--i": 1 } as React.CSSProperties}>
-      <span className="w2-step">05</span>
-      <small>Everyone</small>
-      <h3>An AI receptionist that answers their calls.</h3>
-      <div className="w2-vis">
-        <div className="wave big"><i></i><i style={{ animationDelay: "-.2s" }}></i><i style={{ animationDelay: "-.5s" }}></i><i style={{ animationDelay: "-.1s" }}></i><i style={{ animationDelay: "-.7s" }}></i><i style={{ animationDelay: "-.3s" }}></i><i style={{ animationDelay: "-.6s" }}></i><i style={{ animationDelay: "-.4s" }}></i><i style={{ animationDelay: "-.8s" }}></i><i style={{ animationDelay: "-.15s" }}></i><i style={{ animationDelay: "-.35s" }}></i><i style={{ animationDelay: "-.55s" }}></i></div>
-      </div>
-    </article>
+      </article>
+      <article className="w2-card w3-t2">
+        <span className="w2-step">02</span>
+        <small>SEO experts</small>
+        <h3>Open with a real audit, not a guess.</h3>
+        <div className="w2-vis">
+          <ul className="w2-checks">
+            <li className="ok"><i></i>Page title</li>
+            <li className="warn"><i></i>Meta description missing</li>
+            <li className="ok"><i></i>Mobile layout</li>
+            <li className="warn"><i></i>Images without alt text</li>
+          </ul>
+        </div>
+      </article>
+      <article className="w2-card w3-t3">
+        <span className="w2-step">03</span>
+        <small>UI/UX designers</small>
+        <h3>Show their app, redesigned.</h3>
+        <div className="w2-vis">
+          <div className="w2-phone"><i></i><i className="on"></i><i></i><i></i></div>
+        </div>
+      </article>
+      <article className="w2-card w3-t4">
+        <span className="w2-step">04</span>
+        <small>Marketers</small>
+        <h3>Reply to the reviews they already have.</h3>
+        <div className="w2-vis">
+          <div className="w2-review"><p>Great service, the team was on time.</p><span>Reply</span></div>
+          <div className="w2-review"><p>Waited a little long for the table.</p><span>Reply</span></div>
+        </div>
+      </article>
+      <article className="w2-card w2-wide dk w3-t5">
+        <span className="w2-step">05</span>
+        <small>Everyone</small>
+        <h3>An AI receptionist that answers their calls.</h3>
+        <div className="w2-vis">
+          <div className="wave big"><i></i><i style={{ animationDelay: "-.2s" }}></i><i style={{ animationDelay: "-.5s" }}></i><i style={{ animationDelay: "-.1s" }}></i><i style={{ animationDelay: "-.7s" }}></i><i style={{ animationDelay: "-.3s" }}></i><i style={{ animationDelay: "-.6s" }}></i><i style={{ animationDelay: "-.4s" }}></i><i style={{ animationDelay: "-.8s" }}></i><i style={{ animationDelay: "-.15s" }}></i><i style={{ animationDelay: "-.35s" }}></i><i style={{ animationDelay: "-.55s" }}></i></div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 <section className="end">
