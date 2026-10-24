@@ -49,14 +49,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <PMLogo className="flogo" />
             <p>Leads Portal and premium websites, built in Pakistan. We help businesses find clients and look the part online.</p>
           </div>
-          <form className="fnews" action={"mailto:" + siteConfig.email.primary} method="post" encType="text/plain">
-            <h3>Subscribe to our newsletter</h3>
-            <div className="fnews-row">
-              <input type="email" name="Newsletter signup" placeholder="Enter your email" aria-label="Email address" required />
-              <button type="submit">Subscribe</button>
-            </div>
-            <small>No spam. Just useful notes for growing businesses.</small>
-          </form>
+          <NewsletterForm />
         </div>
         <div className="fw fw-cols">
           <nav aria-label="Main pages"><h3>Main pages</h3><Link href="/">Home</Link><Link href="/how-it-works">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/blog">Blog</Link><Link href="/contact">Contact</Link></nav>
@@ -73,5 +66,35 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div className="fbase"><small>© {new Date().getFullYear()} Premium Markup</small><small>Made in Pakistan</small></div>
       </footer>
     </>
+  );
+}
+
+// Newsletter sign-up: saved in the Leads Portal list (with a one-click unsubscribe link in every email).
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (busy) return;
+    setBusy(true); setMsg(null);
+    try {
+      const r = await fetch("/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j.ok) { setMsg({ ok: true, text: j.message || "Thanks! You are on the list." }); setEmail(""); }
+      else setMsg({ ok: false, text: j.error || "Could not subscribe right now. Try again." });
+    } catch {
+      setMsg({ ok: false, text: "Connection problem. Try again." });
+    } finally { setBusy(false); }
+  }
+  return (
+    <form className="fnews" onSubmit={submit} noValidate>
+      <h3>Subscribe to our newsletter</h3>
+      <div className="fnews-row">
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" aria-label="Email address" required disabled={busy} />
+        <button type="submit" disabled={busy}>{busy ? "Sending…" : "Subscribe"}</button>
+      </div>
+      <small role="status" style={msg && !msg.ok ? { color: "#FCA5A5" } : undefined}>{msg ? msg.text : "No spam. Just useful notes for growing businesses. Unsubscribe any time."}</small>
+    </form>
   );
 }
