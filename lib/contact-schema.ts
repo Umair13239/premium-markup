@@ -12,9 +12,8 @@ export const BUDGETS = [
 // "Service required" — matches the agency's service pages, plus Other.
 export const PROJECT_TYPES = [
   "Leads Portal (plan, account or support)",
-  "Website (new build or redesign)",
-  "SEO audit",
-  "UI/UX design",
+  "Brand Mockups",
+  "Design Studio",
   "AI receptionist",
   "Other",
 ] as const;
@@ -43,22 +42,15 @@ export const PROJECT_SUGGESTIONS: Record<string, string[]> = {
     "Are you already signed up? What email is it under?",
     "What is not working (page, feature or payment)?",
   ],
-  "Website (new build or redesign)": [
-    "Is this a new website or a redesign of an existing one?",
-    "Roughly how many pages?",
-    "Do you already have branding or a logo?",
-    "What is the current website address, if any?",
-    "Need online booking or payments?",
+  "Brand Mockups": [
+    "What do you want to mock up (t-shirt, card, sign, etc.)?",
+    "Do you have a logo file ready?",
+    "What is not working in the output?",
   ],
-  "SEO audit": [
-    "What is the website address to audit?",
-    "What search terms do you want to be found for?",
-    "Any drop in enquiries or rankings?",
-  ],
-  "UI/UX design": [
-    "What product or screen needs design?",
-    "Do you have brand colours or a style in mind?",
-    "Web, mobile app, or both?",
+  "Design Studio": [
+    "What do you want to design or redesign?",
+    "Which page or screen is it for?",
+    "Do you have a reference or example?",
   ],
   "AI receptionist": [
     "What kind of business is it?",
