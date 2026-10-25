@@ -6,9 +6,9 @@ import { Socials } from "@/components/site/socials";
 import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = pageMeta({
-  title: "Contact — start a project | Premium Markup",
+  title: "Contact | Premium Markup",
   description:
-    "Tell us about your business and your website goals. We reply within one working day. Call, WhatsApp or email PremiumMarkup.",
+    "Questions about the Leads Portal, Brand Mockups, Design Studio or the AI receptionist? We reply within one working day. Call, WhatsApp or email Premium Markup.",
   path: "/contact",
 });
 
@@ -18,8 +18,8 @@ export default function ContactPage() {
       <JsonLd data={[breadcrumb([{ name: "Contact", path: "/contact" }]), { "@context": "https://schema.org", "@type": "ContactPage", name: "Contact Premium Markup", url: "https://premiummarkup.com/contact" }]} />
       <section className="pghead" style={{ paddingTop: 84 }}>
         <div className="eyebrow">Contact</div>
-        <h1>Start a <span style={{ color: "var(--brand)" }}>project.</span></h1>
-        <p className="lede">Tell us what you&rsquo;re building and what&rsquo;s gone wrong before. The more specific you are, the more useful our reply will be.</p>
+        <h1>Talk to <span style={{ color: "var(--brand)" }}>us.</span></h1>
+        <p className="lede">Questions about the Leads Portal, your plan or account, or one of our tools? Tell us what you need and we will reply with the exact next step.</p>
       </section>
       <div className="mx-auto grid max-w-[1120px] gap-8 px-5 pb-24 text-[#1D1D1F] md:grid-cols-[1.4fr_1fr] md:px-6">
         <div className="order-2 rounded-[28px] bg-[#F5F5F7] p-6 md:order-1 md:p-9">
@@ -48,9 +48,9 @@ export default function ContactPage() {
           <div className="rounded-[24px] bg-[#F5F5F7] p-6">
             <p className="font-bold">What happens next</p>
             <ol className="mt-3 grid gap-2 text-sm text-[#6E6E73]">
-              <li>1. We read your brief and reply within one working day.</li>
-              <li>2. A short call to confirm scope — no obligation.</li>
-              <li>3. A fixed quote and timeline, in writing.</li>
+              <li>1. We read your message and reply within one working day.</li>
+              <li>2. Plan, account or payment questions get the exact steps to fix them.</li>
+              <li>3. Feature ideas go on our list, and we tell you if we build them.</li>
             </ol>
           </div>
 

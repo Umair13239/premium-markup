@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
         website: data.currentWebsite || null,
         source: "website",
         status: "New",
-        budget: data.budget,
+        budget: data.budget || null,
         projectType: data.projectType,
         message,
         attachmentUrl: data.attachmentUrl || null,
