@@ -121,8 +121,7 @@
 
 @media (max-width: 900px) {
   .pd-hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; gap: 30px; }
-  .pd-hero-art { order: -1; justify-items: start; }
-  .pd-hero-art .mx-bigicon { width: 150px !important; height: 150px !important; }
+  .pd-hero-art { display: none; } /* the big tilted icon crowded the phone hero; the heading leads instead */
   .pd-feat, .pd-feat.flip { grid-template-columns: 1fr; gap: 24px; }
   .pd-feat.flip .pd-feat-copy { order: 0; }
   .pd-who-grid, .pd-price-grid { grid-template-columns: 1fr; }
