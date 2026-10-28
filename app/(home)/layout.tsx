@@ -2,6 +2,7 @@ import { Shell } from "@/components/home/shell";
 import { SiteSchema } from "@/components/site/site-schema";
 import { ChatWidget } from "@/components/site/chat-widget";
 import "@/components/home/home.css";
+import "@/components/home/products.css";
 
 // v2 shell (glass nav, footer, motion). Pages move here from (marketing) as they're redesigned.
 // Typeface (Inter) comes from the root layout.
