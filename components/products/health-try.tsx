@@ -3,7 +3,7 @@
 // itself is what Google indexes. It calls the portal's public API; the full report opens in the app.
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, Gauge } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/site.config";
 import { EASE } from "./motion";
 
@@ -49,6 +49,30 @@ export function HealthTry() {
   const [rep, setRep] = useState<Report | null>(null);
   const [err, setErr] = useState<{ msg: string; signup?: boolean } | null>(null);
   const [checked, setChecked] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // "Try it free" (any link to #try) brings the search bar to the middle of the screen with the cursor
+  // already in it, so the visitor can type a site straight away. Same when the page opens on #try.
+  useEffect(() => {
+    const go = () => {
+      const f = formRef.current;
+      if (!f) return;
+      const top = f.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + f.offsetHeight / 2;
+      window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+      setTimeout(() => inputRef.current?.focus({ preventScroll: true }), reduce ? 0 : 650);
+    };
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.('a[href="#try"]');
+      if (!a) return;
+      e.preventDefault();
+      history.replaceState(null, "", "#try");
+      go();
+    };
+    document.addEventListener("click", onClick);
+    if (window.location.hash === "#try") setTimeout(go, 300);
+    return () => document.removeEventListener("click", onClick);
+  }, [reduce]);
 
   async function run(e: React.FormEvent) {
     e.preventDefault();
@@ -72,9 +96,9 @@ export function HealthTry() {
   const app = `${portal()}/health`;
   return (
     <div className="ht" id="try">
-      <form className="ht-form" onSubmit={run}>
+      <form ref={formRef} className="ht-form" onSubmit={run}>
         <Gauge size={22} className="ht-ic" aria-hidden="true" />
-        <input value={site} onChange={(e) => setSite(e.target.value)} placeholder="example.com" inputMode="url" aria-label="Website address" autoComplete="off" required />
+        <input ref={inputRef} value={site} onChange={(e) => setSite(e.target.value)} placeholder="example.com" inputMode="url" aria-label="Website address" autoComplete="off" required />
         <button type="submit" className="pp-btn" disabled={state === "run"}>{state === "run" ? "Checking…" : "Check website"}</button>
       </form>
       <p className="ht-note">Free: 5 checks a day without an account. No email needed.</p>
