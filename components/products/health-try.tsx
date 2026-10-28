@@ -101,7 +101,7 @@ export function HealthTry() {
         <input ref={inputRef} value={site} onChange={(e) => setSite(e.target.value)} placeholder="example.com" inputMode="url" aria-label="Website address" autoComplete="off" required />
         <button type="submit" className="pp-btn" disabled={state === "run"}>{state === "run" ? "Checking…" : "Check website"}</button>
       </form>
-      <p className="ht-note">Free: 5 checks a day without an account. No email needed.</p>
+      <p className="ht-note">Free: 3 checks a day without an account. No email needed.</p>
 
       <AnimatePresence mode="wait" initial={false}>
         {state === "run" && (

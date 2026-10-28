@@ -166,7 +166,7 @@ export const products: Product[] = [
       { title: "What to fix first", text: "The problems it found, listed in order and written in plain words." },
     ],
     steps: [
-      { title: "Paste a link", text: "Any website, yours or a client's. No sign-up for the first five." },
+      { title: "Paste a link", text: "Any website, yours or a client's. No sign-up for the first three." },
       { title: "Seven checks run", text: "Mail setup, blacklists, SSL, domain records and the site itself." },
       { title: "Fix what matters", text: "Read the scores, then work down the short list." },
     ],
@@ -174,7 +174,7 @@ export const products: Product[] = [
     faqs: [
       { q: "What is the spam score?", a: "Our estimate from 0 to 100 of how risky a domain looks to spam filters, based on blacklists, domain age and DNS setup. Lower is better. It is not the Moz Spam Score." },
       { q: "What are SPF, DKIM and DMARC?", a: "Three DNS records that prove an email really comes from that domain. Without them, inboxes are more likely to send the mail to spam." },
-      { q: "Is it free?", a: "Yes. Five checks a day without an account, fifteen a day with a free account." },
+      { q: "Is it free?", a: "Yes. Three checks a day without an account, fifteen a day with a free account." },
       { q: "How is this different from the SEO report?", a: "Health is about whether the site and its email are set up properly. The SEO report is about how well the site ranks and loads." },
       { q: "Can I check many sites at once?", a: "On the paid plan, yes: paste up to 20 websites and download the results as a CSV." },
     ],
@@ -201,7 +201,7 @@ export const products: Product[] = [
     freeTool: "health",
     marquee: ["Authority score", "Spam score", "SPF", "DKIM", "DMARC", "Spamhaus", "SpamCop", "Barracuda", "SSL expiry", "Domain age", "Registrar", "Tech stack", "Mobile friendly"],
     pricing: {
-      free: ["5 checks a day without an account", "15 a day with a free account", "The full report and a share link"],
+      free: ["3 checks a day without an account", "15 a day with a free account", "The full report and a share link"],
       paid: ["200 checks a day", "Bulk checks with CSV export", "PDF reports"],
     },
   },
