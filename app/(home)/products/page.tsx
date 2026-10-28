@@ -4,7 +4,7 @@ import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Products | Premium Markup",
-  description: "Explore Premium Markup's focused tools for mockups, website health, website building and client-ready SEO reports.",
+  description: "Five tools inside the Leads Portal: an AI receptionist, a website builder, SEO reports, website health checks and brand mockups.",
   path: "/products",
 });
 

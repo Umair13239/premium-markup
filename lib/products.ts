@@ -28,6 +28,17 @@ export type Product = {
   steps: { title: string; text: string }[];
   forWho: string[];
   faqs: { q: string; a: string }[];
+  // Standalone product pages (PRODUCTS-PLAN.md). Optional until each product's step is done.
+  seoTitle?: string;
+  media?: {
+    dir: string; // public/products/<slug>
+    film?: { alt: string; captions: { k: string; t: string }[] };
+    og?: string;
+    shots: { src: string; alt: string; w: number; h: number }[]; // same order as `features`
+  };
+  freeTool?: "health";
+  marquee?: string[];
+  pricing?: { free: string[]; paid: string[] };
 };
 
 export const products: Product[] = [
@@ -134,34 +145,65 @@ export const products: Product[] = [
     id: "health",
     slug: "website-health",
     number: "04",
-    name: "Website Health Checker",
+    name: "Website Health",
     shortName: "Health check",
-    eyebrow: "Find what is holding it back",
-    description: "A clear read on the technical issues, friction and missed opportunities in a website.",
-    detail: "Use the signal, not a wall of jargon, to decide what to fix first.",
+    eyebrow: "Free website checker",
+    description: "A free report on any website: spam score, email setup, blacklists, SSL and domain age.",
+    detail: "Paste a link and see what is hurting the site and its email, in about 15 seconds.",
     accent: "#683ce7",
     icon: Gauge,
-    points: ["Performance signals", "Accessibility checks", "Prioritised fixes"],
-    portalPath: "/?view=health",
-    headline: "Know if a website",
-    headlineEm: "is up and healthy.",
-    lede: "Check whether a site loads, how fast, whether its certificate and domain are in order, and what breaks on a phone. Spot the businesses whose website is down before they do.",
+    points: ["Spam score and authority", "SPF, DKIM and DMARC", "Blacklists and SSL"],
+    portalPath: "/health",
+    seoTitle: "Free Website Health Check: Spam Score, SPF, DKIM, DMARC, Blacklists",
+    headline: "Is this website",
+    headlineEm: "healthy?",
+    lede: "Paste a link and get one report: spam score, email setup (SPF, DKIM, DMARC), spam blacklists, SSL, domain age and tech stack. Free, in about 15 seconds.",
     features: [
-      { title: "Up or down", text: "Find sites that are offline, expired or suspended." },
-      { title: "Speed and mobile", text: "See how fast it loads and whether it works on a phone." },
-      { title: "Security basics", text: "Certificate and domain status at a glance." },
-      { title: "Prioritised fixes", text: "The few things worth fixing first, in order." },
+      { title: "Spam score and authority", text: "Two scores from public data: how established the domain is, and how risky it looks to spam filters." },
+      { title: "Email deliverability", text: "The mail provider, SPF, DKIM and DMARC: the records that decide whether its emails reach the inbox." },
+      { title: "Spam blacklists", text: "The domain and its server checked against six blacklists, including Spamhaus, SpamCop and Barracuda." },
+      { title: "SSL and domain", text: "Whether the certificate is valid and when it runs out, the registrar, and when the domain expires." },
+      { title: "What to fix first", text: "The problems it found, listed in order and written in plain words." },
     ],
     steps: [
-      { title: "Add websites", text: "One at a time or straight from your leads." },
-      { title: "Run the check", text: "Results in seconds." },
-      { title: "Act on it", text: "Pitch the fix, or fix your own site." },
+      { title: "Paste a link", text: "Any website, yours or a client's. No sign-up for the first five." },
+      { title: "Seven checks run", text: "Mail setup, blacklists, SSL, domain records and the site itself." },
+      { title: "Fix what matters", text: "Read the scores, then work down the short list." },
     ],
-    forWho: ["Agencies looking for businesses with broken sites", "Web designers offering maintenance", "Owners who want peace of mind"],
+    forWho: ["Agencies checking a prospect before the first call", "Owners whose emails keep landing in spam", "Freelancers who want an easy way to open a conversation"],
     faqs: [
-      { q: "How is this different from the SEO report?", a: "Health is about whether the site works: online, fast, secure. The SEO report is about how well it ranks and reads." },
-      { q: "Can it find leads?", a: "Yes. A business with a down or expired website is often the warmest lead in your list." },
+      { q: "What is the spam score?", a: "Our estimate from 0 to 100 of how risky a domain looks to spam filters, based on blacklists, domain age and DNS setup. Lower is better. It is not the Moz Spam Score." },
+      { q: "What are SPF, DKIM and DMARC?", a: "Three DNS records that prove an email really comes from that domain. Without them, inboxes are more likely to send the mail to spam." },
+      { q: "Is it free?", a: "Yes. Five checks a day without an account, fifteen a day with a free account." },
+      { q: "How is this different from the SEO report?", a: "Health is about whether the site and its email are set up properly. The SEO report is about how well the site ranks and loads." },
+      { q: "Can I check many sites at once?", a: "On the paid plan, yes: paste up to 20 websites and download the results as a CSV." },
     ],
+    media: {
+      dir: "/products/website-health",
+      og: "/products/website-health/og.png",
+      film: {
+        alt: "Website Health checking example.com: seven checks run, then the scores and the full report",
+        captions: [
+          { k: "Paste a link", t: "Type any website and press Check." },
+          { k: "Seven checks run", t: "Mail setup, blacklists, SSL and the domain, one after another." },
+          { k: "Read the scores", t: "Health, authority and spam score at a glance." },
+          { k: "See every detail", t: "Email, blacklists, security and the tech the site is built with." },
+        ],
+      },
+      shots: [
+        { src: "/products/website-health/ui-scores.webp", alt: "Score cards for example.com: health 82, authority 70, spam score 0 and a domain age of 31 years", w: 1600, h: 316 },
+        { src: "/products/website-health/ui-email.webp", alt: "Email deliverability card showing SPF set, DMARC set to reject and DKIM found", w: 1050, h: 752 },
+        { src: "/products/website-health/ui-blacklists.webp", alt: "Spam blacklist card with Spamhaus, SURBL, URIBL, SpamCop and Barracuda all clean", w: 1050, h: 752 },
+        { src: "/products/website-health/ui-security.webp", alt: "Security and domain card showing a valid SSL certificate, its issuer and expiry, and the registrar", w: 1050, h: 582 },
+        { src: "/products/website-health/ui-fix.webp", alt: "What to fix first: a numbered list of problems found on the site", w: 1600, h: 288 },
+      ],
+    },
+    freeTool: "health",
+    marquee: ["Authority score", "Spam score", "SPF", "DKIM", "DMARC", "Spamhaus", "SpamCop", "Barracuda", "SSL expiry", "Domain age", "Registrar", "Tech stack", "Mobile friendly"],
+    pricing: {
+      free: ["5 checks a day without an account", "15 a day with a free account", "The full report and a share link"],
+      paid: ["200 checks a day", "Bulk checks with CSV export", "PDF reports"],
+    },
   },
   {
     id: "mockup",

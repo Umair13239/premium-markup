@@ -1,219 +1,231 @@
 "use client";
-
+// /products: hero, a sticky scroll showcase (one product per screen of scroll, its demo playing on the
+// right), a flow line drawn by scroll, a statement that lights up word by word, and a closing CTA.
+// Motion rules from CLAUDE.md: observers sit on unclipped parents, text is readable before it moves
+// (scroll-linked opacity floors at .35), and everything respects reduced motion.
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import {
-  Activity,
-  ArrowRight,
-  Check,
-  Mic,
-  MonitorSmartphone,
-  MousePointer2,
-  PenTool,
-  ScanSearch,
-  ShieldCheck,
-} from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import { AnimatePresence, motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { ArrowRight, Check } from "lucide-react";
+import { useRef, useState } from "react";
 import { siteConfig } from "@/site.config";
-import { products, portalLink, type Product, type ProductId } from "@/lib/products";
+import { products, portalLink } from "@/lib/products";
+import { Magnetic } from "@/components/site/magnetic";
+import { FadeUp, Rise, WordLight } from "@/components/products/motion";
+import { ProductPreview } from "./product-previews";
+import "./pp.css";
 
-const workflow = [
-  { label: "Create", text: "Make the visual proof, the first draft or the working site.", icon: PenTool },
-  { label: "Inspect", text: "See the issues that matter before they become expensive.", icon: ScanSearch },
-  { label: "Improve", text: "Use a clear next step instead of guessing what to change.", icon: Activity },
-  { label: "Present", text: "Share work that looks finished and feels easy to trust.", icon: ShieldCheck },
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/* ---------- hero: five product tiles that fan out, then drift apart as you scroll ---------- */
+const FAN = [
+  { x: -372, y: 46, r: -12 },
+  { x: -186, y: 4, r: -6 },
+  { x: 0, y: -12, r: 0 },
+  { x: 186, y: 4, r: 6 },
+  { x: 372, y: 46, r: 12 },
 ];
 
-export function ProductPreview({ id, compact = false }: { id: ProductId; compact?: boolean }) {
-  if (id === "receptionist") {
-    return (
-      <div className={`product-preview product-preview-receptionist${compact ? " is-compact" : ""}`}>
-        <div className="preview-toolbar"><span>Spice Route / receptionist</span><b className="status-live">Live</b></div>
-        <div className="rcp-layout">
-          <div className="rcp-bubble rcp-them">Are you open on Sunday evening?</div>
-          <div className="rcp-bubble rcp-us">Yes, we&apos;re open until 11pm on Sundays. Would you like me to book a table?</div>
-          <div className="rcp-bubble rcp-them">Table for four at 8, please.</div>
-          <div className="rcp-booking"><Check size={13} /> Booking confirmed, sent on WhatsApp</div>
-          <div className="rcp-mic"><Mic size={14} /> Tap to talk</div>
-        </div>
-      </div>
-    );
-  }
+function FanTile({ i, progress }: { i: number; progress: MotionValue<number> }) {
+  const reduce = useReducedMotion();
+  const p = products[i];
+  const Icon = p.icon;
+  const f = FAN[i];
+  const spread = (i - 2) * 46;
+  const x = useTransform(progress, [0, 1], [f.x, f.x + spread]);
+  const y = useTransform(progress, [0, 1], [f.y, f.y - 90 - Math.abs(i - 2) * 30]);
+  const rotate = useTransform(progress, [0, 1], [f.r, f.r * 1.8]);
+  return (
+    <motion.div className="pp-tile" style={reduce ? { x: f.x, y: f.y, rotate: f.r } : { x, y, rotate, zIndex: 10 - Math.abs(i - 2) }}
+      initial={reduce ? false : { opacity: 0, scale: 0.8, y: 160 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.35 + i * 0.08, ease: EASE }}>
+      <Link href={`/products/${p.slug}`} className="pp-tile-in">
+        <span className="pp-tile-ic"><Icon size={20} strokeWidth={1.8} /></span>
+        <small>{p.number}</small>
+        <b>{p.shortName}</b>
+      </Link>
+    </motion.div>
+  );
+}
 
-  if (id === "mockup") {
-    return (
-      <div className={`product-preview product-preview-mockup${compact ? " is-compact" : ""}`}>
-        <div className="preview-toolbar"><span>Brand kit / scenes</span><b>Export</b></div>
-        <div className="mockup-layout">
-          <div className="mockup-canvas">
-            <div className="mockup-window-card"><span>PM</span><small>STUDIO</small></div>
-            <div className="mockup-shadow" />
-          </div>
-          <div className="mockup-controls">
-            <span>Scene</span>
-            <b>Desk / daylight</b>
-            <i /><i className="short" /><i className="active" />
-            <small>3 variations ready</small>
-          </div>
-        </div>
+function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0.35]);
+  return (
+    <section ref={ref} className="pp-hero">
+      <motion.div className="pp-hero-copy" style={{ opacity: fade }}>
+        <motion.span className="pp-pill" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE }}>Products</motion.span>
+        <h1 className="pp-h1">
+          <Rise text="Five tools." mount delay={0.1} />
+          <br />
+          <Rise text="One portal." className="pp-brand" mount delay={0.28} />
+        </h1>
+        <FadeUp delay={0.5} className="pp-lede">
+          <p>Answer every visitor, build the site, check what is broken and show the brand. Each tool works on the leads you already have in your Leads Portal.</p>
+        </FadeUp>
+        <FadeUp delay={0.62} className="pp-actions">
+          <Magnetic><a className="pp-btn" href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener">Start free <ArrowRight size={17} /></a></Magnetic>
+          <a className="pp-link" href="#tools">See each tool <ArrowRight size={15} /></a>
+        </FadeUp>
+      </motion.div>
+      <div className="pp-fan" aria-hidden="true">
+        {products.map((p, i) => <FanTile key={p.id} i={i} progress={scrollYProgress} />)}
       </div>
-    );
-  }
+    </section>
+  );
+}
 
-  if (id === "health") {
-    return (
-      <div className={`product-preview product-preview-health${compact ? " is-compact" : ""}`}>
-        <div className="preview-toolbar"><span>premiummarkup.com</span><b className="status-live">Live</b></div>
-        <div className="health-layout">
-          <div className="health-score"><small>Overall health</small><strong>88</strong><span>/ 100</span><em>Good foundation</em></div>
-          <div className="health-list">
-            <div><span>Performance</span><b>96</b><i><u style={{ width: "96%" }} /></i></div>
-            <div><span>Accessibility</span><b>91</b><i><u style={{ width: "91%" }} /></i></div>
-            <div><span>SEO</span><b>86</b><i><u style={{ width: "86%" }} /></i></div>
-            <div><span>Best practices</span><b>79</b><i><u style={{ width: "79%" }} /></i></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (id === "builder") {
-    return (
-      <div className={`product-preview product-preview-builder${compact ? " is-compact" : ""}`}>
-        <div className="preview-toolbar"><span>New project / North Oak</span><b>Publish</b></div>
-        <div className="builder-layout">
-          <aside><span className="builder-avatar">N</span><i /><i /><i /><i /></aside>
-          <div className="builder-canvas">
-            <div className="builder-nav"><b>North Oak</b><span>Work</span><span>About</span><span className="builder-button">Contact</span></div>
-            <div className="builder-hero"><small>Crafted with care</small><strong>Good work<br />deserves a<br /><em>clear stage.</em></strong><button>Explore work <ArrowRight size={12} /></button></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+/* ---------- sticky showcase: scroll picks the product, its demo plays ---------- */
+function Showcase() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const i = Math.min(products.length - 1, Math.max(0, Math.floor(v * products.length)));
+    setActive((cur) => (cur === i ? cur : i));
+  });
+  const fill = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const p = products[active];
+  const Icon = p.icon;
 
   return (
-    <div className={`product-preview product-preview-seo${compact ? " is-compact" : ""}`}>
-      <div className="preview-toolbar"><span>SEO report / North Oak</span><b>Download PDF</b></div>
-      <div className="seo-layout">
-        <div className="seo-head"><small>Visibility snapshot</small><strong>72<span>/100</span></strong><em>Room to grow</em></div>
-        <div className="seo-bars"><div><span>Technical</span><i><u style={{ height: "78%" }} /></i></div><div><span>Content</span><i><u style={{ height: "62%" }} /></i></div><div><span>Local search</span><i><u style={{ height: "84%" }} /></i></div><div><span>Experience</span><i><u style={{ height: "70%" }} /></i></div></div>
-        <div className="seo-note"><Check size={13} /> 4 quick wins found</div>
+    <section ref={ref} id="tools" className="pp-show" style={{ height: `${products.length * 95}vh` }}>
+      <div className="pp-sticky">
+        <div className="pp-show-grid">
+          <div className="pp-show-copy">
+            <div className="pp-rail" aria-hidden="true">
+              <motion.i style={{ scaleY: reduce ? 1 : fill }} />
+              {products.map((x, i) => <span key={x.id} className={i <= active ? "on" : ""} />)}
+            </div>
+            <div className="pp-show-text">
+              <div className="pp-count"><b>{p.number}</b> / 0{products.length}</div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={p.id} initial={reduce ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0, y: -18 }} transition={{ duration: 0.45, ease: EASE }}>
+                  <span className="pp-show-ic"><Icon size={22} strokeWidth={1.8} /></span>
+                  <h2 className="pp-h2">{p.name}</h2>
+                  <p className="pp-show-desc">{p.description}</p>
+                  <ul className="pp-points">{p.points.map((x) => <li key={x}><Check size={15} /> {x}</li>)}</ul>
+                  <div className="pp-show-links">
+                    <Link className="pp-btn sm" href={`/products/${p.slug}`}>How it works <ArrowRight size={15} /></Link>
+                    <a className="pp-link" href={portalLink(p)} target="_blank" rel="noopener">Open in portal <ArrowRight size={14} /></a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+          <div className="pp-stage">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={p.id} className="pp-stage-in" initial={reduce ? false : { opacity: 0, y: 40, rotateX: 8, scale: 0.96 }} animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }} exit={reduce ? undefined : { opacity: 0, y: -30, scale: 0.97 }} transition={{ duration: 0.6, ease: EASE }}>
+                <ProductPreview id={p.id} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* small screens: no pinning, each product in turn with its demo playing while on screen */
+function MobileItem({ i }: { i: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "-20% 0px -20% 0px" });
+  const p = products[i];
+  const Icon = p.icon;
+  return (
+    <div ref={ref} className="pp-mob-item">
+      <FadeUp>
+        <div className="pp-count"><b>{p.number}</b> / 0{products.length}</div>
+        <span className="pp-show-ic"><Icon size={22} strokeWidth={1.8} /></span>
+        <h2 className="pp-h2">{p.name}</h2>
+        <p className="pp-show-desc">{p.description}</p>
+      </FadeUp>
+      <FadeUp delay={0.1} className="pp-mob-stage"><ProductPreview id={p.id} play={inView} /></FadeUp>
+      <div className="pp-show-links">
+        <Link className="pp-btn sm" href={`/products/${p.slug}`}>How it works <ArrowRight size={15} /></Link>
+        <a className="pp-link" href={portalLink(p)} target="_blank" rel="noopener">Open in portal <ArrowRight size={14} /></a>
       </div>
     </div>
   );
 }
 
-function ProductCard({ product, index, reducedMotion }: { product: Product; index: number; reducedMotion: boolean }) {
-  const Icon = product.icon;
+/* ---------- flow: one line, drawn by scroll, lighting each step as it passes ---------- */
+const FLOW = [
+  { k: "Find", t: "Pick a business from your leads." },
+  { k: "Build", t: "Make it a site in about two minutes." },
+  { k: "Check", t: "Show what is slow, broken or missing." },
+  { k: "Answer", t: "Add a receptionist that takes bookings." },
+  { k: "Present", t: "Put their logo on real-world mockups." },
+];
+
+function FlowStep({ i, progress }: { i: number; progress: MotionValue<number> }) {
+  const reduce = useReducedMotion();
+  const at = i / (FLOW.length - 1);
+  const o = useTransform(progress, [at - 0.12, at], [0.35, 1]);
+  const s = useTransform(progress, [at - 0.12, at], [0.6, 1]);
   return (
-    <motion.article
-      className={`product-card product-card-${product.id}`}
-      style={{ "--product-accent": product.accent } as CSSProperties}
-      initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reducedMotion ? undefined : { y: -7 }}
-    >
-      <div className="product-card-top">
-        <span className="product-number">{product.number}</span>
-        <span className="product-icon"><Icon size={19} strokeWidth={1.8} /></span>
-      </div>
-      <div className="product-card-copy">
-        <p>{product.eyebrow}</p>
-        <h3>{product.name}</h3>
-        <div className="product-card-description">{product.description}</div>
-        <p className="product-card-detail">{product.detail}</p>
-      </div>
-      <ProductPreview id={product.id} compact />
-      <div className="product-card-bottom">
-        <ul>{product.points.map((point) => <li key={point}><Check size={14} />{point}</li>)}</ul>
-        <div className="product-card-actions">
-          <Link href={`/products/${product.slug}`} className="product-card-link">See how it works <ArrowRight size={16} /></Link>
-          <a href={portalLink(product)} target="_blank" rel="noopener" className="product-card-open">Open in portal</a>
+    <motion.li style={reduce ? undefined : { opacity: o }}>
+      <motion.span className="pp-node" style={reduce ? undefined : { scale: s }}>{String(i + 1).padStart(2, "0")}</motion.span>
+      <b>{FLOW[i].k}</b>
+      <p>{FLOW[i].t}</p>
+    </motion.li>
+  );
+}
+
+function Flow() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 55%"] });
+  const line = reduce ? undefined : scrollYProgress;
+  return (
+    <section ref={ref} className="pp-flow">
+      <div className="pp-wrap">
+        <span className="pp-pill">How they connect</span>
+        <h2 className="pp-h2 big"><Rise text="One lead." /> <Rise text="Five ways to win it." className="pp-brand" delay={0.15} /></h2>
+        <div className="pp-flow-track">
+          <div className="pp-line h"><motion.i style={{ scaleX: line ?? 1 }} /></div>
+          <div className="pp-line v"><motion.i style={{ scaleY: line ?? 1 }} /></div>
+          <ol>{FLOW.map((_, i) => <FlowStep key={i} i={i} progress={scrollYProgress} />)}</ol>
         </div>
       </div>
-    </motion.article>
+    </section>
+  );
+}
+
+/* ---------- statement: words light up as it scrolls through ---------- */
+function Statement() {
+  return (
+    <section className="pp-say">
+      <WordLight className="pp-wrap" text="Built for people who sell web work. Find the business, show them something real, and follow up while they still care." />
+    </section>
+  );
+}
+
+/* ---------- closing CTA ---------- */
+function End() {
+  return (
+    <section className="pp-end">
+      <div className="pp-wrap">
+        <h2 className="pp-h2 big"><Rise text="Start with one." /><br /><Rise text="Use all five." className="pp-brand" delay={0.15} /></h2>
+        <FadeUp delay={0.2} className="pp-lede center"><p>Every tool is inside one Leads Portal account. Sign up free and open the one you need today.</p></FadeUp>
+        <FadeUp delay={0.3} className="pp-actions center">
+          <Magnetic><a className="pp-btn" href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener">Open the Leads Portal <ArrowRight size={17} /></a></Magnetic>
+          <Link className="pp-link" href="/pricing">See pricing <ArrowRight size={15} /></Link>
+        </FadeUp>
+      </div>
+    </section>
   );
 }
 
 export function ProductsPage() {
-  const reducedMotion = useReducedMotion() ?? false;
-  const [active, setActive] = useState<ProductId>("receptionist");
-  const activeProduct = products.find((product) => product.id === active) ?? products[0];
-  const ActiveIcon = activeProduct.icon;
-
   return (
-    <main className="products-page">
-      <section className="products-hero" aria-labelledby="products-title">
-        <div className="products-container products-hero-grid">
-          <motion.div className="products-hero-copy" initial={reducedMotion ? false : { opacity: 0, y: 18 }} animate={reducedMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="products-kicker"><span /> Premium Markup / Product suite</p>
-            <h1 id="products-title">Tools that make good work <em>easier to ship.</em></h1>
-            <p className="products-hero-lede">Five focused products for the moments that matter: answering every visitor, building the page, finding the issue and showing the idea, all inside one Leads Portal account.</p>
-            <div className="products-hero-actions">
-              <Link className="products-button products-button-dark" href="#products"><span>Explore products</span><ArrowRight size={17} /></Link>
-              <a className="products-text-link" href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener">Open Leads Portal <ArrowRight size={15} /></a>
-            </div>
-            <div className="products-proof-row"><span><Check size={15} /> Purpose-built workflows</span><span><Check size={15} /> Clear output, less noise</span></div>
-          </motion.div>
-
-          <motion.div className="suite-console-wrap" initial={reducedMotion ? false : { opacity: 0, x: 26 }} animate={reducedMotion ? undefined : { opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="suite-console">
-              <div className="suite-console-bar"><div className="window-dots"><i /><i /><i /></div><span>premium markup / products</span><b>{products.length} tools</b></div>
-              <div className="suite-console-body">
-                <div className="suite-sidebar">
-                  <div className="suite-sidebar-brand"><span>PM</span><b>Workspace</b></div>
-                  <div className="suite-tabs" role="tablist" aria-label="Product previews">
-                    {products.map((product) => {
-                      const Icon = product.icon;
-                      return <button key={product.id} type="button" role="tab" aria-selected={active === product.id} className={active === product.id ? "is-active" : ""} onClick={() => setActive(product.id)}><Icon size={15} /><span>{product.shortName}</span><small>{product.number}</small></button>;
-                    })}
-                  </div>
-                  <div className="suite-sidebar-foot"><span className="online-dot" /> Workspace ready</div>
-                </div>
-                <div className="suite-stage">
-                  <div className="suite-stage-head"><div><span>Selected product</span><strong><ActiveIcon size={18} />{activeProduct.name}</strong></div><span className="suite-status">Live preview</span></div>
-                  <AnimatePresence mode="wait">
-                    <motion.div key={active} initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0, y: -8 }} transition={{ duration: 0.22 }}>
-                      <ProductPreview id={active} />
-                    </motion.div>
-                  </AnimatePresence>
-                  <div className="suite-stage-foot"><span>Designed for momentum</span><span><MonitorSmartphone size={14} /> Desktop + mobile</span></div>
-                </div>
-              </div>
-            </div>
-            <div className="console-note"><MousePointer2 size={14} /> Select a product to preview the workflow</div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="products-intro" aria-label="Product suite overview">
-        <div className="products-container products-intro-grid">
-          <p className="products-section-kicker">01 / The suite</p>
-          <div><h2>Less hunting for the right tool.<br /><em>More time making the work count.</em></h2><p>Premium Markup products are designed as practical instruments, not feature piles. Each one has a clear job and a clean handoff to the next step.</p></div>
-          <div className="products-intro-meta"><strong>{products.length}</strong><span>focused products<br />in one connected workflow</span></div>
-        </div>
-      </section>
-
-      <section className="products-grid-section" id="products" aria-labelledby="products-grid-title">
-        <div className="products-container">
-          <div className="products-section-head"><div><p className="products-section-kicker">02 / Choose your instrument</p><h2 id="products-grid-title">One suite.<br /><em>Five useful starting points.</em></h2></div><p>Pick the part of the workflow you need to move forward. The rest stays close when you are ready for it.</p></div>
-          <div className="products-grid">{products.map((product, index) => <ProductCard key={product.id} product={product} index={index} reducedMotion={reducedMotion} />)}</div>
-        </div>
-      </section>
-
-      <section className="products-workflow" aria-labelledby="workflow-title">
-        <div className="products-container">
-          <div className="workflow-heading"><p className="products-section-kicker">03 / A better sequence</p><h2 id="workflow-title">From first impression<br /><em>to final report.</em></h2><p>Good tools should remove the awkward gaps between making, checking and presenting. This is the sequence the suite is built around.</p></div>
-          <div className="workflow-grid">{workflow.map((step, index) => { const Icon = step.icon; return <motion.div key={step.label} className="workflow-step" initial={reducedMotion ? false : { opacity: 0, y: 18 }} whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 0.5, delay: index * 0.08 }}><div className="workflow-step-top"><span>0{index + 1}</span><Icon size={19} strokeWidth={1.8} /></div><h3>{step.label}</h3><p>{step.text}</p>{index < workflow.length - 1 && <span className="workflow-line" aria-hidden="true" />}</motion.div>; })}</div>
-        </div>
-      </section>
-
-      <section className="products-cta">
-        <div className="products-container products-cta-inner"><div><p className="products-section-kicker">04 / Ready when you are</p><h2>Make the next step<br /><em>feel obvious.</em></h2><p>Start with the tool that solves today&apos;s bottleneck. Add the rest when the work calls for it.</p></div><div className="products-cta-actions"><a className="products-button products-button-light" href={siteConfig.leadsPortalUrl} target="_blank" rel="noopener"><span>Open Leads Portal</span><ArrowRight size={17} /></a><Link className="products-cta-contact" href="/contact">Talk to the team <ArrowRight size={15} /></Link></div></div>
-      </section>
+    <main className="pp">
+      <Hero />
+      <div className="pp-desk"><Showcase /></div>
+      <div className="pp-mob pp-wrap">{products.map((p, i) => <MobileItem key={p.id} i={i} />)}</div>
+      <Flow />
+      <Statement />
+      <End />
     </main>
   );
 }

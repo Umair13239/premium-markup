@@ -1,0 +1,140 @@
+/* Product page template (product-detail.tsx) + the on-page Website Health check (health-try.tsx).
+   Builds on pp.css (.pp, .pp-wrap, .pp-h1/.pp-h2, .pp-btn, .pp-pill). White canvas, brand colours only. */
+.pd section { position: relative; }
+.pd-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 22px; color: var(--ink-2); font-size: 15px; text-decoration: none; transition: color .2s; }
+.pd-back:hover { color: var(--brand); }
+.pd-back svg { transition: transform .35s var(--spring); }
+.pd-back:hover svg { transform: translateX(-3px); }
+
+/* 1. hero */
+.pd-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 50px; align-items: center; padding-top: 140px; padding-bottom: 60px; min-height: 92svh; }
+.pd-hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+.pd-h1 { font-size: clamp(52px, 7.4vw, 108px); }
+.pd-hero-art { display: grid; place-items: center; }
+.pd-points { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 4px 0 0; padding: 0; color: var(--ink-2); font-size: 15px; }
+.pd-points li { display: flex; align-items: center; gap: 8px; }
+.pd-points svg { color: var(--brand); }
+
+/* 2. free tool */
+.pd-try { padding-top: 70px; padding-bottom: 90px; }
+.pd-try .pp-h2 { margin-bottom: 30px; }
+
+/* 3. film / preview */
+.pd-film-head { padding-top: 80px; }
+.pd-film-head .pp-h2 { margin-top: 20px; }
+.pd-preview { max-width: 860px; padding-top: 60px; padding-bottom: 60px; }
+.pd-marquee { padding: 40px 0 30px; }
+
+/* 4. features */
+.pd-features { padding-top: 110px; padding-bottom: 60px; }
+.pd-features .pp-h2 { margin-top: 20px; max-width: 900px; }
+.pd-feat-list { display: grid; gap: 30px; margin-top: 70px; }
+.pd-feat { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 60px; align-items: center; padding: 30px 0; border-top: 1px solid var(--pp-line); }
+.pd-feat:not(.has-shot) { grid-template-columns: 1fr; }
+.pd-feat.flip .pd-feat-copy { order: 2; }
+.pd-feat-n { font: 500 13px/1 var(--font-plex-mono), ui-monospace, monospace; color: var(--brand); }
+.pd-feat h3 { margin: 14px 0 0; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.05; letter-spacing: -.035em; }
+.pd-feat p { margin: 14px 0 0; max-width: 440px; color: var(--ink-2); font-size: 18px; line-height: 1.55; }
+.pd-feat-shot img { display: block; width: 100%; height: auto; border-radius: 20px; background: #fff; box-shadow: 0 0 0 1px var(--pp-line), 0 40px 80px -40px rgba(20, 10, 60, .35); }
+
+/* 5. steps */
+.pd-steps { padding-top: 100px; padding-bottom: 80px; }
+.pd-steps .pp-h2 { margin-top: 20px; }
+.pd-steps-in { margin-top: 60px; }
+
+/* 6. who */
+.pd-who { padding-top: 60px; padding-bottom: 80px; }
+.pd-who-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.pd-who-card { height: 100%; padding: 28px; border-radius: 24px; background: var(--pp-soft); }
+.pd-who-card span { font: 500 13px/1 var(--font-plex-mono), ui-monospace, monospace; color: var(--brand); }
+.pd-who-card p { margin: 40px 0 0; font-size: 21px; line-height: 1.3; letter-spacing: -.02em; font-weight: 600; }
+
+/* 7. pricing */
+.pd-price { padding-top: 70px; padding-bottom: 90px; }
+.pd-price-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.pd-plan { display: flex; flex-direction: column; height: 100%; padding: 28px; border-radius: 24px; background: #fff; box-shadow: 0 0 0 1px var(--pp-line), var(--pp-shadow); }
+.pd-plan.on { box-shadow: 0 0 0 2px var(--brand), 0 40px 80px -40px rgba(104, 60, 231, .45); }
+.pd-plan b { font-size: 22px; letter-spacing: -.025em; }
+.pd-plan small { color: var(--ink-2); }
+.pd-plan ul { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; gap: 10px; flex: 1; }
+.pd-plan li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+.pd-plan li svg { flex: none; margin-top: 3px; color: var(--brand); }
+.pd-plan .pp-btn { align-self: flex-start; }
+.pp-btn.ghost { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(29, 29, 31, .16); }
+.pp-btn.ghost:hover { color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
+
+/* 8. faq */
+.pd-faq { padding-top: 60px; padding-bottom: 80px; max-width: 980px; }
+.pd-faq-list { margin-top: 30px; border-top: 1px solid var(--pp-line); }
+.pd-faq details { border-bottom: 1px solid var(--pp-line); }
+.pd-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0; font-size: 20px; font-weight: 600; letter-spacing: -.02em; cursor: pointer; list-style: none; }
+.pd-faq summary::-webkit-details-marker { display: none; }
+.pd-faq details p { margin: 0 0 24px; max-width: 760px; color: var(--ink-2); font-size: 17px; line-height: 1.6; animation: pdOpen .45s var(--spring); }
+@keyframes pdOpen { from { opacity: 0; transform: translateY(-6px); } }
+
+/* 9. more */
+.pd-more { padding-top: 60px; padding-bottom: 110px; }
+.pd-more-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 36px; }
+.pd-more-card { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 22px; border-radius: 22px; background: #fff; color: var(--ink); text-decoration: none; box-shadow: 0 0 0 1px var(--pp-line); transition: transform .45s var(--spring), box-shadow .3s; }
+.pd-more-card:hover { transform: translateY(-6px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 40%, transparent), 0 30px 60px -30px rgba(104, 60, 231, .4); }
+.pd-more-ic { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 10px; border-radius: 14px; background: var(--pp-tint); color: var(--brand); }
+.pd-more-card b { font-size: 18px; letter-spacing: -.02em; }
+.pd-more-card small { color: var(--ink-2); font-size: 14px; line-height: 1.45; flex: 1; }
+.pd-more-card em { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--brand); font-style: normal; font-weight: 600; font-size: 14px; }
+
+/* ---------- the on-page Website Health check ---------- */
+.ht { max-width: 860px; }
+.ht-form { display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 20px; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px var(--pp-line), 0 30px 60px -30px rgba(20, 10, 60, .35); transition: box-shadow .3s; }
+.ht-form:focus-within { box-shadow: 0 0 0 2px var(--brand), 0 30px 60px -26px rgba(104, 60, 231, .45); }
+.ht-ic { color: var(--brand); flex: none; }
+.ht-form input { flex: 1; min-width: 0; height: 56px; border: 0; outline: 0; background: none; font: 500 19px/1 var(--font-inter), system-ui, sans-serif; color: var(--ink); }
+.ht-form .pp-btn:disabled { opacity: .7; }
+.ht-note { margin: 14px 0 0 6px; color: var(--ink-2); font-size: 14px; }
+.ht-card { margin-top: 24px; padding: 26px; border-radius: 24px; background: #fff; box-shadow: 0 0 0 1px var(--pp-line), var(--pp-shadow); }
+.ht-run-head, .ht-done-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.ht-run-head b, .ht-done-head b { font-size: 19px; letter-spacing: -.02em; }
+.ht-run-head span, .ht-done-head span { font: 500 13px/1 var(--font-plex-mono), ui-monospace, monospace; color: var(--brand); }
+.ht-prog { height: 6px; margin: 14px 0 16px; border-radius: 6px; background: #ededf1; overflow: hidden; }
+.ht-prog i { display: block; height: 100%; background: var(--brand); transform-origin: left; }
+.ht-run ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.ht-run li { display: flex; align-items: center; gap: 12px; padding: 8px 2px; color: #a1a1aa; transition: color .3s; }
+.ht-run li.now, .ht-run li.done { color: var(--ink); }
+.ht-dot { display: grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; box-shadow: inset 0 0 0 2px #dcdce2; color: #fff; transition: background .3s, box-shadow .3s; }
+.ht-run li.now .ht-dot { box-shadow: inset 0 0 0 2px var(--brand); animation: htPulse 1s ease-in-out infinite; }
+.ht-run li.done .ht-dot { background: var(--brand); box-shadow: none; }
+@keyframes htPulse { 50% { box-shadow: inset 0 0 0 2px var(--brand), 0 0 0 5px rgba(104, 60, 231, .15); } }
+.ht-scores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+.ht-score { padding: 18px; border-radius: 18px; background: var(--pp-soft); }
+.ht-score b { display: block; margin-top: 12px; font-size: 15px; }
+.ht-score small { color: var(--ink-2); font-size: 13px; }
+.ht-ring { position: relative; width: 92px; height: 92px; }
+.ht-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ht-ring circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+.ht-ring .trk { stroke: #e4e4ea; }
+.ht-ring .val { stroke: var(--brand); }
+.ht-ring strong { position: absolute; inset: 0; display: grid; place-items: center; font-size: 28px; letter-spacing: -.04em; font-feature-settings: "tnum" 1; }
+.ht-fix { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 8px; }
+.ht-fix li { display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--pp-soft); font-size: 15px; }
+.ht-fix li span { flex: none; color: var(--brand); font: 500 13px/1.6 var(--font-plex-mono), ui-monospace, monospace; }
+.ht-err { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.ht-err p { margin: 0; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .pd-hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; gap: 30px; }
+  .pd-hero-art { order: -1; justify-items: start; }
+  .pd-hero-art .mx-bigicon { width: 150px !important; height: 150px !important; }
+  .pd-feat, .pd-feat.flip { grid-template-columns: 1fr; gap: 24px; }
+  .pd-feat.flip .pd-feat-copy { order: 0; }
+  .pd-who-grid, .pd-price-grid { grid-template-columns: 1fr; }
+  .pd-more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .ht-form { flex-wrap: wrap; border-radius: 24px; padding: 10px 10px 10px 16px; }
+  .ht-form input { flex-basis: calc(100% - 40px); height: 48px; }
+  .ht-form .pp-btn { width: 100%; justify-content: center; }
+  .ht-scores { grid-template-columns: 1fr; }
+  .ht-score { display: grid; grid-template-columns: 70px 1fr; column-gap: 14px; align-items: center; }
+  .ht-ring { width: 70px; height: 70px; grid-row: span 2; } .ht-ring strong { font-size: 22px; }
+  .ht-score b { margin-top: 0; }
+  .pd-more-grid { grid-template-columns: 1fr; }
+}
