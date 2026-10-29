@@ -5,6 +5,7 @@ import { JsonLd, breadcrumb, pageMeta } from "@/lib/seo";
 import { RegionProvider, RegionToggle, Price } from "@/components/home/region";
 
 export const metadata: Metadata = pageMeta({
+  image: { url: "/og/pricing.png", alt: "Premium Markup pricing: a free tier, then plans for the Leads Portal and each tool" },
   title: "Pricing | Leads Portal by Premium Markup",
   description: "Start free with 1,000 leads. Paid plans from Rs 1,500 a month in Pakistan or $12 elsewhere add more leads, unlimited WhatsApp checks and one-click demo websites.",
   path: "/pricing",

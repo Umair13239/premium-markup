@@ -6,6 +6,7 @@ import { Socials } from "@/components/site/socials";
 import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = pageMeta({
+  image: { url: "/og/contact.png", alt: "Contact Premium Markup" },
   title: "Contact | Premium Markup",
   description:
     "Questions about the Leads Portal, Brand Mockups, Design Studio or the AI receptionist? We reply within one working day. Call, WhatsApp or email Premium Markup.",

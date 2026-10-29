@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${p.seoTitle || p.name} | Premium Markup`,
     description: p.description,
     path: `/products/${p.slug}`,
-    image: p.media?.og ? { url: p.media.og, alt: `${p.name}: ${p.description}` } : undefined,
+    image: { url: p.media?.og || `/products/${p.slug}/og.png`, alt: `${p.name}: ${p.description}` },
   });
 }
 

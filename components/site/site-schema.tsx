@@ -9,7 +9,7 @@ export function SiteSchema() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: base,
-    image: `${base}/generated/og.png`,
+    image: `${base}/og/home.png`,
     description: siteConfig.description,
     email: siteConfig.email.primary,
     telephone: siteConfig.phone.tel,
