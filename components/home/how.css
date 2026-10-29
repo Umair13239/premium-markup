@@ -9,6 +9,7 @@
 .hw .hw-hero p { font-size: clamp(18px, 1.8vw, 22px); color: var(--ink-2); max-width: 560px; margin: 0 auto; }
 .hw .hw-cta { display: flex; gap: 24px; justify-content: center; align-items: center; margin-top: 30px; flex-wrap: wrap; }
 .hw .hw-link { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid currentColor; padding-bottom: 2px; }
+@media (max-width: 720px) { .hw .hw-link { display: inline-flex; align-items: center; min-height: 44px; } }
 
 /* flow strip */
 .hw .hw-flow { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-width: 980px; margin: 76px auto 0; }

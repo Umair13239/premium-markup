@@ -55,3 +55,6 @@ next-env.d.ts
 /wa-checker/wa-results.*
 /wa-checker/node_modules
 /portal-exports/
+
+# local-only: the leads spreadsheet (private data, read by leads-manager/import-xlsx.cjs)
+/Leads data .xlsx

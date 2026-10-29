@@ -90,7 +90,7 @@ export default function PricingPage() {
           <table>
             <thead><tr><th scope="col"><span className="sr">Feature</span></th>{PUBLIC_PLANS.map((p) => <th key={p.id} scope="col">{p.name}</th>)}</tr></thead>
             <tbody>{ROWS.map(([label, get]) => (
-              <tr key={label}><th scope="row">{label}</th>{PUBLIC_PLANS.map((p) => <td key={p.id}>{get(p)}</td>)}</tr>
+              <tr key={label}><th scope="row">{label}</th>{PUBLIC_PLANS.map((p) => <td key={p.id} data-plan={p.name}>{get(p)}</td>)}</tr>
             ))}</tbody>
           </table>
         </div>
