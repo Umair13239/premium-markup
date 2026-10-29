@@ -99,21 +99,47 @@ export function Marquee({ items, speed = 38 }: { items: string[]; speed?: number
   );
 }
 
-/* ---------- BigIcon: a huge product icon that draws itself, then floats and tilts with scroll ---------- */
+/* ---------- BigIcon: a product icon that draws itself, then floats in 3D with the pointer and scroll ---------- */
 export function BigIcon({ icon: Icon, size = 280, label }: { icon: LucideIcon; size?: number; label?: string }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const rotate = useTransform(scrollYProgress, [0, 1], [-8, 8]);
-  const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const scrollRot = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const scrollY = useTransform(scrollYProgress, [0, 1], [24, -24]);
+  // the pointer tilts the tile in 3D; springs make it feel physical, not stiff
+  const px = useMotionValue(0), py = useMotionValue(0);
+  const rx = useSpring(useTransform(py, (v) => v * -16), { stiffness: 160, damping: 18, mass: 0.6 });
+  const ry = useSpring(useTransform(px, (v) => v * 16), { stiffness: 160, damping: 18, mass: 0.6 });
   // lucide draws with paths/circles/rects: give each a pathLength of 1 so CSS can draw it
   useEffect(() => {
     ref.current?.querySelectorAll("svg *").forEach((el) => el.setAttribute("pathLength", "1"));
   }, []);
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    px.set((e.clientX - r.left) / r.width - 0.5);
+    py.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { px.set(0); py.set(0); };
   return (
-    <motion.div ref={ref} className={"mx-bigicon" + (inView || reduce ? " drawn" : "")} style={reduce ? { width: size, height: size } : { rotate, y, width: size, height: size }} role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
-      <span className="mx-bigicon-tile"><Icon strokeWidth={1.3} /></span>
+    <motion.div
+      ref={ref}
+      className={"mx-bigicon" + (inView || reduce ? " drawn" : "")}
+      style={reduce ? { width: size, height: size } : { width: size, height: size, rotate: scrollRot, y: scrollY, perspective: 900 }}
+      onPointerMove={reduce ? undefined : onMove}
+      onPointerLeave={reduce ? undefined : onLeave}
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+    >
+      <motion.div className="mx-bigicon-float" style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}>
+        <span className="mx-bigicon-glow" aria-hidden="true" />
+        <span className="mx-bigicon-tile"><Icon strokeWidth={1.3} /></span>
+        <span className="mx-bigicon-shine" aria-hidden="true" />
+      </motion.div>
+      <span className="mx-bigicon-ring r1" aria-hidden="true" />
+      <span className="mx-bigicon-ring r2" aria-hidden="true" />
     </motion.div>
   );
 }

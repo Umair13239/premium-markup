@@ -2,16 +2,31 @@
 .mx-mask { display: inline-block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; vertical-align: bottom; }
 .mx-word { display: inline-block; will-change: transform; }
 
-/* BigIcon */
-.mx-bigicon { position: relative; display: grid; place-items: center; }
-.mx-bigicon-tile { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 22%; background: #fff; color: var(--brand, #683CE7); box-shadow: 0 0 0 1px rgba(29, 29, 31, .07), 0 50px 90px -40px rgba(20, 10, 60, .38), inset 0 -10px 30px -10px color-mix(in srgb, var(--brand, #683CE7) 10%, transparent); }
-.mx-bigicon-tile svg { width: 56%; height: 56%; }
+/* BigIcon: a drawn product icon on a white tile, with a soft purple glow beneath, a light sheen that
+   crosses it as you scroll, two orbit rings, and a gentle float. Everything is transform/opacity. */
+.mx-bigicon { position: relative; display: grid; place-items: center; transform-style: preserve-3d; }
+.mx-bigicon-float { position: relative; width: 100%; height: 100%; display: grid; place-items: center; transform-style: preserve-3d; animation: mxFloat 6s ease-in-out infinite; }
+.mx-bigicon-glow { position: absolute; left: 12%; right: 12%; bottom: -10%; height: 34%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--brand, #683CE7) 38%, transparent), transparent 70%); filter: blur(18px); opacity: .0; transition: opacity 1.4s ease .5s; }
+.mx-bigicon.drawn .mx-bigicon-glow { opacity: .9; }
+.mx-bigicon-tile { position: relative; z-index: 1; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 24%; background: linear-gradient(160deg, #fff 0%, #fbfaff 100%); color: var(--brand, #683CE7); overflow: hidden; box-shadow: 0 0 0 1px rgba(29, 29, 31, .07), inset 0 1px 0 #fff, inset 0 -18px 30px -22px color-mix(in srgb, var(--brand, #683CE7) 22%, transparent), 0 60px 90px -44px rgba(20, 10, 60, .45); }
+.mx-bigicon-tile svg { width: 54%; height: 54%; filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--brand, #683CE7) 25%, transparent)); }
 .mx-bigicon-tile svg * { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s cubic-bezier(.65, 0, .35, 1); }
 .mx-bigicon.drawn .mx-bigicon-tile svg * { stroke-dashoffset: 0; }
 .mx-bigicon.drawn .mx-bigicon-tile svg *:nth-child(2) { transition-delay: .25s; }
 .mx-bigicon.drawn .mx-bigicon-tile svg *:nth-child(3) { transition-delay: .45s; }
 .mx-bigicon.drawn .mx-bigicon-tile svg *:nth-child(n+4) { transition-delay: .6s; }
-.mx-bigicon::after { content: ""; position: absolute; inset: -14px; border-radius: 26%; border: 1.5px dashed color-mix(in srgb, var(--brand, #683CE7) 28%, transparent); animation: mxSpin 40s linear infinite; pointer-events: none; }
+/* the sheen: a soft diagonal band that crosses the tile once it is drawn, then rests */
+.mx-bigicon-shine { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .85) 50%, transparent 65%); transform: translateX(-120%); opacity: 0; pointer-events: none; }
+.mx-bigicon.drawn .mx-bigicon-shine { animation: mxSheen 2.8s cubic-bezier(.4, 0, .2, 1) 1.6s 1 both; }
+@keyframes mxSheen { 0% { transform: translateX(-120%); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateX(120%); opacity: 0; } }
+/* two orbit rings, drawn as thin dashed circles that turn at different speeds */
+.mx-bigicon-ring { position: absolute; inset: -18px; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--brand, #683CE7) 30%, transparent); pointer-events: none; opacity: 0; transition: opacity 1.2s ease 1s; }
+.mx-bigicon-ring.r2 { inset: -44px; border-style: solid; border-width: 1px; border-color: color-mix(in srgb, var(--brand, #683CE7) 12%, transparent); }
+.mx-bigicon.drawn .mx-bigicon-ring { opacity: 1; }
+.mx-bigicon-ring.r1 { animation: mxSpin 26s linear infinite; }
+.mx-bigicon-ring.r2 { animation: mxSpin 40s linear infinite reverse; }
+.mx-bigicon-ring::before { content: ""; position: absolute; top: -3px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--brand, #683CE7); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand, #683CE7) 14%, transparent); }
+@keyframes mxFloat { 0%, 100% { transform: translateY(0) rotateZ(0); } 50% { transform: translateY(-10px) rotateZ(.4deg); } }
 @keyframes mxSpin { to { transform: rotate(360deg); } }
 
 /* Marquee */
@@ -63,5 +78,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mx-bigicon-tile svg * { stroke-dashoffset: 0; transition: none; }
-  .mx-bigicon::after { animation: none; }
+  .mx-bigicon-float, .mx-bigicon-ring, .mx-bigicon-shine { animation: none !important; }
+  .mx-bigicon-shine { display: none; }
+  .mx-bigicon-ring { opacity: .6; }
 }
